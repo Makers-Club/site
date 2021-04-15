@@ -11,7 +11,9 @@ else:
     environ["FLASK_SECRET_KEY"] = str(uuid4())
 CORS(app, resources={r"*": {"origins": "*"}})
 
-
+@app.route('/login', methods=['GET'], strict_slashes=False)
+def login():
+    render_template('login.html')
 
 @app.errorhandler(400)
 def bad_request(error) -> str:
