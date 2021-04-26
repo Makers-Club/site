@@ -26,6 +26,7 @@
 
       <nav>
         <a href="/">Home</a>
+        <a href="/">About</a>
         <!-- TODO -->
         <!-- jinja if not logged in -->
           <!-- {% if data.user %} -->
@@ -34,8 +35,6 @@
           <!-- <a href="/">Logout</a> -->
           <!-- {% endif %} -->
         <!-- END TODO -->
-        <a href="/">Contact Us</a>
-        <a href="/">About</a>
       </nav>
       {% endblock %}
     </div>
@@ -47,6 +46,19 @@
 
     <div id="footer">
       {% block footer %}
+      <nav>
+        <a href="/">Home</a>
+        <a href="/">About</a>
+        <!-- TODO -->
+        <!-- jinja if not logged in -->
+          <!-- {% if data.user %} -->
+          <a href="/">Sign up / Login</a>
+          <!-- {% else %} -->
+          <!-- <a href="/">Logout</a> -->
+          <!-- {% endif %} -->
+        <!-- END TODO -->
+        <a href="/">Contact Us</a>
+      </nav>
       <!-- ADD a Copyright?? -->
       <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
       {% endblock %}
