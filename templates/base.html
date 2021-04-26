@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+  <head>
+    {% block head %}
+
+    <!-- TODO -->
+    <!-- put css links here -->
+    <!-- END TODO -->
+    <title>
+      {% block title %}
+      {% endblock %} - Makers
+    </title>
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <div id="header">
+      {% block header %}
+      <div id="home_logo">
+        <a href="/">
+          <!-- <img> logo goes here -->
+        </a>
+      </div>
+
+      <nav>
+        <a href="/">Home</a>
+        <!-- TODO -->
+        <!-- jinja if not logged in -->
+          <!-- {% if data.user %} -->
+          <a href="/">Sign up / Login</a>
+          <!-- {% else %} -->
+          <!-- <a href="/">Logout</a> -->
+          <!-- {% endif %} -->
+        <!-- END TODO -->
+        <a href="/">Contact Us</a>
+        <a href="/">About</a>
+      </nav>
+      {% endblock %}
+    </div>
+
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <div id="footer">
+      {% block footer %}
+      <!-- ADD a Copyright?? -->
+      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+      {% endblock %}
+    </div>
+
+  </body>
+
+</html>
