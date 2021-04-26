@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  {% if authenticated_user %}
+  <p style="display: none;">{{ authenticated_user }}</p>
+  {% endif %}
+{% endblock %}
