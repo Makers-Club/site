@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Sign Up / Login</h1>
+  <a href="{{ url_for(landing.auth_page) }}">Sign Up</a>
+{% endblock %}
