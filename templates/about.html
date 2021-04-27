@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<section>
+
+  {% if data.authenticated_user %}
+  <p>{{ data.authenticated_user }}</p>
+  {% endif %}
+
+  <p>pH Content</p>
+</section>
+{% endblock %}

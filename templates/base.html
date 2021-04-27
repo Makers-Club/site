@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+  <head>
+    {% block head %}
+
+    <!-- TODO -->
+    <!-- put css links here -->
+    <!-- END TODO -->
+    <title>
+      {% block title %}
+      {% endblock %} - Makers
+    </title>
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <header>
+      <div id="home_logo">
+        <a href="/">
+          <!-- <img> logo goes here -->
+        </a>
+      </div>
+
+      <nav>
+        <a href="/">Home</a>
+        <a href="{{ url_for('landing.about') }}">About</a>
+        <!-- TODO -->
+        <!-- jinja if not logged in -->
+          <!-- { if data.user } -->
+          <a href="/">Sign up / Login</a>
+          <!-- { else } -->
+          <!-- <a href="/">Logout</a> -->
+          <!-- { endif } -->
+        <!-- END TODO -->
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <footer>
+      <nav>
+        <a href="/">Home</a>
+        <a href="{{ url_for('landing.about') }}">About</a>
+        <!-- TODO -->
+        <!-- jinja if not logged in -->
+          <!-- { if data.user } -->
+          <a href="/">Sign up / Login</a>
+          <!-- { else } -->
+          <!-- <a href="/">Logout</a> -->
+          <!-- { endif } -->
+        <!-- END TODO -->
+        <a href="{{ url_for('landing.contact_us') }}">Contact Us</a>
+      </nav>
+      <!-- ADD a Copyright?? -->
+      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+    </div>
+
+  </body>
+
+</html>
