@@ -16,8 +16,7 @@
 
   <body>
 
-    <div id="header">
-      {% block header %}
+    <header>
       <div id="home_logo">
         <a href="/">
           <!-- <img> logo goes here -->
@@ -36,16 +35,14 @@
           <!-- {% endif %} -->
         <!-- END TODO -->
       </nav>
-      {% endblock %}
-    </div>
+    </header>
 
-    <div id="content">
+    <main>
       {% block content %}
       {% endblock %}
-    </div>
+    </main>
 
-    <div id="footer">
-      {% block footer %}
+    <footer>
       <nav>
         <a href="/">Home</a>
         <a href="/">About</a>
@@ -61,7 +58,6 @@
       </nav>
       <!-- ADD a Copyright?? -->
       <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
-      {% endblock %}
     </div>
 
   </body>
