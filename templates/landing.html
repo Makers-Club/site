@@ -3,7 +3,15 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+
 {% block content %}
+<section id=hero>
   <h1>Sign Up / Login</h1>
-  <a href="{{ url_for(landing.auth_page) }}">Sign Up</a>
+  <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+</section>
+
+<section id=how_it_works>
+  <h1>Sign Up / Login</h1>
+  <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+</section>
 {% endblock %}
