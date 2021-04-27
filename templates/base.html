@@ -25,14 +25,14 @@
 
       <nav>
         <a href="/">Home</a>
-        <a href="/">About</a>
+        <a href="{{ url_for('landing.about') }}">About</a>
         <!-- TODO -->
         <!-- jinja if not logged in -->
-          <!-- {% if data.user %} -->
+          <!-- { if data.user } -->
           <a href="/">Sign up / Login</a>
-          <!-- {% else %} -->
+          <!-- { else } -->
           <!-- <a href="/">Logout</a> -->
-          <!-- {% endif %} -->
+          <!-- { endif } -->
         <!-- END TODO -->
       </nav>
     </header>
@@ -45,16 +45,16 @@
     <footer>
       <nav>
         <a href="/">Home</a>
-        <a href="/">About</a>
+        <a href="{{ url_for('landing.about') }}">About</a>
         <!-- TODO -->
         <!-- jinja if not logged in -->
-          <!-- {% if data.user %} -->
+          <!-- { if data.user } -->
           <a href="/">Sign up / Login</a>
-          <!-- {% else %} -->
+          <!-- { else } -->
           <!-- <a href="/">Logout</a> -->
-          <!-- {% endif %} -->
+          <!-- { endif } -->
         <!-- END TODO -->
-        <a href="/">Contact Us</a>
+        <a href="{{ url_for('landing.contact_us') }}">Contact Us</a>
       </nav>
       <!-- ADD a Copyright?? -->
       <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
