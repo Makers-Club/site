@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify
 from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
-
+from routes import landing
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -11,9 +11,13 @@ else:
     environ["FLASK_SECRET_KEY"] = str(uuid4())
 CORS(app, resources={r"*": {"origins": "*"}})
 
+# Register Blueprints
+app.register_blueprint(landing)
+
+
 @app.route('/login', methods=['GET'], strict_slashes=False)
 def login():
-    render_template('login.html')
+    return render_template('login.html')
 
 @app.errorhandler(400)
 def bad_request(error) -> str:
