@@ -1,0 +1,35 @@
+<!doctype html>
+<!--
+Copyright 2016 Google Inc. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+-->
+<html>
+<head>
+  
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Title</title>
+
+
+
+<button id="button" onclick="red()">here</button>
+
+<script>
+    function red() {
+    window.location.href = "https://github.com/login/oauth/authorize?client_id=25ea07bd2d607833d0bd&scope=user";
+    }
+
+</script>
+
+
+
+</head>
+<body>
+  
+{% if data %}
+{{ data.response}}
+{% endif %}
+
+</body>
+</html>
