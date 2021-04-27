@@ -3,8 +3,14 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+
 {% block content %}
-  {% if authenticated_user %}
-  <p style="display: none;">{{ authenticated_user }}</p>
+<section>
+
+  {% if data.authenticated_user %}
+  <p>{{ data.authenticated_user }}</p>
   {% endif %}
+
+  <p>pH Content</p>
+</section>
 {% endblock %}
