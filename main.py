@@ -3,7 +3,7 @@ from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 import requests
-
+from routes import *
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -14,14 +14,11 @@ else:
 # Save these later elsewhere, Russ - J.I.
 environ['GITHUB_CLIENT_ID'] = '25ea07bd2d607833d0bd'
 environ['GITHUB_CLIENT_SECRET'] = '39da3ad6dfd757263026315bb3df8ad58da582a1'
-home_url = 'https://8080-cs-142477231692-default.cs-us-central1-mtyn.cloudshell.dev/'
+home_url = 'https://8080-cs-1011683879296-default.cs-us-central1-mtyn.cloudshell.dev/'
     
 CORS(app, resources=r"*")
 
-
-@app.route('/', methods=['GET'], strict_slashes=False)
-def index():
-    return render_template('index.html')
+app.register_blueprint(landing)
 
 @app.route('/callback', methods=['GET'], strict_slashes=False)
 def callback():
@@ -42,7 +39,7 @@ def callback():
     headers = {'content-type': 'application/json', 'Authorization': f'token {token}'}
     response = requests.get('https://api.github.com/user/emails', headers=headers)
     print(response.text)
-    return redirect(url_for('index'))
+    return redirect(url_for('landing.index'))
 
 
 """
