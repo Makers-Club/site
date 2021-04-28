@@ -14,18 +14,22 @@ def set_user(**kwargs) -> dict:
 
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
+  """ render landing template """
   data = set_user()
   return render_template('landing.html', data=data)
 
 @landing.route('/about', methods=['GET'], strict_slashes=False)
 def about():
+  """ render about template """
   data = set_user()
   return render_template('about.html', data=data)
 
 @landing.route('/auth', methods=['GET'], strict_slashes=False)
 def auth_page():
+  """ render auth template """
   return render_template('auth.html', data=None)
 
 @landing.route('/contact_us', methods=['GET'], strict_slashes=False)
 def contact_us():
+  """ render contact template """
   return render_template('contact.html', data=None)
