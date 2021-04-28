@@ -3,7 +3,7 @@ from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 import requests
-from routes.landing import landing
+from routes import *
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -15,7 +15,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 # Save these later elsewhere, Russ - J.I.
 environ['GITHUB_CLIENT_ID'] = '25ea07bd2d607833d0bd'
 environ['GITHUB_CLIENT_SECRET'] = '39da3ad6dfd757263026315bb3df8ad58da582a1'
-home_url = 'https://8080-cs-142477231692-default.cs-us-central1-mtyn.cloudshell.dev/'
+home_url = 'https://8080-cs-1011683879296-default.cs-us-central1-mtyn.cloudshell.dev/'
     
 app.register_blueprint(landing)
 
