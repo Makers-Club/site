@@ -6,8 +6,13 @@
 
 {% block content %}
 <section>
-  <div id="firebase_signup">
-    <button style="margin: 5rem; margin-left: 0;">Sign In with Google</button>
-  </div>
+  <button id="button" onclick="github_login()">Sign Up / Sign In</button>
+
+  <script>
+      function github_login() {
+      window.location.href = "https://github.com/login/oauth/authorize?client_id=25ea07bd2d607833d0bd&scope=user";
+      }
+
+  </script>
 </section>
 {% endblock %}
