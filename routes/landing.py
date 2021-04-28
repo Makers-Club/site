@@ -24,8 +24,8 @@ def about():
 
 @landing.route('/auth', methods=['GET'], strict_slashes=False)
 def auth_page():
-  return render_template('auth.html')
+  return render_template('auth.html', data=None)
 
 @landing.route('/contact_us', methods=['GET'], strict_slashes=False)
 def contact_us():
-  return render_template('contact.html')
+  return render_template('contact.html', data=None)
