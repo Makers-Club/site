@@ -1,1 +1,1 @@
-echo "soure ~/envs/home/bin/activate"
+echo "source ~/envs/home/bin/activate"
