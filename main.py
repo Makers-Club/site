@@ -5,6 +5,7 @@ from uuid import uuid4
 from re import search
 import requests
 from routes import *
+from models.engine import storage
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -33,6 +34,7 @@ def callback():
             A. If we know the user, sign them in
             B. If we don't, sign them up
     """
+    from models.user import User
 
     # Data to pass to authentication url
     auth_data = {
@@ -62,11 +64,12 @@ def callback():
     oauth_api_url = 'https://api.github.com/user/emails'
     response = requests.get(oauth_api_url, headers=headers)
     emails = response.json()
-    user_emails = ['accounts@jicruz.com']  # This is just for testing
     data = {
         'primary_email': None,
         'other_emails': []
     }
+    all_users = storage.all(User)
+    user_emails = {user.email for user in all_users}
     for email_dict in emails:
         if email_dict['email'] in user_emails:
             return email_dict['email'] + " has signed in!"
