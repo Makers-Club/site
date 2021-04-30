@@ -25,15 +25,12 @@
 
       <nav>
         <a href="/">Home</a>
-        <a href="{{ url_for('landing.about') }}">About</a>
-        <!-- TODO -->
-        <!-- jinja if not logged in -->
-          <!-- { if data.user } -->
-          <a href="/">Sign up / Login</a>
-          <!-- { else } -->
-          <!-- <a href="/">Logout</a> -->
-          <!-- { endif } -->
-        <!-- END TODO -->
+        <a href="{{ url_for('landing.about') }}">About Us</a>
+        {% if data.authenticated_user %}
+        <a href="/">Login</a>
+        {%  else  %}
+        <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+        {% endif %}
       </nav>
     </header>
 
@@ -45,15 +42,12 @@
     <footer>
       <nav>
         <a href="/">Home</a>
-        <a href="{{ url_for('landing.about') }}">About</a>
-        <!-- TODO -->
-        <!-- jinja if not logged in -->
-          <!-- { if data.user } -->
-          <a href="/">Sign up / Login</a>
-          <!-- { else } -->
-          <!-- <a href="/">Logout</a> -->
-          <!-- { endif } -->
-        <!-- END TODO -->
+        <a href="{{ url_for('landing.about') }}">About Us</a>
+        {% if data.authenticated_user %}
+        <a href="/">Login</a>
+        {%  else  %}
+        <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+        {% endif %}
         <a href="{{ url_for('landing.contact_us') }}">Contact Us</a>
       </nav>
       <!-- ADD a Copyright?? -->

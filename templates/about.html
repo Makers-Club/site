@@ -5,12 +5,33 @@
 {% endblock %}
 
 {% block content %}
-<section>
+<section style="margin: 4rem 0;" id="our_mission">
+  <h1>Our Mission</h1>
+  <p>Touchy Feely Feels</p>
+</section>
 
-  {% if data.authenticated_user %}
-  <p>{{ data.authenticated_user }}</p>
-  {% endif %}
+<section id="our_story">
+  <h1>Our Story</h1>
+  <p>Dramatized exposition with Michael Bay Explosions</p>
+</section>
 
-  <p>pH Content</p>
+<section style="margin: 4rem 0;" id="faq">
+  <h1>FAQ</h1> 
+  <div style="margin: 0 1rem;">
+    <div>
+      <h3>Who are we?</h3>
+      <p style="margin: 0 1rem;">This is a question for <a href="https://en.wikipedia.org/wiki/Socrates">Socrates</a></p>
+    </div>
+    
+    <div>
+      <h3>Why are we here?</h3>
+      <p style="margin: 0 1rem;"><a href="https://en.wikipedia.org/wiki/Rastafari#:~:text=Rastafari%2C%20also%20known%20as%20the,movement%20by%20scholars%20of%20religion.">Here</a>. They know.</p>
+    </div>
+
+    <div>
+      <h3>Are we Alone?</h3>
+      <p style="margin: 0 1rem;"><a href="https://www.history.com/shows/ancient-aliens">History Channel</a></p>
+    </div>
+  </div>  
 </section>
 {% endblock %}
