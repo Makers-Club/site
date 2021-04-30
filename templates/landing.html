@@ -7,7 +7,14 @@
 {% block content %}
 <section style="margin: 5rem 0;" id=hero>
   <h1>Sign Up / Login</h1>
-  <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+  <button id="button" onclick="login()">Login</button>
+
+<script>
+    function login() {
+    window.location.href = "https://github.com/login/oauth/authorize?client_id=25ea07bd2d607833d0bd&scope=user";
+    }
+
+</script>
 </section>
 
 <section style="margin-bottom: 5rem;" id=how_it_works>
