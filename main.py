@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, g
 from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 from re import search
 import requests
 from routes import *
-from models.engine import storage
+# from models.engine import storage
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -17,13 +17,11 @@ CORS(app, resources={r"*": {"origins": "*"}})
 # Save these later elsewhere, Russ - J.I.
 environ['GITHUB_CLIENT_ID'] = '25ea07bd2d607833d0bd'
 environ['GITHUB_CLIENT_SECRET'] = '39da3ad6dfd757263026315bb3df8ad58da582a1'
-home_url = 'https://8080-1f8078dd-2378-4707-8a3e-78d294857adf.cs-us-central1-mtyn.cloudshell.dev/'
+home_url = 'https://8080-cs-142477231692-default.cs-us-central1-mtyn.cloudshell.dev/'
 
 app.register_blueprint(landing)
 
-
-@app.route('/callback', methods=['GET'], strict_slashes=False)
-def callback():
+def get_github_identity():
     """
     The Github OAuth API returns the user sign-in code to this redirect URL.
     This function:
@@ -34,8 +32,6 @@ def callback():
             A. If we know the user, sign them in
             B. If we don't, sign them up
     """
-    from models.user import User
-
     # Data to pass to authentication url
     auth_data = {
         'client_id': environ['GITHUB_CLIENT_ID'],
@@ -46,7 +42,8 @@ def callback():
     # The requests module is deprecated so we should change this at some point
     oauth_url = 'https://github.com/login/oauth/access_token?'
     response = requests.post(oauth_url, auth_data)
-
+    if not response.text:
+        return None
     # Preferably, we should be checking the value of response in case there are any errors.
     # Leaving some boiler plate here for now...
     # if response.status_code != 200:
@@ -60,10 +57,26 @@ def callback():
         'content-type': 'application/json',
         'Authorization': f'token {token}'
     }
-
     oauth_api_url = 'https://api.github.com/user/emails'
-    response = requests.get(oauth_api_url, headers=headers)
-    emails = response.json()
+    response = requests.get(oauth_api_url, headers=headers).json()
+    for emails in response:
+        if emails.get('primary'):
+            return emails.get('email')
+    return None
+
+
+@app.route('/callback', methods=['GET'], strict_slashes=False)
+def callback():
+    email = get_github_identity()
+    return render_template('dash.html', data={'authenticated_user':email})
+
+
+
+
+#    from models.user import User
+
+    
+"""emails = response.json()
     data = {
         'primary_email': None,
         'other_emails': []
@@ -80,11 +93,7 @@ def callback():
                 data['other_emails'].append(email_dict['email'])
 
     if data['primary_email']:
-        return 'First time seeing ya! Time to sign up!'
-
-    return 'You have no *verified* emails with Github. Please verify your Github email address'
-
-
+        return 'First time seeing ya! Time to sign up!'"""
 """
 error handler functions
 """
