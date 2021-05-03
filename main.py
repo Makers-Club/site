@@ -15,9 +15,9 @@ else:
 CORS(app, resources={r"*": {"origins": "*"}})
 
 # Save these later elsewhere, Russ - J.I.
-environ['GITHUB_CLIENT_ID'] = '25ea07bd2d607833d0bd'
-environ['GITHUB_CLIENT_SECRET'] = '39da3ad6dfd757263026315bb3df8ad58da582a1'
-home_url = 'https://8080-cs-142477231692-default.cs-us-central1-mtyn.cloudshell.dev/'
+# environ['GITHUB_CLIENT_ID'] = '25ea07bd2d607833d0bd'
+# environ['GITHUB_CLIENT_SECRET'] = '39da3ad6dfd757263026315bb3df8ad58da582a1'
+# environ['GCP_DEV_URL'] = 'https://8080-cs-142477231692-default.cs-us-central1-mtyn.cloudshell.dev/'
 
 app.register_blueprint(landing)
 
@@ -37,7 +37,7 @@ def get_github_identity():
         'client_id': environ['GITHUB_CLIENT_ID'],
         'client_secret': environ['GITHUB_CLIENT_SECRET'],
         'code': request.args.get('code'),
-        'redirect_uri': home_url + 'callback'
+        'redirect_uri': environ['GCP_DEV_URL'] + 'callback'
     }
     # The requests module is deprecated so we should change this at some point
     oauth_url = 'https://github.com/login/oauth/access_token?'
