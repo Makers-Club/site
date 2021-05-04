@@ -6,6 +6,9 @@
 
     <!-- TODO -->
     <!-- put css links here -->
+    <script src="{{ url_for('static', filename='github_login.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- END TODO -->
     <title>
       {% block title %}
@@ -16,43 +19,76 @@
 
   <body>
 
-    <header>
-      <div id="home_logo">
+    <header id="header">
+      <div id="logo-container">
         <a href="/">
-          <!-- <img> logo goes here -->
+          <img id="logo" src="https://storage.googleapis.com/makers-club-static/Logo.png">
         </a>
       </div>
 
       <nav>
-        <a href="/">Home</a>
-        <a href="{{ url_for('landing.about') }}">About Us</a>
-        {% if data.authenticated_user %}
-        <a href="/">Login</a>
-        {%  else  %}
-        <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
-        {% endif %}
+          <ul id="navbar">
+            <li>
+                <a href="{{ url_for('landing.about') }}">About Us</a>
+            </li>
+            <li>
+                <a href="{{ url_for('landing.about') }}">Product</a>
+            </li>
+            <li>
+                {% if data.authenticated_user %}
+                    <!-- send this to a logout route once that's done -->
+                    <a href="/">Logout</a>
+                {%  else  %}
+                    <div onclick="{{ data.func }}">Sign In </div>
+                {% endif %}
+            </li>
+
+          </ul>
+        
       </nav>
     </header>
 
     <main>
       {% block content %}
+
+
+
       {% endblock %}
     </main>
 
     <footer>
-      <nav>
-        <a href="/">Home</a>
-        <a href="{{ url_for('landing.about') }}">About Us</a>
-        {% if data.authenticated_user %}
-        <a href="/">Login</a>
-        {%  else  %}
-        <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
-        {% endif %}
-        <a href="{{ url_for('landing.contact_us') }}">Contact Us</a>
-      </nav>
+        <nav>
+            <ul id="ourLinks">
+                <h2>our links</h2>
+                <li>
+                    <a href="{{ url_for('landing.index') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('landing.about') }}">About Us</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('landing.about') }}">Product</a>
+                </li>
+            </ul>
+
+            <ul id="getStarted">
+                <h2>get started</h2>
+                <li>
+                    <a href="{{ data.func }}">Sign Up</a>
+                </li>
+                <li>
+                    <a href="{{ data.func }}">Sign In</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('landing.contact_us') }}">Contact Us</a>
+                </li>
+            </ul>
+
+        </nav>
+      ©Copyright Russell Molimock 2020
+    </footer>
       <!-- ADD a Copyright?? -->
       <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
-    </div>
 
   </body>
 

@@ -1,0 +1,23 @@
+
+
+#hero {
+    height: 35rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F2F7F7 40.13%, #E9F2F2 100%), #EFEFEF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+#hero > div {
+    margin: auto;
+}
+#callToAction {
+    color: #636363;
+    font-weight: 400;
+    margin-bottom: 3rem;
+}
+#options {
+    display: flex;
+    justify-content: space-between;
+}

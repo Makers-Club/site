@@ -16,7 +16,8 @@ def set_user(**kwargs) -> dict:
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
   """ render landing template """
-  data = set_user()
+  print(environ['GITHUB_CLIENT_ID'])
+  data = {'func': 'github_login("{}")'.format(environ['GITHUB_CLIENT_ID'])}
   return render_template('landing.html', data=data)
 
 @landing.route('/about', methods=['GET'], strict_slashes=False)

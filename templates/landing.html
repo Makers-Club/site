@@ -2,16 +2,38 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
 {% endblock %}
 
 {% block content %}
-<section style="margin: 5rem 0;" id=hero>
-  <h1>Sign Up / Login</h1>
-  <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
+<!--
+<img id="github-signup" src="https://storage.googleapis.com/makers-club-static/Github%20signup%20button" onclick="{{ data.func }}">
+
+-->
+<section id="hero">
+    <div>
+    <header>
+        <h1 id="callToAction">Let's play<br>dev-team together</h1>
+    </header>
+    <div id="options">
+        <div id="forStudents" class="card">
+            <div class="card-body">
+                <header>
+                    <h3>For students</h3>
+                </header>
+            </div>
+        </div>
+        <div id="forEmployers">
+            <header>
+                <h3>For employers</h3>
+            </header>
+        </div>
+    </div>
+    </div>
+
 </section>
 
-<section style="margin-bottom: 5rem;" id=how_it_works>
-  <h1>Sign Up / Login</h1>
-  <a href="{{ url_for('landing.auth_page') }}">Sign Up</a>
-</section>
+
+<section id="howItWorks"></section>
+
 {% endblock %}
