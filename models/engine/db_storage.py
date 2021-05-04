@@ -1,7 +1,6 @@
 """This module creates the db_storage engine"""
 from os import getenv
 from sqlalchemy.engine import create_engine
-from sqlalchemy.engine.url import URL as sqlalchemyURL
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.orm import scoped_session
 
@@ -20,9 +19,10 @@ class DBStorage():
             'username': 'root', #getenv('MYSQL_USER'),
             'password': 'root', #getenv('MYSQL_PWD'),
             'database': 'dev_db', #getenv('MYSQL_DB'),
-            'query': {'unix_socket': '/cloudsql/{}'.format('makers-club:us-central1:myinstance')}
+            'host': 'localhost'
         }
-        self.__engine = create_engine(sqlalchemyURL(**db_credentials), pool_pre_ping=True)
+        db_url = '{drivername}://{username}:{password}@{host}/{database}'.format(**db_credentials)
+        self.__engine = create_engine(db_url, pool_pre_ping=True)
 
     def all(self, cls=None):
         """Returns all of type cls or all classes if cls=None"""        
@@ -31,16 +31,9 @@ class DBStorage():
             for model in models.values():
                 objs.extend(self.__session.query(model).all())
         else:
-            if type(cls) is str:
-                class_name = eval(cls)
-            else:
-                class_name = eval(cls().__class__.__name__)
-            objs = self.__session.query(class_name).all()
-        new_dict = {}
-        for obj in objs:
-            key = obj.__class__.__name__ + '.' + obj.id
-            new_dict.update({key: obj})
-        return new_dict
+            objs = self.__session.query(cls).all()
+
+        return objs
 
     def new(self, obj):
         """Adds the object to the current database session"""
@@ -57,7 +50,7 @@ class DBStorage():
     def reload(self):
         """Create all tables in the database"""
         from models.base_model import DBase
-        
+    
         DBase.metadata.create_all(self.__engine)
         sf = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sf)
@@ -77,7 +70,7 @@ class DBStorage():
         elif cls not in models.values():
             return None
         
-        return self.__session.query(model).get(id)
+        return self.__session.query(cls).get(id)
     
     def count(self, cls=None):
         """ Returns count of objects in storage of type cls or
