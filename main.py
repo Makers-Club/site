@@ -3,8 +3,6 @@ from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 from routes import *
-from helpers import *
-from models.engine import storage
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -14,14 +12,7 @@ else:
 CORS(app, resources={r"*": {"origins": "*"}})
 
 app.register_blueprint(landing)
-
-@app.route('/callback', methods=['GET'], strict_slashes=False)
-def callback():
-    email = login(request.args.get('code'))
-    if email is None:
-        return 'No verified emails, buddy! Verify your GitHub email.'
-    return render_template('dash.html', data={'authenticated_user': email})
-
+app.register_blueprint(auth)
 
 """
 error handler functions

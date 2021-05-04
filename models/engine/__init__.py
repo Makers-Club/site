@@ -1,5 +1,5 @@
-from models.engine.db_storage import DBStorage
+from models.engine.mysql_storage import MySQLStorage
 
-storage = DBStorage()
+storage = MySQLStorage()
 
 storage.reload()

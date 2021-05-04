@@ -7,13 +7,13 @@ from sqlalchemy.orm import scoped_session
 # Expected to be a dictionary that associates all known models with its name
 models = {}
 
-class DBStorage():
-    """This is an instance of the DBStorage class"""
+class MySQLStorage():
+    """This is an instance of the MySQLStorage class"""
     __engine = None
     __session = None
 
     def __init__(self):
-        """This creates an instance of the DBStorage class"""
+        """This creates an instance of the MySQLStorage class"""
         db_credentials = {
             'drivername': 'mysql+pymysql',
             'username': 'root', #getenv('MYSQL_USER'),
