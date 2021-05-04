@@ -3,8 +3,6 @@ from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 from routes import *
-from helpers import *
-from models.engine import storage
 
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
