@@ -1,11 +1,22 @@
 """Defines all methods and routes related to user authentication"""
-from flask import request, render_template, Blueprint, abort, g
+from flask import request, render_template, Blueprint, abort, redirect, g
 from requests import get, post # warning: deprecated
 from os import environ
 from re import search
 
 auth = Blueprint('auth', __name__, url_prefix="")
 
+@auth.route('/auth', methods=['GET'], strict_slashes=False)
+def get_gh_temporary_code():
+    """Sends user to Github Login to sign in."""
+    query_params = {
+        'client_id': environ['GITHUB_CLIENT_ID'],
+        'scope': 'user'
+    }
+    URL = 'https://github.com/login/oauth/authorize?'
+    for key, value in query_params.items():
+        URL += '{}={}&'.format(key, value)
+    return redirect(URL)
 
 @auth.route('/callback', methods=['GET'], strict_slashes=False)
 def callback():

@@ -26,13 +26,6 @@ def about():
   data = set_user()
   return render_template('about.html', data=data)
 
-@landing.route('/auth', methods=['GET'], strict_slashes=False)
-def auth_page():
-  """ render auth template """
-  # Temporary client ID hack, sorry Russ. -J.I.
-  data = {'func': 'github_login("{}")'.format(environ['GITHUB_CLIENT_ID'])}
-  return render_template('auth.html', data=data)
-
 @landing.route('/contact_us', methods=['GET'], strict_slashes=False)
 def contact_us():
   """ render contact template """
