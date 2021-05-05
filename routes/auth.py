@@ -3,8 +3,8 @@ from flask import request, render_template, Blueprint, abort, redirect, g
 from requests import get, post # warning: deprecated
 from os import environ
 from re import search
+from routes import auth
 
-auth = Blueprint('auth', __name__, url_prefix="")
 
 @auth.route('/auth', methods=['GET'], strict_slashes=False)
 def get_gh_temporary_code():
