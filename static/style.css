@@ -45,6 +45,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;    
     width: 25vw;
 }
 li {
@@ -76,4 +77,8 @@ footer > nav {
     justify-content: space-between;
     align-items: center;
     height: 80%;
+}
+
+.card {
+  background-color: transparent;
 }
