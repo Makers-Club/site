@@ -2,7 +2,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 from datetime import datetime
 from uuid import uuid4
-from models.engine import storage
 
 
 # Used by DBStorage class for loading objects into memory
@@ -33,6 +32,7 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
+        from models.engine import storage
         self.updated_at = datetime.now()
         storage.new(self)
         storage.save()
@@ -52,4 +52,5 @@ class BaseModel:
 
     def delete(self):
         """Delete the current instance from storage by calling delete method"""
+        from models.engine import storage
         storage.delete(self)

@@ -9,9 +9,10 @@ from routes import auth
 @auth.route('/auth', methods=['GET'], strict_slashes=False)
 def get_gh_temporary_code():
     """Sends user to Github Login to sign in."""
+    scopes = ['user', 'repo']
     query_params = {
         'client_id': environ['GITHUB_CLIENT_ID'],
-        'scope': 'user'
+        'scope': '%20'.join(scopes)
     }
     URL = 'https://github.com/login/oauth/authorize?'
     for key, value in query_params.items():
@@ -53,14 +54,14 @@ def get_user(gh_tmp_code):
     Return:
         * user_email (str): user identifier
     """
-
+    
     gh_access_token = get_gh_access_token(gh_tmp_code)
     if gh_access_token is None:
         # either the code was fake or our Github credentials are off.
         return None
     user_data = get_gh_user_data(gh_access_token)
     if user_data is None:
-        # I can't fathom when this would ever happen.
+        # User has a Github account without any verified emails
         return None
     # Later on this will be a User object, not a user email
     user_email = match_user(user_data)    
@@ -109,11 +110,22 @@ def get_gh_user_data(gh_access_token):
         'Authorization': f'token {gh_access_token}'
     }
 
-    gh_response = get('https://api.github.com/user/emails', headers=headers)
+    gh_response = get('https://api.github.com/user', headers=headers)
     if gh_response.status_code != 200:
         return None
     
-    return gh_response.json()
+    user_data = gh_response.json()
+    if user_data['email'] is None:
+        gh_response = get('https://api.github.com/user/emails', headers=headers)
+        for email_dict in gh_response.json():
+            if email_dict.get('primary') and email_dict.get('verified'):
+                user_data['email'] = email_dict.get('email')
+    
+    if user_data['email'] is None:
+        return None
+    
+    return user_data
+
 
 def match_user(user_data):
     """matches the user data returned by the Github API with our known users.
@@ -124,8 +136,21 @@ def match_user(user_data):
     Return:
         * (str): Email as a string (FOR NOW)* Later it will be more user data
     """
-    for emails_dict in user_data:
-        if emails_dict.get('primary') and emails_dict.get('verified'):
-            return emails_dict.get('email')
+    from models.engine import storage
+    from models.user import User
+
+
+    users = storage.all('User')
+    user = None
+    for u in users:
+        if u.email == user_data['email']:
+            user = u
+            break
+
+    if user is None:
+        user = User(email=user_data['email'], username=user_data['login'], first_name=user_data['name'])
+        user.save()
+        return user.first_name + ', a NEW USER!!!'
+
     
-    return None
+    return user.first_name

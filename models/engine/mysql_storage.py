@@ -3,9 +3,10 @@ from os import getenv
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.orm import scoped_session
+from models.user import User
 
 # Expected to be a dictionary that associates all known models with its name
-models = {}
+models = {'User': User}
 
 class MySQLStorage():
     """This is an instance of the MySQLStorage class"""
@@ -31,7 +32,7 @@ class MySQLStorage():
             for model in models.values():
                 objs.extend(self.__session.query(model).all())
         else:
-            objs = self.__session.query(cls).all()
+            objs = self.__session.query(models[cls]).all()
 
         return objs
 
