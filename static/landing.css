@@ -1,23 +1,19 @@
-
-
-#hero {
-    height: 35rem;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F2F7F7 40.13%, #E9F2F2 100%), #EFEFEF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+:root {
+  --background-gradient: linear-gradient(180deg, #FFFFFF 0%, #F2F7F7 40.13%, #E9F2F2 100%), #EFEFEF;
+  --hero-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.bg-hero {
+  background: var(--background-gradient);
+  box-shadow: var(--hero-shadow);
+}
+
 #hero > div {
-    margin: auto;
+  max-width: 600px;
 }
-#callToAction {
-    color: #636363;
-    font-weight: 400;
-    margin-bottom: 3rem;
+
+.text-underline {
+  font-size: .75rem;
+  text-decoration: underline !important;
 }
-#options {
-    display: flex;
-    justify-content: space-between;
-}
+
