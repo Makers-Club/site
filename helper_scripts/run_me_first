@@ -1,6 +1,23 @@
 #!/bin/bash
+
+# Create virtual environment folder and download dependencies
 mkdir -p ~/envs
 virtualenv ~/envs/${PWD##*/}
 source ~/envs/${PWD##*/}/bin/activate
 pip install -r requirements.txt
+
+# Downloads the Cloud SQL proxy file and place in /usr/local/bin
+echo "Downloading cloud_sql_proxy dependency"
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+wait
+echo "Moving cloud_sql_proxy to /usr/local/bin"
+sudo mv cloud_sql_proxy /usr/local/bin
+
+# Add startup command as an alias
+echo "adding 'startup' command to ~/.bash_aliases"
+echo "alias startup='source ~/envs/${PWD##*/}/bin/activate; cloud_sql_proxy --instances=maker-teams-site:us-central1:mt-mysql-db=tcp=3306'" >> ~/.bash_aliases
+echo "Install complete. Please use the command `startup` to activate your virtual environmet and connect to the database. Press ENTER to continue"
+read
+echo "Install done"
+
 
