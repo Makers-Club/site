@@ -14,10 +14,11 @@ echo "Moving cloud_sql_proxy to /usr/local/bin"
 sudo mv cloud_sql_proxy /usr/local/bin
 
 # Add startup command as an alias
+echo "adding 'envit' command to ~/.bash_aliases"
+echo "alias envit='cd ${PWD##*/} ; source ~/envs/${PWD##*/}/bin/activate'" >> ~/.bash_aliases
 echo "adding 'startup' command to ~/.bash_aliases"
-echo "alias startup='source ~/envs/${PWD##*/}/bin/activate; cloud_sql_proxy --instances=maker-teams-site:us-central1:mt-mysql-db=tcp=3306'" >> ~/.bash_aliases
-echo "Install complete. Please use the command `startup` to activate your virtual environmet and connect to the database. Press ENTER to continue"
-read
-echo "Install done"
-
-
+echo "alias sqlit='cloud_sql_proxy -instances=maker-teams-site:us-central1:mt-mysql-db=tcp:3306'" >> ~/.bash_aliases
+alias sqlit='cloud_sql_proxy -instances=maker-teams-site:us-central1:mt-mysql-db=tcp:3306'
+alias envit='cd ${PWD##*/} ; source ~/envs/${PWD##*/}/bin/activate'
+clear
+echo -e "\033[1;32mInstall complete.\n\033[0m \nPlease use the command \033[1;32menvit\033[0m to activate your virtual environment.\n\n\033[0;31mAND ON A SEPARATE TERMINAL WINDOW\033[0m, run the command \033[1;32msqlit\033[0m to connect to the database.\033[0m\n\n"
