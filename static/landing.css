@@ -17,3 +17,33 @@
   text-decoration: underline !important;
 }
 
+
+/* Carousel */
+#carousel_a .carousel-indicators {
+  position: absolute;
+  top: 0;
+  /* background-color: black; */
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-image: none;
+}
+
+#carousel_a .carousel-indicators {
+  top: unset;
+}
+
+.carousel-indicators li {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-clip: unset;
+  border-top: unset;
+  border-bottom: unset;
+  opacity: 0.25;
+
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: #85f2f2;
+
+}

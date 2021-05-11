@@ -28,3 +28,11 @@ a:visited {
 #logo {
   width: 6rem;
 }
+
+.GitHub-SignIn > svg{
+  /* Github signin button */
+  
+  background-color: white;
+}
+
+
