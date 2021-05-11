@@ -63,6 +63,8 @@ def get_user(gh_tmp_code):
     if user_data is None:
         # User has a Github account without any verified emails
         return None
+    # we will redirect to /signup around here to separate github identity verification from registration
+    # this way registration is can be tested with a test token.
     # Later on this will be a User object, not a user email
     user_email = match_user(user_data)    
     return user_email

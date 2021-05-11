@@ -12,7 +12,7 @@ def about():
   """ render about template """
   return render_template('about.html', data=None)
 
-@landing.route('/contact_us', methods=['GET'], strict_slashes=False)
-def contact_us():
+@landing.route('/contact', methods=['GET'], strict_slashes=False)
+def contact():
   """ render contact template """
   return render_template('contact.html', data=None)
