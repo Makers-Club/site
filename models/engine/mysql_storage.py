@@ -66,3 +66,39 @@ class MySQLStorage():
         from models.base_model import DBase
 
         DBase.metadata.create_all(self.__engine)
+        sf = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(sf)
+        self.__session = Session()
+
+    def close(self):
+        """Disposes of the current Session, if present"""
+        self.__session.close()
+    
+    def get(self, cls, id):
+        """Returns object based on class name and ID or None if not found"""
+        
+        if type(cls) is str:
+            if cls not in models:
+                return None
+            cls = models[cls]
+        elif cls not in models.values():
+            return None
+        
+        return self.__session.query(cls).get(id)
+    
+    def count(self, cls=None):
+        """ Returns count of objects in storage of type cls or
+        count of *all* objects if cls is None """
+        
+        if cls is None:
+            return len(self.all())
+        
+        if type(cls) is str:
+            if cls not in models:
+                return -1
+            cls = models[cls]
+        
+        if cls not in models.values():
+            return -1
+
+        return self.__session.query(cls).count()        
