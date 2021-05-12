@@ -34,12 +34,12 @@ def callback():
         # someone tried to access the naked URL, abort.
         abort(404)
 
-    email = get_user(gh_tmp_code)
-    if email is None:
+    user = get_user(gh_tmp_code)
+    if user is None:
         # Future coders, address all edge cases! Check get_user() comments
         return 'No verified emails, buddy! Verify your GitHub email.'
 
-    return render_template('dash.html', data={'authenticated_user': email})
+    return render_template('dash.html', data=user.to_dict())
 
 def get_user(gh_tmp_code):
     """Finds a user profile using Github OAuth temporary code.
@@ -117,15 +117,14 @@ def get_gh_user_data(gh_access_token):
         return None
     
     user_data = gh_response.json()
-    if user_data['email'] is None:
+    if user_data['email'] is None: # if user email is private, GET /user/emails too
         gh_response = get('https://api.github.com/user/emails', headers=headers)
         for email_dict in gh_response.json():
             if email_dict.get('primary') and email_dict.get('verified'):
                 user_data['email'] = email_dict.get('email')
-    
-    if user_data['email'] is None:
+                return user_data
         return None
-    
+
     return user_data
 
 
@@ -142,17 +141,12 @@ def match_user(user_data):
     from models.user import User
 
 
-    users = storage.all('User')
-    user = None
-    for u in users:
-        if u.email == user_data['email']:
-            user = u
-            break
+    user = storage.get(User, user_data['id'])
 
+    # No user? Make new user!
     if user is None:
-        user = User(email=user_data['email'], username=user_data['login'], first_name=user_data['name'])
+        user = User(**user_data)
         user.save()
-        return user.first_name + ', a NEW USER!!!'
-
+        print('NEW USER {} ADDED TO DATABASE'.format(user.id))
     
-    return user.first_name
+    return user
