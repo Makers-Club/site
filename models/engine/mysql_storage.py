@@ -1,12 +1,33 @@
 """This module creates the db_storage engine"""
 from os import getenv
 from sqlalchemy.engine import create_engine
+from sqlalchemy.engine.url import URL
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.orm import scoped_session
 from models.user import User
 
 # Expected to be a dictionary that associates all known models with its name
 models = {'User': User}
+
+db_credentials = {
+    'drivername': 'mysql+pymysql',
+    'username': 'root',  # getenv('MYSQL_USER'),
+    'password': '123123',  # getenv('MYSQL_PWD'),
+    'database': 'dev_db',  # getenv('MYSQL_DB'),
+    'host': 'localhost',
+    'query': None
+}
+
+db_socket_dir = '/cloudsql'  # getenv('DB_SOCKET_DIR')
+db_connection_name = 'maker-teams-site:us-central1:mt-mysql-db' # getenv('DB_CONNECTION_NAME')
+
+if getenv('DB_ENV_TYPE') == 'production':
+    db_credentials['database'] = 'prod_db'
+    db_credentials['host'] = ''
+    db_credentials['query'] = {
+        'unix_socket': '{}/{}'.format(db_socket_dir, db_connection_name)
+    }
+
 
 class MySQLStorage():
     """This is an instance of the MySQLStorage class"""
@@ -15,18 +36,10 @@ class MySQLStorage():
 
     def __init__(self):
         """This creates an instance of the MySQLStorage class"""
-        db_credentials = {
-            'drivername': 'mysql+pymysql',
-            'username': 'root', #getenv('MYSQL_USER'),
-            'password': 'root', #getenv('MYSQL_PWD'),
-            'database': 'dev_db', #getenv('MYSQL_DB'),
-            'host': 'localhost'
-        }
-        db_url = '{drivername}://{username}:{password}@{host}/{database}'.format(**db_credentials)
-        self.__engine = create_engine(db_url, pool_pre_ping=True)
+        self.__engine = create_engine(URL(**db_credentials), pool_pre_ping=True)
 
     def all(self, cls=None):
-        """Returns all of type cls or all classes if cls=None"""        
+        """Returns all of type cls or all classes if cls=None"""
         if cls is None:
             objs = []
             for model in models.values():
@@ -51,7 +64,7 @@ class MySQLStorage():
     def reload(self):
         """Create all tables in the database"""
         from models.base_model import DBase
-    
+
         DBase.metadata.create_all(self.__engine)
         sf = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sf)
@@ -88,4 +101,4 @@ class MySQLStorage():
         if cls not in models.values():
             return -1
 
-        return self.__session.query(cls).count()
+        return self.__session.query(cls).count()        
