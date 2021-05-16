@@ -137,15 +137,15 @@ def match_user(user_data):
     Return:
         * (str): Email as a string (FOR NOW)* Later it will be more user data
     """
-    from models.engine import storage
+    user = None
     from models.user import User
+    d = user_data
 
-
-    user = storage.get(User, user_data['id'])
+    user = User.get_by_id(d['id'])
 
     # No user? Make new user!
     if user is None:
-        user = User(**user_data)
+        user = User(id=d['id'], email=d['email'], name=d['name'], handle=d['login'], avatar_url=d['avatar_url'])
         user.save()
         print('NEW USER {} ADDED TO DATABASE'.format(user.id))
     
