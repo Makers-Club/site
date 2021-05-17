@@ -72,8 +72,8 @@ def get_user(gh_tmp_code):
     # we will redirect to /signup around here to separate github identity verification from registration
     # this way registration is can be tested with a test token.
     # Later on this will be a User object, not a user email
-    user_email = match_user(user_data)    
-    return user_email
+    user = match_user(user_data)    
+    return user
 
 def get_gh_access_token(gh_tmp_code):
     """Exchanges a temporary code for an access token from Github API
@@ -146,8 +146,8 @@ def match_user(user_data):
     user = None
     from models.user import User
     d = user_data
-
     user = User.get_by_id(d['id'])
+    print(user.__dict__)
 
     # No user? Make new user!
     if user is None:
