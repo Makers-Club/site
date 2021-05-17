@@ -16,14 +16,15 @@ CORS(app, resources={r"*": {"origins": "*"}})
 
 
 @pytest.fixture
-def client():
+def test_app():
     """
     This is the test version of the app.
     It is imported by pytest unittests.
+    We use this to make test requests.
     """
     # app.config['TESTING'] = True
-    client = app.test_client()
-    yield client
+    test_app = app.test_client()
+    yield test_app
 
 
 # register blueprints

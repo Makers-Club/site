@@ -58,7 +58,7 @@
                     <a class="nav-link text-right" href="/">Logout</a>
                 {%  else  %}                
                     <!-- <div class="nav-link text-right" onclick="github_login()">Sign In</div> -->
-                    <a class="nav-link text-right" href="{{ url_for('auth.get_gh_temporary_code') }}">Sign In</a>
+                    <a class="nav-link text-right" href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
                 {% endif %}
             </li>
           </ul>
@@ -90,13 +90,13 @@
             <ul class="col-12 col-md-6">
                 <h2>get started</h2>
                 <li>
-                    <a href="{{ url_for('auth.get_gh_temporary_code') }}">Sign Up</a>
+                    <a href="{{ url_for('auth.send_visitor_to_github') }}>Sign Up</a>
                 </li>
                 <li>
-                    <a href="{{ url_for('auth.get_gh_temporary_code') }}">Sign In</a>
+                    <a href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
                 </li>
                 <li>
-                    <a href="{{ url_for('landing.contact') }}">Contact Us</a>
+                    <a href="{{ url_for('auth.send_visitor_to_github') }}">Contact Us</a>
                 </li>
             </ul>
 

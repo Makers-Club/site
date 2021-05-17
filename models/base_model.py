@@ -1,4 +1,4 @@
-from sqlalchemy.ext.declarative import declarative_base
+'''from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 from datetime import datetime
 from uuid import uuid4
@@ -8,7 +8,7 @@ from uuid import uuid4
 DBase = declarative_base()
 
 class BaseModel:
-    """A base class for all hbnb models"""
+    """A base class for all models"""
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
@@ -53,4 +53,4 @@ class BaseModel:
     def delete(self):
         """Delete the current instance from storage by calling delete method"""
         from models.engine import storage
-        storage.delete(self)
+        storage.delete(self)'''

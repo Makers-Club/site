@@ -1,13 +1,18 @@
 """Defines all methods and routes related to user authentication"""
-from flask import request, render_template, Blueprint, abort, redirect, g
+from flask import request, render_template, Blueprint, abort, redirect, url_for
 from requests import get, post # warning: deprecated
 from os import environ
 from re import search
 from routes import auth
 
 
-@auth.route('/auth', methods=['GET'], strict_slashes=False)
-def get_gh_temporary_code():
+class GithubClient():
+    pass
+    
+
+
+@auth.route('/authenticate_with_github', methods=['GET'], strict_slashes=False)
+def send_visitor_to_github():
     """Sends user to Github Login to sign in."""
     scopes = ['user', 'repo']
     query_params = {
@@ -19,8 +24,8 @@ def get_gh_temporary_code():
         URL += '{}={}&'.format(key, value)
     return redirect(URL)
 
-@auth.route('/callback', methods=['GET'], strict_slashes=False)
-def callback():
+@auth.route('/github_callback', methods=['GET'], strict_slashes=False)
+def github_callback():
     """The Github sign-in redirects to this page with a temporary code in the
     query parameters. This function uses the code to get the user's profile
     information from Github to sign the user in.
@@ -56,6 +61,7 @@ def get_user(gh_tmp_code):
     """
     
     gh_access_token = get_gh_access_token(gh_tmp_code)
+    print(gh_access_token)
     if gh_access_token is None:
         # either the code was fake or our Github credentials are off.
         return None
@@ -84,7 +90,7 @@ def get_gh_access_token(gh_tmp_code):
         'client_id': environ['GITHUB_CLIENT_ID'],
         'client_secret': environ['GITHUB_CLIENT_SECRET'],
         'code': gh_tmp_code,
-        'redirect_uri': environ['GCP_DEV_URL'] + 'callback'
+        'redirect_uri': environ['GCP_DEV_URL'] + url_for('auth.github_callback')
     }
     oauth_url = 'https://github.com/login/oauth/access_token?'
     response = post(oauth_url, auth_data)
