@@ -3,10 +3,21 @@ Feature: User authentication
     I want to sign up or sign in using my github identity,
     So I can use the platform.
 
-Scenario: A visitor uses their github identity to registers as a user
-Given github confirms the identity of a visitor
-When we register a github identity as a new user
-Then a new user should exist in our database, based on the visitor identity
+Scenario: A new visitor signs in with github for the first time
+Given github sends an identity we haven't seen before
+Then the user shouldn't match with our authentication
+When a new user is created
+Then the user should match with our authentication
+
+Scenario: A returning visitor visits the home page
+Given the user was already signed in
+When they visit the home page
+Then they should be sent to their dashboard
+
+Scenario: A visitor visits the homepage
+Given the visitor is not signed in
+When they visit the home page
+Then they should see the landing page
 
 Scenario: A logged in user accesses a non public page
 Given a user is logged in
@@ -18,7 +29,6 @@ Given the visitor is not logged in
 When the user visits a non public page
 Then they should be redirected to a signup page with a message
 
-# visits public page / home page
 # logs out
 # deletes account
 # log out of all devices
