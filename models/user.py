@@ -9,7 +9,7 @@ class User(Base, declarative_base):
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
 
-    def __init__(self, id, email, name, handle, avatar_url):
+    def __init__(self, id, email, name, handle, avatar_url=None):
         super().__init__()
         self.id = id # Users will use Github IDs rather than our own uuid's
         self.email = email
