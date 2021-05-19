@@ -14,13 +14,17 @@ class Base():
         print(self.__dict__, 'yo')
     
     def save(self):
-        from models.storage import mysql_client
-        mysql_client.save_obj_to_db(self)
+        from models.storage import DB
+        DB.save(self)
+    
+    def delete(self):
+        from models.storage import DB
+        DB.delete(self)
     
     @classmethod
     def get_by_id(cls, id):
-        from models.storage import mysql_client
-        return mysql_client.get_from_db_by_id(cls, id)
+        from models.storage import DB
+        return DB.get_by_id(cls, id)
     
     def to_dict(self):
         try:
@@ -28,3 +32,5 @@ class Base():
         except:
             pass
         return self.__dict__
+
+

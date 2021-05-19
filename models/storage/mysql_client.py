@@ -20,12 +20,19 @@ class MySQLClient():
     def is_connected(self):
         return True if self.__engine else False
     
-    def save_obj_to_db(self, obj):
+    def save(self, obj):
         self.__session.add(obj)
+        self.__session.commit()
+    
+    def delete(self, obj):
+        self.__session.delete(obj)
         self.__session.commit()
     
     def get_by_id(self, cls: type, id: str):
         return self.__session.query(cls).filter_by(id=id).one()
+    
+
+        
 
 
 
