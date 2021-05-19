@@ -3,8 +3,18 @@ from flask_cors import (CORS, cross_origin)
 from os import environ
 import pytest
 from uuid import uuid4
+from functools import wraps
 from routes import *
+from flask import request
 
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.current_user is None:
+            return redirect(url_for('landing.index', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # initialize the app
 app = Flask(__name__)
@@ -31,6 +41,16 @@ def test_app():
 app.register_blueprint(landing)
 app.register_blueprint(auth)
 
+
+@app.before_request
+def before():
+    from models.auth import Auth
+    from flask import request
+    from models.session import Session
+    from uuid import uuid4
+    logged_in_user = Auth.logged_in_user
+    session = request.cookies.get('session')
+    request.current_user = logged_in_user(session)
 
 
 # handle errors (abort)

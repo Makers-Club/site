@@ -4,12 +4,17 @@ from requests import get, post # warning: deprecated
 from os import environ
 from re import search
 from routes import auth
+from main import login_required
 
 
 class GithubClient():
     pass
     
 
+@login_required
+@auth.route('/private')
+def private():
+    return render_template('about.html')
 
 @auth.route('/authenticate_with_github', methods=['GET'], strict_slashes=False)
 def send_visitor_to_github():
@@ -39,12 +44,15 @@ def github_callback():
         # someone tried to access the naked URL, abort.
         abort(404)
 
-    user = get_user(gh_tmp_code)
+    user, session = get_user(gh_tmp_code)
     if user is None:
         # Future coders, address all edge cases! Check get_user() comments
         return 'No verified emails, buddy! Verify your GitHub email.'
-
-    return render_template('dash.html', data=user.to_dict())
+    from flask import make_response
+    response = make_response(render_template('dash.html', data=user.to_dict()))
+    response.set_cookie('session', session)
+    return response
+    return render_template('dash.html', )
 
 def get_user(gh_tmp_code):
     """Finds a user profile using Github OAuth temporary code.
@@ -73,7 +81,9 @@ def get_user(gh_tmp_code):
     # this way registration is can be tested with a test token.
     # Later on this will be a User object, not a user email
     user = match_user(user_data)    
-    return user
+    from models.auth import Auth
+    session = Auth.login(gh_access_token, user)
+    return user, session
 
 def get_gh_access_token(gh_tmp_code):
     """Exchanges a temporary code for an access token from Github API
@@ -149,6 +159,7 @@ def match_user(user_data):
     user = User.get_by_id(d['id'])
     print(user.__dict__)
 
+        
     # No user? Make new user!
     if user is None:
         user = User(id=d['id'], email=d['email'], name=d['name'], handle=d['login'], avatar_url=d['avatar_url'])
