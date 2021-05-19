@@ -1,32 +1,31 @@
-from ..user_authentication import test_app
-from pytest_bdd import scenario, given, when, then
-import pytest
-from main import test_app
 from models.auth import Auth
-from uuid import uuid4
+from models.storage import DB
+from models.user import User
+import pytest
+from pytest_bdd import scenario, given, when, then, and
 
-@scenario('../features/user_authentication.feature', 'A new visitor signs in with github for the first time')
-def test_yes():
+
+
+
+@scenario('../features/user_authentication.feature', 'User sign up')
+def test_after():
     pass
 
-fake_id = str(uuid4())
+register = Auth.register
+dummy_user = User()
 
 @pytest.fixture
-@given('github sends an identity we haven\'t seen before')
-def new_fake_user():
-    user = Auth.get_user(fake_id)
-    return user
+@given('a user signs up')
+def registered_user():
+    return register(dummy_user)
 
-@then('the user shouldn\'t match with our authentication')
-def no_match(new_fake_user):
-    assert new_fake_user is None
+@then('we should recognize them as one of our users')
+def registered_user_is_in_database(registered_user):
+    print(registered_user)
+    user_in_database = User.get_by_id(registered_user.id)
+    assert(registered_user == user_in_database)
 
-@when('a new user is created')
-def new_user():
-    Auth.register_user(fake_id, name="fakename", email="{}@email.com".format(fake_id), handle="fake{}".format(fake_id))
-
-@then('the user should match with our authentication')
-def user_matches_now():
-    user = Auth.get_user(fake_id)
-    assert user is not None # A user was found
-    assert user.id == fake_id # and it was the right user
+    
+# given they don't have the right info
+# when a user signs up
+# they don't exist in the db

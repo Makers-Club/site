@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.base import declarative_base, Base
+from uuid import uuid4
 
 class User(Base, declarative_base):
     __tablename__ = 'users'
@@ -9,13 +10,16 @@ class User(Base, declarative_base):
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
 
-    def __init__(self, id, email, name, handle, avatar_url=None):
+    def __init__(self, id=None, email=None, name=None, handle=None, avatar_url=None):
         super().__init__()
-        self.id = id # Users will use Github IDs rather than our own uuid's
-        self.email = email
-        self.name = name
-        self.handle = handle
-        self.avatar_url = avatar_url
-
+        self.id = id or str(uuid4()) # Users will use Github IDs rather than our own uuid's
+        if email and '@' in email:
+            self.email = email
+        elif not email:
+            self.email = str(uuid4())
+        self.name = name or str(uuid4())
+        self.handle = handle or str(uuid4())
+        self.avatar_url = avatar_url or str(uuid4())
+    
     
 

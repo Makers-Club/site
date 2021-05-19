@@ -9,7 +9,7 @@ from models.base import declarative_base
 
 class MySQLClient():
     def __init__(self, credentials):
-        self.__engine = create_engine(URL(**credentials), pool_pre_ping=True)
+        self.__engine = create_engine(URL.create(**credentials), pool_pre_ping=True)
     
     def reload(self):
         declarative_base.metadata.create_all(self.__engine)
@@ -24,7 +24,7 @@ class MySQLClient():
         self.__session.add(obj)
         self.__session.commit()
     
-    def get_from_db_by_id(self, cls: type, id: str):
+    def get_by_id(self, cls: type, id: str):
         return self.__session.query(cls).filter_by(id=id).one()
 
 

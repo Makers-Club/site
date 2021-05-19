@@ -3,14 +3,12 @@ Feature: User authentication
     I want to sign up or sign in using my github identity,
     So I can use the platform.
 
-Scenario: A new visitor signs in with github for the first time
-Given github sends an identity we haven't seen before
-Then the user shouldn't match with our authentication
-When a new user is created
-Then the user should match with our authentication
+Scenario: User sign up
+Given a user signs up
+Then we should recognize them as one of our users
 
-Scenario: A returning visitor visits the home page
-Given the user was already signed in
+Scenario: A logged in user visits the home page
+Given the user was already logged in
 When they visit the home page
 Then they should be sent to their dashboard
 

@@ -2,7 +2,6 @@ from models.storage.mysql_client import MySQLClient
 from os import getenv
 
 
-
 def credentials():
 
     credentials = {
@@ -31,3 +30,5 @@ def credentials():
 
 mysql_client = MySQLClient(credentials())
 mysql_client.reload()
+
+DB = mysql_client
