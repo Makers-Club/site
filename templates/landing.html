@@ -29,7 +29,7 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consec utetur adipiscing elit. Sed do eiusmod tempor arana incididunt ut labore et.</p>
             <!-- GitHub Sign up Button START -->
             <a href="{{ url_for('auth.send_visitor_to_github') }}">
-                <img class="btn col-9 px-0" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
+                <img class="img-fluid" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
             </a>
             <!-- GitHub Sign up Button END -->
             
@@ -102,7 +102,7 @@
 
     <div id="carousel_a" class="carousel slide col-6" data-ride="carousel" data-interval="false">
       <div class="carousel-inner w-75 m-auto pb-4">
-        <div class="carousel-item active">
+        <div class="carousel-item ml-2 active">
           <p>
             1 - Blue<br>
             Lorem ipsum dolor sit amet, consectetur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -110,7 +110,7 @@
             Ipsum dolor sit amet, consectetur iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item ml-2">
           <p>
             2 - Yellow<br>
             Lorem ipsum dolor sit amet, consectetur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -118,7 +118,7 @@
             Ipsum dolor sit amet, consectetur iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item ml-2">
           <p>
             3 - Red<br>
             Lorem ipsum dolor sit amet, consectetur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -197,9 +197,11 @@
 
     <div class="container col-6 m-0 p-0">
       <!-- GitHub Sign up Button START -->
-      <a href="{{ url_for('auth.send_visitor_to_github') }}">
-            <img class="btn col-9 px-0" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
-      </a>
+      <div class="w-75 mx-auto">
+          <a href="{{ url_for('auth.send_visitor_to_github') }}">
+                <img class="img-fluid" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
+          </a>
+      </div>
       <!-- GitHub Sign up Button END -->
       <div class="container pb-3">
         <div class="row justify-content-center">
