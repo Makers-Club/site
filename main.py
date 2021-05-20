@@ -47,14 +47,15 @@ app.register_blueprint(auth)
 
 @app.before_request
 def before():
-    from models.auth import Auth
     from flask import request
-    from models.session import Session
-    from uuid import uuid4
-    logged_in_user = Auth.logged_in_user
-    session = request.cookies.get('session')
-    request.current_user = logged_in_user(session)
-    print(request.current_user)
+    # ALERT: make this more dynamic at some point
+    if 'static' not in request.url and 'favicon' not in request.url:
+        from models.auth import Auth
+        from models.session import Session
+        from uuid import uuid4
+        logged_in_user = Auth.logged_in_user
+        session = request.cookies.get('session')
+        request.current_user = logged_in_user(session)
 
 
 # handle errors (abort)
