@@ -68,7 +68,6 @@ def get_user(gh_tmp_code):
     """
     
     gh_access_token = get_gh_access_token(gh_tmp_code)
-    print(gh_access_token)
     if gh_access_token is None:
         # either the code was fake or our Github credentials are off.
         return None, None
@@ -101,7 +100,6 @@ def get_gh_access_token(gh_tmp_code):
         'code': gh_tmp_code,
         'redirect_uri': environ['GCP_DEV_URL'] + url_for('auth.github_callback')
     }
-    print(auth_data)
     oauth_url = 'https://github.com/login/oauth/access_token?'
     response = post(oauth_url, auth_data)
 
