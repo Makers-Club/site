@@ -5,7 +5,7 @@ import pytest
 from uuid import uuid4
 from functools import wraps
 from routes import *
-from flask import request
+from flask import request, redirect, url_for
 
 
 def login_required(f):
@@ -23,6 +23,9 @@ if "FLASK_SECRET_KEY" in environ:
 else:
     environ["FLASK_SECRET_KEY"] = str(uuid4())
 CORS(app, resources={r"*": {"origins": "*"}})
+
+
+
 
 
 @pytest.fixture
@@ -51,6 +54,7 @@ def before():
     logged_in_user = Auth.logged_in_user
     session = request.cookies.get('session')
     request.current_user = logged_in_user(session)
+    print(request.current_user)
 
 
 # handle errors (abort)

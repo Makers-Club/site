@@ -25,6 +25,8 @@ class Auth():
         from models.session import Session
         from models.user import User
         current_session = Session.get_by_id(session)
+        if not current_session:
+            return None
         user_id = current_session.user_id
         return User.get_by_id(user_id)
         

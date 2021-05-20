@@ -1,5 +1,6 @@
 :root {
     /* colors */
+    --neutral: rgb(101,101,120);
     --dark: rgb(70, 70, 70);
     --darkest: rgb(42, 42, 42);
     --lightest: white;

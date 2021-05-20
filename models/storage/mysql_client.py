@@ -29,7 +29,10 @@ class MySQLClient():
         self.__session.commit()
     
     def get_by_id(self, cls: type, id: str):
-        return self.__session.query(cls).filter_by(id=id).one()
+        result = self.__session.query(cls).filter_by(id=id)
+        if not result:
+            return None
+        return result.first()
     
 
         

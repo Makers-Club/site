@@ -11,10 +11,10 @@ class GithubClient():
     pass
     
 
-@login_required
 @auth.route('/private')
+@login_required
 def private():
-    return render_template('about.html')
+    return render_template('about.html', data=None)
 
 @auth.route('/authenticate_with_github', methods=['GET'], strict_slashes=False)
 def send_visitor_to_github():
@@ -50,9 +50,8 @@ def github_callback():
         return 'No verified emails, buddy! Verify your GitHub email.'
     from flask import make_response
     response = make_response(render_template('dash.html', data=user.to_dict()))
-    response.set_cookie('session', session)
+    response.set_cookie('session', session.id)
     return response
-    return render_template('dash.html', )
 
 def get_user(gh_tmp_code):
     """Finds a user profile using Github OAuth temporary code.
@@ -82,7 +81,7 @@ def get_user(gh_tmp_code):
     # Later on this will be a User object, not a user email
     user = match_user(user_data)    
     from models.auth import Auth
-    session = Auth.login(gh_access_token, user)
+    session = Auth.login(gh_access_token, user.id)
     return user, session
 
 def get_gh_access_token(gh_tmp_code):

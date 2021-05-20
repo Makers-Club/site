@@ -12,6 +12,10 @@
   max-width: 600px;
 }
 
+#forEmployers * {
+    color: var(--neutral);
+}
+
 .text-underline {
   font-size: .75rem;
   text-decoration: underline !important;
