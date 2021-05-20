@@ -20,9 +20,8 @@ def credentials():
         credentials['host'] = ''
         credentials['query'] = query()
     else:
-        credentials['database'] = 'development',
+        credentials['database'] = 'development'
         credentials['host'] = 'localhost'
-    credentials['database'] = 'development'
     
     return credentials
 
