@@ -5,7 +5,7 @@
 
 .bg-hero {
   background: var(--background-gradient);
-  box-shadow: var(--hero-shadow);
+  /* box-shadow: var(--hero-shadow); */
 }
 
 #hero > div {
