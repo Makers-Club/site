@@ -71,11 +71,11 @@ def get_user(gh_tmp_code):
     print(gh_access_token)
     if gh_access_token is None:
         # either the code was fake or our Github credentials are off.
-        return None
+        return None, None
     user_data = get_gh_user_data(gh_access_token)
     if user_data is None:
         # User has a Github account without any verified emails
-        return None
+        return None, None
     # we will redirect to /signup around here to separate github identity verification from registration
     # this way registration is can be tested with a test token.
     # Later on this will be a User object, not a user email
@@ -101,6 +101,7 @@ def get_gh_access_token(gh_tmp_code):
         'code': gh_tmp_code,
         'redirect_uri': environ['GCP_DEV_URL'] + url_for('auth.github_callback')
     }
+    print(auth_data)
     oauth_url = 'https://github.com/login/oauth/access_token?'
     response = post(oauth_url, auth_data)
 
@@ -129,6 +130,7 @@ def get_gh_user_data(gh_access_token):
 
     gh_response = get('https://api.github.com/user', headers=headers)
     if gh_response.status_code != 200:
+        print('Faulty response')
         return None
     
     user_data = gh_response.json()
@@ -156,9 +158,7 @@ def match_user(user_data):
     from models.user import User
     d = user_data
     user = User.get_by_id(d['id'])
-    print(user.__dict__)
 
-        
     # No user? Make new user!
     if user is None:
         user = User(id=d['id'], email=d['email'], name=d['name'], handle=d['login'], avatar_url=d['avatar_url'])
