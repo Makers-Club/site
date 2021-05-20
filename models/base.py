@@ -11,7 +11,6 @@ class Base():
         self.id = str(uuid4())
         for k, v in kwargs.items():
             self.__dict__[k] = v
-        print(self.__dict__, 'yo')
     
     def save(self):
         from models.storage import DB
