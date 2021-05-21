@@ -43,7 +43,6 @@ def github_callback():
         # Future coders, address all edge cases! Check get_user() comments
         return 'No verified emails, buddy! Verify your GitHub email.'
     response = make_response(redirect('/'))
-    # response = make_response(render_template('dash.html', data=user.to_dict()))
     response.set_cookie('session', session.id)
     return response
 
