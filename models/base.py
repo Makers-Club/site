@@ -26,10 +26,6 @@ class Base():
         return DB.get_by_id(cls, id)
     
     def to_dict(self):
-        try:
-            del self.__dict__['_sa_instance_state']
-        except:
-            pass
         return self.__dict__
 
 
