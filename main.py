@@ -43,7 +43,7 @@ def test_app():
 # register blueprints
 app.register_blueprint(landing)
 app.register_blueprint(auth)
-
+app.register_blueprint(users)
 
 @app.before_request
 def before():
