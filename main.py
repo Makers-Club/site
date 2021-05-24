@@ -11,7 +11,7 @@ from flask import request, redirect, url_for
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not hasattr(request, 'current_user'):
+        if not hasattr(request, 'current_user') or not request.current_user:
             return redirect(url_for('auth.send_visitor_to_github', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
