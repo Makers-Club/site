@@ -30,7 +30,7 @@ class MySQLClient():
     
     def get_by_id(self, cls: type, id: str):
         result = self.__session.query(cls).filter_by(id=id)
-        if not result:
+        if not result or not result.first():
             return None
         return result.first()
     
