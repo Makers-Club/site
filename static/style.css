@@ -12,6 +12,7 @@
     box-sizing: border-box;
     text-decoration: none;
     color: var(--dark);
+    scroll-behavior: smooth;
 }
 
 body {
