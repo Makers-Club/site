@@ -6,11 +6,21 @@
 
 {% block content %}
 
+{% if data %}
+    {% if data.current_user %}
+        {% set current_user = data.current_user %}
+    {% else %}
+        {% set current_user = None %}
+    {% endif %}
+{% endif %}
+
 
 Dashboard
-<img src="{{ data.avatar_url }}" height="100" width="100"/>
+<img src="{{ current_user.avatar_url }}" height="100" width="100"/>
 <br/>
-Welcome, {{ data.name }}
+Welcome, {{ current_user.name }}<br>
+@{{ current_user.handle }}
+
 
 
 {% endblock %}
