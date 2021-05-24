@@ -8,7 +8,7 @@ def my_profile():
     """ render user profile template """
     data = set_user_data(request.current_user)
     if (data is not None):
-        user_id = data.get('user_data').get('id')
+        user_id = data.get('current_user').get('id')
         return redirect(url_for('users.user_by_id', user_id=user_id))
     else:
         return redirect(url_for('landing.index'))
@@ -27,7 +27,7 @@ def delete_user_by_id(user_id):
     if user.get('id') != user_id:
         return redirect( url_for('landing.index') )
     else:
-        request.current_user.delete()
+        request.current_user.delete()        
     return redirect(url_for('landing.index'))
 
 
@@ -35,9 +35,11 @@ def delete_user_by_id(user_id):
 def set_user_data(user=None):
     if user is None:
         return None
+    print("Current user: ", request.current_user)
+    user_id = request.current_user.to_dict()['id'] if request.current_user is not None else None
     data = {
-        'authorized': user.to_dict()['id'] == request.current_user.to_dict()['id'],
-        'user_data': {
+        'authorized': user.to_dict()['id'] == user_id,
+        'current_user': {
             'handle': "",
             'id': "",
             'email': "",
@@ -45,5 +47,5 @@ def set_user_data(user=None):
             'name': ""
         }
     }
-    data['user_data'].update(user.to_dict())
+    data['current_user'].update(user.to_dict())
     return data
