@@ -16,6 +16,16 @@ class GithubClient():
 def private():
     return render_template('about.html', data=None)
 
+@auth.route('/logout', methods=['GET'], strict_slashes=False)
+def logout():
+    from models.session import Session
+    cookie = request.cookies.get('session')
+    session = Session.get_by_id(cookie)
+    if session:
+        session.delete()
+    return redirect(url_for('landing.index'))
+
+
 @auth.route('/authenticate_with_github', methods=['GET'], strict_slashes=False)
 def send_visitor_to_github():
     """Sends user to Github Login to sign in."""

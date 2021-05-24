@@ -45,9 +45,9 @@
               <a class="nav-link text-right" href="{{ url_for('landing.about') }}">Product</a>
             </li>
             <li class="nav-item">
-                {% if data.authenticated_user %}
+                {% if data.current_user %}
                     <!-- send this to a logout route once that's done -->
-                    <a class="nav-link text-right" href="/">Logout</a>
+                    <a class="nav-link text-right" href="{{ url_for('auth.logout') }}">Sign Out</a>
                 {%  else  %}                
                     <!-- <div class="nav-link text-right" onclick="github_login()">Sign In</div> -->
                     <a class="nav-link text-right" href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
