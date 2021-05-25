@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Tutorial{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    {% if data.passed %}
+    <button onclick="toggle_quiz()">Show/Hide Quiz</button>
+    <div id="quiz_container" style="display: none;">
+    {% endif %}
+
+    <form method="POST" id="tutorial_quiz">
+        {% for item in data.quiz %}
+        {% set question = data.quiz[item] %}
+        
+            <h1>{{ question.text }}</h1>
+            <ul>
+                {% set options = question.options %}
+                {% for option in options %}
+                <li>
+                    <input type="checkbox" id="{{ item }}_{{ option }}" name="{{ item }}_{{ option }}" value="{{ options[option] }}"/>
+                    <label for="{{item}}_{{ option }}">{{ options[option] }}</label>
+                </li>    
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit"/>
+    </form>
+    {% if data.passed %}
+    </div>
+    {% endif %}
+</section>
+
+<script type="application/javascript">
+
+function toggle_quiz() {
+    $('#quiz_container').toggle();
+}
+
+</script>
+
+{% endblock %}
