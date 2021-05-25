@@ -19,6 +19,10 @@ body {
   padding-top: 6rem;
 }
 
+main {
+    min-height: 60vh;
+}
+
 li {
   list-style-type: none;
 }

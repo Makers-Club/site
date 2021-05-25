@@ -18,15 +18,16 @@
 
 {% block content %}
 
-{% if current_user %}
-    <section>
-        <a href="{{ url_for('users.profile', handle=current_user.handle) }}">
-            <img src="{{ current_user.avatar_url }}" height="100" width="100"/>
-        </a>
-        <p>{{ current_user.name }}</p>
-        <p>{{ current_user.handle }}</p>
-    </section>
-{% endif %}
+<section class="d-flex w-100 justify-content-evenly">
+    {% if current_user %}
+        <div class="col d-flex justify-content-center">
+            <a href="{{ url_for('users.profile', handle=current_user.handle) }}">
+                <img src="{{ current_user.avatar_url }}" height="100" width="100"/>
+            </a>
+            <p>{{ current_user.name }}<br>
+            {{ current_user.handle }}</p>
+        </div>
+    {% endif %}
 
 
 <!-- show list of users -->
@@ -39,15 +40,18 @@
 {% endif %}
 
 
-{% for user in users %}
-<section>
-    <a href="{{ url_for('users.profile', handle=user.handle) }}">
-        <img src="{{ user.avatar_url }}" height="100" width="100"/>
-    </a>
-    <p>{{ user.name }}</p>
-    <p>{{ user.handle }}</p>
+    {% for user in users %}
+        {% if user.id != current_user.id %}
+            <div class="col justify-content-evenly d-flex justify-content-center">
+                <a href="{{ url_for('users.profile', handle=user.handle) }}">
+                    <img src="{{ user.avatar_url }}" height="100" width="100"/>
+                </a>
+                <p>{{ user.name }}<br>
+                {{ user.handle }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
 </section>
-{% endfor %}
 
 
 {% endblock %}
