@@ -9,7 +9,7 @@ def index():
   if request.args.get('error'):
       data['error'] = request.args.get('error')
   if request.args.get('msg'):
-      data['error'] = request.args.get('msg')
+      data['msg'] = request.args.get('msg')
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
     return render_template('dash.html', data=data)
