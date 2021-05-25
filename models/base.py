@@ -25,7 +25,20 @@ class Base():
         from models.storage import DB
         return DB.get_by_id(cls, id)
     
+    @classmethod
+    def get_by_handle(cls, handle):
+        from models.storage import DB
+        return DB.get_by_handle(cls, handle)
+    
+    @classmethod
+    def get_all(cls):
+        from models.storage import DB
+        return DB.get_all(cls)
+    
     def to_dict(self):
+        dict_repr = self.__dict__
+        if 'password' in dict_repr:
+            del dict_repr['password']
         return self.__dict__
 
 
