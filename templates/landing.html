@@ -6,10 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<!--
-<img id="github-signup" src="https://storage.googleapis.com/makers-club-static/Github%20signup%20button" onclick="github_login(client_id)">
 
--->
 <section class="bg-hero" id="hero">
   <div class="container w-75 p-0">
     
@@ -20,11 +17,11 @@
     <div class="container py-4" id="options">
       <div class="row justify-content-between">
 
-        <div id="forStudents" class="card my-3 my-md-0 col-12 col-md-5">
+        <div id="forDevelopers" class="card my-3 my-md-0 col-12 col-md-5 developer-card">
     
           <div class="card-body px-0">
             <header>
-              <h3 class="card-title">For students</h3>
+              <h3 class="card-title">For developers</h3>
             </header>
             <p class="card-text">Lorem ipsum dolor sit amet, consec utetur adipiscing elit. Sed do eiusmod tempor arana incididunt ut labore et.</p>
             <!-- GitHub Sign up Button START -->
@@ -37,7 +34,7 @@
 
         </div>
     
-        <div id="forEmployers" class="card col-12 col-md-5">
+        <div id="forEmployers" class="card col-12 col-md-5 employer-card">
     
           <div class="card-body px-0">
             <header>
@@ -197,7 +194,7 @@
 
     <div class="container col-6 m-0 p-0">
       <!-- GitHub Sign up Button START -->
-      <div class="w-75 mx-auto">
+      <div class="w-50 mx-auto card-body">
           <a href="{{ url_for('auth.send_visitor_to_github') }}">
                 <img class="img-fluid" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
           </a>
