@@ -2,50 +2,42 @@ from flask import render_template, request, g, redirect, url_for
 from os import environ
 from routes import users
 from models.user import User
+from main import login_required
+
 
 @users.route('/', methods=['GET'], strict_slashes=False)
-def my_profile():
-    """ render user profile template """
-    data = set_user_data(request.current_user)
-    if (data is not None):
-        user_id = data.get('current_user').get('id')
-        return redirect(url_for('users.user_by_id', user_id=user_id))
-    else:
-        return redirect(url_for('landing.index'))
+def all():
+    all_users = User.get_all()
+    current_user = request.current_user.to_dict()
+    data = {
+        'current_user': current_user,
+        'users': all_users
+    }
+    return render_template('users.html', data=data)
 
-@users.route('/<user_id>', methods=['GET'], strict_slashes=False)
-def user_by_id(user_id):
-    # TODO: Use user_id in place of user_handle for time being
-    user = User().get_by_id(user_id)
-    data = set_user_data(user)
-
+@users.route('/<handle>', methods=['GET'], strict_slashes=False)
+@login_required
+def profile(handle):
+    current_user = request.current_user.to_dict()
+    user = User.get_by_handle(handle)
+    data = {
+        'current_user': current_user,
+        'user_profile': user.to_dict()
+    }
     return render_template('profile.html', data=data)
 
-@users.route('/<user_id>', methods=['POST'], strict_slashes=False)
-def delete_user_by_id(user_id):
-    user = request.current_user.to_dict()
-    if user.get('id') != user_id:
-        return redirect( url_for('landing.index') )
-    else:
-        request.current_user.delete()        
-    return redirect(url_for('landing.index'))
-
-
-
-def set_user_data(user=None):
-    if user is None:
-        return None
-    print("Current user: ", request.current_user)
-    user_id = request.current_user.to_dict()['id'] if request.current_user is not None else None
+@users.route('/<handle>', methods=['POST'], strict_slashes=False)
+@login_required
+def delete_user(user_id):
+    current_user = request.current_user.to_dict()
     data = {
-        'authorized': user.to_dict()['id'] == user_id,
-        'current_user': {
-            'handle': "",
-            'id': "",
-            'email': "",
-            'avatar_url': "",
-            'name': ""
-        }
+        'current_user': current_user,
     }
-    data['current_user'].update(user.to_dict())
-    return data
+    if current_user.handle != handle:
+        data['error'] = 'Not in my house.'
+        return render_template('profile.html', data=data)
+    else:
+        current_user.delete()        
+        data['msg'] = 'Your account has been deleted.'
+        return redirect(url_for('users.profile'))
+

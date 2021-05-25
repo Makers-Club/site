@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+
+
+
+
+<!-- show you, current user -->
+
+{% if data.current_user %}
+    {% set current_user = data.current_user %}
+{% else %}
+    {% set current_user = None %}
+{% endif%}
+
+{% block content %}
+
+{% if current_user %}
+    <section>
+        <a href="{{ url_for('users.profile', handle=current_user.handle) }}">
+            <img src="{{ current_user.avatar_url }}" height="100" width="100"/>
+        </a>
+        <p>{{ current_user.name }}</p>
+        <p>{{ current_user.handle }}</p>
+    </section>
+{% endif %}
+
+
+<!-- show list of users -->
+
+
+{% if data %}
+{% if data.users %}
+{% set users = data.users %}
+{% endif %}
+{% endif %}
+
+
+{% for user in users %}
+<section>
+    <a href="{{ url_for('users.profile', handle=user.handle) }}">
+        <img src="{{ user.avatar_url }}" height="100" width="100"/>
+    </a>
+    <p>{{ user.name }}</p>
+    <p>{{ user.handle }}</p>
+</section>
+{% endfor %}
+
+
+{% endblock %}

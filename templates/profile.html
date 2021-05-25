@@ -5,18 +5,27 @@
 {% endblock %}
 
 {% if data.current_user %}
-    {% set user = data.current_user %}
+    {% set current_user = data.current_user %}
+    {% if data.user_profile %}
+        {% set user_profile = data.user_profile %}    
+        {% if user_profile.handle == current_user.handle %}
+        {% set is_my_profile = True %}
+        {% else %}
+        {% set is_my_profile = False %}
+        {% endif %}
+    {% endif %}
 {% else %}
-    {% set user = None %}
+    {% set current_user = None %}
 {% endif%}
+
 
 {% block content %}
 
-{% if user %}
+{% if user_profile %}
     <section>
-        <p>{{ user.handle }}</p>
-        <img src="{{ user.avatar_url }}" height="100" width="100"/>
-        <p>name: {{ user.name }}</p>
+        <p>{{ user_profile.handle }}</p>
+        <img src="{{ user_profile.avatar_url }}" height="100" width="100"/>
+        <p>name: {{ user_profile.name }}</p>
     </section>
 {% else %}
     <section>
@@ -26,7 +35,7 @@
     </section>
 {% endif %}
 
-{% if data.authorized %}
+{% if is_my_profile %}
 <section class="pb-5 mb-5">
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
     DELETE ME
