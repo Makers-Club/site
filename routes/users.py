@@ -18,9 +18,10 @@ def all():
     return render_template('users.html', data=data)
 
 @users.route('/<handle>', methods=['GET'], strict_slashes=False)
-@login_required
 def profile(handle):
-    current_user = request.current_user.to_dict()
+    current_user = request.current_user
+    if current_user:
+        current_user = current_user.to_dict()
     user = User.get_by_handle(handle)
     data = {
         'current_user': current_user,
