@@ -15,6 +15,9 @@
         {% endif %}
     {% endif %}
 {% else %}
+    {% if data.user_profile %}
+        {% set user_profile = data.user_profile %}
+    {% endif %}
     {% set current_user = None %}
 {% endif%}
 

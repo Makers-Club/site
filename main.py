@@ -35,6 +35,7 @@ def test_app():
 app.register_blueprint(landing)
 app.register_blueprint(auth)
 app.register_blueprint(users)
+app.register_blueprint(tutorial)
 
 @app.before_request
 def before():
