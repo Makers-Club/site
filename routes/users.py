@@ -8,7 +8,9 @@ from main import login_required
 @users.route('/', methods=['GET'], strict_slashes=False)
 def all():
     all_users = User.get_all()
-    current_user = request.current_user.to_dict()
+    current_user = request.current_user
+    if current_user:
+        current_user = current_user.to_dict()
     data = {
         'current_user': current_user,
         'users': all_users
@@ -28,16 +30,16 @@ def profile(handle):
 
 @users.route('/<handle>', methods=['POST'], strict_slashes=False)
 @login_required
-def delete_user(user_id):
-    current_user = request.current_user.to_dict()
+def delete_user(handle):
+    current_user = request.current_user
     data = {
-        'current_user': current_user,
+        'current_user': current_user.to_dict(),
     }
     if current_user.handle != handle:
         data['error'] = 'Not in my house.'
         return render_template('profile.html', data=data)
     else:
         current_user.delete()        
-        data['msg'] = 'Your account has been deleted.'
-        return redirect(url_for('users.profile'))
+        msg = 'Your account has been deleted.'
+        return redirect(url_for('landing.index', msg=msg))
 
