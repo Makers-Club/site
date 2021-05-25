@@ -57,6 +57,16 @@
         </div>
       </nav>      
     </header>
+    {% if data.error %}
+
+    <p class="alert">{{data.error}}</p>
+
+    {% endif %}
+{% if data.msg %}
+
+    <p >{{data.msg}}</p>
+
+    {% endif %}    
 
     <main>
       {% block content %}
