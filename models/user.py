@@ -10,16 +10,13 @@ class User(Base, declarative_base):
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
 
-    def __init__(self, id=None, email=None, name=None, handle=None, avatar_url=None):
+    def __init__(self, id, email, handle, name=None, avatar_url=None):
         super().__init__()
-        self.id = id or str(uuid4()) # Users will use Github IDs rather than our own uuid's
-        if email and '@' in email:
-            self.email = email
-        elif not email:
-            self.email = str(uuid4())
-        self.name = name or str(uuid4())
+        self.id = id or str(uuid4())
+        self.email = email or str(uuid4())
+        self.name = name or handle or str(uuid4())
         self.handle = handle or str(uuid4())
-        self.avatar_url = avatar_url or str(uuid4())
+        self.avatar_url = avatar_url
     
     
 
