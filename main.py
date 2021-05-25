@@ -7,15 +7,6 @@ from functools import wraps
 from routes import *
 from flask import request, redirect, url_for
 
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not hasattr(request, 'current_user') or not request.current_user:
-            return redirect(url_for('auth.send_visitor_to_github', next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
-
 # initialize the app
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
@@ -53,7 +44,7 @@ def before():
     from models.auth import Auth
     logged_in_user = Auth.logged_in_user
     session = request.cookies.get('session')
-    request.current_user = logged_in_user(session)
+    setattr(request, 'current_user', logged_in_user(session))
 
 
 # handle errors (abort)

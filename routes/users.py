@@ -2,8 +2,7 @@ from flask import render_template, request, g, redirect, url_for
 from os import environ
 from routes import users
 from models.user import User
-from main import login_required
-
+from models.auth import auth_client
 
 @users.route('/', methods=['GET'], strict_slashes=False)
 def all():
@@ -16,7 +15,7 @@ def all():
     return render_template('users.html', data=data)
 
 @users.route('/<handle>', methods=['GET'], strict_slashes=False)
-@login_required
+@auth_client.login_required
 def profile(handle):
     current_user = request.current_user.to_dict()
     user = User.get_by_handle(handle)
@@ -27,7 +26,7 @@ def profile(handle):
     return render_template('profile.html', data=data)
 
 @users.route('/<handle>', methods=['POST'], strict_slashes=False)
-@login_required
+@auth_client.login_required
 def delete_user(user_id):
     current_user = request.current_user.to_dict()
     data = {
