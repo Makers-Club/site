@@ -28,16 +28,19 @@ def profile(handle):
     return render_template('profile.html', data=data)
 
 @users.route('/<handle>', methods=['POST'], strict_slashes=False)
-def delete_user(user_id):
-    current_user = request.current_user.to_dict()
-    data = {
-        'current_user': current_user.to_dict(),
-    }
-    if current_user.handle != handle:
-        data['error'] = 'Not in my house.'
-        return render_template('profile.html', data=data)
-    else:
-        current_user.delete()        
-        msg = 'Your account has been deleted.'
-        return redirect(url_for('landing.index', msg=msg))
+def delete_user(handle):
+    current_user = request.current_user
+    if current_user:
+        data = {
+            'current_user': current_user.to_dict(),
+        }
+        if current_user.handle == handle:
+            current_user.delete()        
+            msg = 'Your account has been deleted.'
+            return redirect(url_for('landing.index', msg=msg))
+    data = {}
+    data['error'] = 'Not in my house.'
+    return render_template('profile.html', data=data)
+            
+    
 
