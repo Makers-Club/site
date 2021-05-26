@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from uuid import uuid4
 from sqlalchemy import Column, String
+from datetime import datetime
 
 
 declarative_base = declarative_base()
@@ -9,8 +10,15 @@ class Base():
     id = Column(String(60), nullable=False, primary_key=True)
     def __init__(self, *args, **kwargs):
         self.id = str(uuid4())
+        self.created_at = datetime.now()
+        date_format = "%Y-%m-%dT%H:%M:%S.%f"
         for k, v in kwargs.items():
-            self.__dict__[k] = v
+            if k == "created_at":
+                self.__dict__[k] = datetime.strptime(v, date_format)
+            if k != "__class__":
+                self.__dict__[k] = v
+        
+        
     
     def save(self):
         from models.storage import DB

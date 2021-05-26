@@ -56,7 +56,17 @@ class GithubClient:
             print('Faulty response')
             return None
         
-        user_data = gh_response.json()
+        user_github_data = gh_response.json()
+
+        # tested new user creation, had to add these because it was giving
+        # errors for all the github info we don't accept in user's init args
+        user_data = {}
+        user_data['id'] = user_github_data.get('id')
+        user_data['name'] = user_github_data.get('name')
+        user_data['email'] = user_github_data.get('email')
+        user_data['handle'] = user_github_data.get('login')
+        user_data['avatar_url'] = user_github_data.get('avatar_url')
+
         if user_data['email'] is None: # if user email is private, GET /user/emails too
             gh_response = get('https://api.github.com/user/emails', headers=headers)
             for email_dict in gh_response.json():
