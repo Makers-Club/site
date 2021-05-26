@@ -11,7 +11,7 @@ def credentials():
         'query': None
     }
 
-    if getenv('PRODUCTION_DATABASE'):
+    if getenv('PRODUCTION'):
         def query():
             socket_directory = '/cloudsql'  # getenv('DB_SOCKET_DIR')
             connection_name = 'maker-teams-site:us-central1:mt-mysql-db' # getenv('DB_CONNECTION_NAME')
