@@ -12,17 +12,24 @@
     {% endif %}
 
     <form method="POST" id="tutorial_quiz">
-        {% for item in data.quiz %}
-        {% set question = data.quiz[item] %}
+        {% for item in data.quiz.questions %}
+        {% set question = data.quiz.questions[item] %}
         
             <h1>{{ question.text }}</h1>
             <ul>
                 {% set options = question.options %}
-                {% for option in options %}
-                <li>
-                    <input type="checkbox" id="{{ item }}_{{ option }}" name="{{ item }}_{{ option }}" value="{{ options[option] }}"/>
-                    <label for="{{item}}_{{ option }}">{{ options[option] }}</label>
-                </li>    
+                {% for option in options %}                
+                    {% if data.passed and question.correct_answer == options[option] %}
+                        <li>
+                            <input type="checkbox" id="{{ item }}_{{ option }}" name="{{ item }}_{{ option }}" value="{{ options[option] }}" checked/>
+                            <label for="{{item}}_{{ option }}">{{ options[option] }}</label>
+                        </li>
+                    {% else %}
+                        <li>
+                            <input type="checkbox" id="{{ item }}_{{ option }}" name="{{ item }}_{{ option }}" value="{{ options[option] }}"/>
+                            <label for="{{item}}_{{ option }}">{{ options[option] }}</label>
+                        </li>    
+                    {% endif %}
                 {% endfor %}
             </ul>
         {% endfor %}
