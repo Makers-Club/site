@@ -7,3 +7,4 @@ Flask-SQLAlchemy==2.5.1
 PyMySQL==1.0.2
 pytest==6.2.4
 pytest-bdd==4.0.2
+Flask-Migrate==3.0.1
