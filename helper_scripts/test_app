@@ -1,0 +1,8 @@
+CHECKER_API_URL='http://localhost:8081/' \
+GITHUB_CLIENT_ID='6e983434d144a0d2169c' \
+GITHUB_CLIENT_SECRET='6c91554ab1e4705c33a43cea639fb7c1536dc009' \
+GITHUB_CALLBACK_URL='http://localhost:8080/auth/github_callback' \
+GCP_DEV_URL='https://8080-1f8078dd-2378-4707-8a3e-78d294857adf.cs-us-central1-mtyn.cloudshell.dev' \
+MYSQL_USER='root' \
+MYSQL_PWD='123123' \
+python3 main.py
