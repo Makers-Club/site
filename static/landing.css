@@ -11,6 +11,9 @@
 #hero > div {
   max-width: 600px;
 }
+.display-4 {
+    font-size: 4rem;
+}
 .developer-card {
     box-shadow: 4px 3px 4px rgba(108, 206, 208, 0.25);
     border-radius: 1px;
@@ -29,7 +32,9 @@
   text-decoration: underline !important;
 }
 
-
+.github-signup-btn {
+    max-height: 50px;
+}
 /* Carousel */
 #carousel_a .carousel-indicators {
   position: absolute;
