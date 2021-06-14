@@ -48,6 +48,23 @@ def before():
     setattr(request, 'current_user', logged_in_user(session))
 
 
+@app.route('/payment_successful', methods=['GET', 'POST'], strict_slashes=False)
+def payment_successful():
+    from models.charge import Charge
+    import json
+    json_str = request.data
+    json_data = json.loads(json_str)
+    price = json_data.get('data')
+    if price:
+        price = price.get('object')
+        if price:
+            price = price.get('amount')
+    new_charge = Charge(price)
+    new_charge.save()    
+    print(new_charge.to_dict())
+    return jsonify('success')
+
+
 # handle errors (abort)
 @app.errorhandler(400)
 def bad_request(error) -> str:
