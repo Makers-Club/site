@@ -18,11 +18,11 @@
 <h1>{{ data.name }}</h1>
 <h3>for {{ current_user.name }} </h3>
 
-<p> Create a repo named "{{ data.repo }}".</p>
+<p> Create a repo named "{{ data.repo }}" and make a dummy flask app in a file named app.py that displays the phrase "Hello, World!" exactly.</p>
 
 <button onclick="check( '{{ current_user.handle }}', '{{ data.repo }}' )">Check your repo</button>
-
-<div id="target">Result goes here</div>
+</br>
+<div id="checks">Results:</div>
 
 
 {% endblock %}
