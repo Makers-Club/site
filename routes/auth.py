@@ -15,7 +15,7 @@ def private():
 
 @auth.route('/logout', methods=['GET'], strict_slashes=False)
 def logout():
-    from models.session import Session
+    from b import Session
     cookie = request.cookies.get('session')
     session = Session.get_by_id(cookie)
     if session:

@@ -6,6 +6,13 @@ from uuid import uuid4
 from functools import wraps
 from routes import *
 from flask import request, redirect, url_for
+from models.storage import DB
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
+DB_MIGRATION_URI = DB._MySQLClient__engine.url
+
 
 # initialize the app
 app = Flask(__name__)
@@ -16,6 +23,10 @@ else:
 CORS(app, resources={r"*": {"origins": "*"}})
 
 
+app.config["SQLALCHEMY_DATABASE_URI"] = DB_MIGRATION_URI
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 

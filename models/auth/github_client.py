@@ -1,6 +1,6 @@
 from requests import post, get
 from re import search
-from models.user import User
+from b import User
 from models.auth.auth import Auth
 
 class GithubClient:

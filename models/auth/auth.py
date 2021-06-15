@@ -1,4 +1,4 @@
-from models.user import User
+from b import User
 from functools import wraps
 from flask import request, redirect, url_for
 
@@ -26,15 +26,15 @@ class Auth:
     @classmethod
     def login(cls, token, user_id):
         ''' log a user in '''
-        from models.session import Session
+        from b import Session
         new_session = Session(token=token, user_id=user_id)
         new_session.save()
         return new_session
     
     @classmethod
     def logged_in_user(cls, session):
-        from models.session import Session
-        from models.user import User
+        from b import Session
+        from b import User
         current_session = Session.get_by_id(session)
         if not current_session:
             return None

@@ -34,6 +34,29 @@ def index():
         print("passed ", data['passed'])
         return render_template('tutorial.html', data=data)
 
+
+class Tutorial:
+    def __init__(self, path = ''):
+        self.file_path = path
+        self.questions = []
+
+    def add_question(self):
+        raise NotImplementedError()
+
+    def json(self):
+        raise NotImplementedError()
+
+class Question:
+    def __init__(self):
+        self.answer = None
+        self.options = []
+
+    def add_answer(self, answer):
+        self.answer = answer
+
+    def add_false_option(self, option):
+        self.options.append(option)
+
 def getQuiz():
     """ placeHolder for getting Quiz questions """
     return {
