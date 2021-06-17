@@ -1,7 +1,7 @@
 from flask import render_template, request, g, redirect, url_for
 from os import environ
 from routes import users
-from models.user import User
+from b import User
 
 @users.route('/', methods=['GET'], strict_slashes=False)
 def all():

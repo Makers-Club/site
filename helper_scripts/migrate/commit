@@ -1,0 +1,2 @@
+FLASK_APP=b.py flask db migrate
+echo "Check migration script in ./migrations/versions for corrections"

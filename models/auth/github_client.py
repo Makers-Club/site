@@ -1,6 +1,6 @@
 from requests import post, get
 from re import search
-from models.user import User
+from b import User
 from models.auth.auth import Auth
 
 class GithubClient:
@@ -36,6 +36,7 @@ class GithubClient:
         match = search('access_token=(.*?)(&|$)', response.text)
         if match is None:
             print(response.text)
+            print(self.__auth_data)
             return None
 
         # match[0] is the full matched string ('access_token=...')

@@ -8,6 +8,6 @@ def project():
     data = {
         'current_user': request.current_user,
         'name': 'Project "Hello, World!"',
-        'repo': 'raw-discipline' 
+        'repo': 'hello-world' 
     }
     return render_template('project.html', data=data)
