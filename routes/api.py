@@ -2,6 +2,8 @@ from flask import jsonify, request
 from requests import post
 from routes import api
 from os import environ
+from models.auth import auth_client
+from models.user import User
 
 @api.route('/checker', methods=['POST'], strict_slashes=False)
 def checker():
