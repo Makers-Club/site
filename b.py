@@ -25,14 +25,16 @@ class User(Base, db.Model):
     avatar_url = Column(String(256), nullable=True)
     id = Column(String(60), nullable=False, primary_key=True)
     credits = Column(Float(10,5))
+    access_token = Column(String(128))
 
-    def __init__(self, id, email, handle, name=None, avatar_url=None):
+    def __init__(self, id, email, handle, access_token, name=None, avatar_url=None):
         super().__init__()
         self.email = email or str(uuid4())
         self.name = name or handle or str(uuid4())
         self.handle = handle or str(uuid4())
         self.avatar_url = avatar_url
         self.credits = 0.0
+        self.access_token = access_token
 
 
 class Session(Base, db.Model):
