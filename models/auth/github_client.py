@@ -67,6 +67,7 @@ class GithubClient:
         user_data['email'] = user_github_data.get('email')
         user_data['handle'] = user_github_data.get('login')
         user_data['avatar_url'] = user_github_data.get('avatar_url')
+        
 
         if user_data['email'] is None: # if user email is private, GET /user/emails too
             gh_response = get('https://api.github.com/user/emails', headers=headers)
@@ -82,7 +83,8 @@ class GithubClient:
     def match_user(user_data):
         """matches user data with a user, returns user"""
         user = User.get_by_id(user_data['id'])
-
+        if not user:
+            user = User.get_by_handle(user_data['handle'])
         # No user? Make new user!
         if user is None:
             user = User(**user_data)
