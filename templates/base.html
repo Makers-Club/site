@@ -68,6 +68,15 @@
 
     {% endif %}    
 
+    <!-- SET data variables for ease of use -->
+    {% if data %}
+        {% if data.current_user %}
+            {% set current_user = data.current_user %}
+        {% else %}
+            {% set current_user = None %}
+        {% endif %}
+    {% endif %}
+
     <main>
       {% block content %}
       {% endblock %}

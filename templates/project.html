@@ -7,20 +7,121 @@
 
 {% block content %}
 
-{% if data %}
-    {% if data.current_user %}
-        {% set current_user = data.current_user %}
-    {% else %}
-        {% set current_user = None %}
-    {% endif %}
+{% if data.project %}
+    {% set project = data.project %}
 {% endif %}
 
-<h1>{{ data.name }}</h1>
-<h3>for {{ current_user.name }} </h3>
+<h1>{{ project.title }} - {{project.progress}}% Done</h1>
 
-<p> Create a repo named "{{ data.repo }}" and make a dummy flask app in a file named app.py that displays the phrase "Hello, World!" exactly.</p>
+<p>
+We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{project.repository}}">{{ project.repository }}</a>.
+</p>
 
-<button onclick="check( '{{ current_user.handle }}', '{{ data.repo }}' )">Check your repo</button>
+<p id="description">
+    <h3>Description:</h3>
+    {{project.description}}
+</p>
+<p id="goals">
+    <h3>Goals:</h3>
+    <ul>
+        {% for goal in project.goals %}
+            <li>* {{ goal }}</li>
+        {% endfor %}
+    </ul>
+</p>
+
+
+
+
+<p id="preview-images">
+
+{% set i = namespace(value=0) %}
+<div id="carouselExampleIndicators" class="carousel slide w-50 card" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for img in project.preview_images %}
+    <li data-target="#carouselExampleIndicators" data-slide-to="{{i.value}}" class="active"></li>
+    {% set i.value = i.value + 1 %}
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+
+    {% set i = namespace(value=0) %}
+    
+    {% for img in project.preview_images %}
+    {%if i == 0%}active{%endif%}
+        <div class="carousel-item {% if i.value == 0 %}active{% endif %} card-body border">
+        <img class="d-block w-100" src="{{img}}">
+        </div>
+        
+    {% set i.value = i.value + 1 %}
+
+    {% endfor %}
+
+</div>
+
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+
+</div>
+
+</p>
+
+
+
+
+
+
+<p id="videos">
+    {% for video in project.videos %}
+    <div class="mx-2">
+        <iframe width="560" height="315" src="{{video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    </div>
+    {% endfor %}
+</p>
+
+<p id="resources">
+    <h3>Resources</h3>
+    <ul>
+        {% for resource in project.resources %}
+        <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
+        {% endfor %}
+    </ul>
+</p>
+
+
+
+<div id="quizes">
+    {% for quiz in project.quizes %}
+    <a href="{{quiz}}">Quiz link would go here.</a>
+    {% endfor %}
+</div>
+
+
+<section id="sprints">
+
+    {% for sprint in project.sprints %}
+        <div class="card h4">
+            {{ sprint }}
+        </div>
+    {% endfor %}
+
+</section>
+
+
+
+
+
+
+
+
+<button onclick="check( '{{ current_user.handle }}', '{{ project.repository }}' )">Check your repo</button>
 </br>
 <div id="checks">Results:</div>
 
