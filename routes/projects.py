@@ -4,7 +4,7 @@ from models.auth import auth_client
 
 @projects.route('/', methods=['GET', 'POST'], strict_slashes=False)
 @auth_client.login_required
-def project():
+def index():
     project = {
         'title': 'Historic Black Wallstreet Business Directory',
         'repository': 'hello-world',
