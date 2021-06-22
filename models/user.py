@@ -9,7 +9,7 @@ class User(Base, declarative_base):
     name = Column(String(128), nullable=False)
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
-    credits = Column(Float(10,5))
+    credits = Column(Int(10))
 
     def __init__(self, id, email, handle, name=None, avatar_url=None):
         super().__init__()
@@ -18,7 +18,7 @@ class User(Base, declarative_base):
         self.name = name or handle or str(uuid4())
         self.handle = handle or str(uuid4())
         self.avatar_url = avatar_url
-        self.credits = 0.0
+        self.credits = 0
     
     
 
