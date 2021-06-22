@@ -38,42 +38,51 @@
     <header class="container" id="header">
       <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
 
-        <div>
-        {% if current_user %}
-        <h3>{{ current_user.name }}</h3>
-        Credits:
-            {% if current_user.credits %}
-            {{current_user.credits}}
-            {% else %}0.00{% endif %}
-        {% else %}
-            <a class="navbar-brand" href="{{ url_for('landing.index') }}">
-                <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
-            </a>
-        {% endif %}
-        </div>
+        <a class="navbar-brand" href="{{ url_for('landing.index') }}">
+            <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
+        </a>
+        
+        
+
+            
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link text-right" href="{{ url_for('landing.about') }}">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-right" href="{{ url_for('landing.about') }}">Product</a>
-            </li>
-            <li class="nav-item">
-                {% if data.current_user %}
-                    <!-- send this to a logout route once that's done -->
-                    <a class="nav-link text-right" href="{{ url_for('auth.logout') }}">Sign Out</a>
-                {%  else  %}                
-                    <!-- <div class="nav-link text-right" onclick="github_login()">Sign In</div> -->
-                    <a class="nav-link text-right" href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
-                {% endif %}
-            </li>
-          </ul>
+        
+        <div class="collapse navbar-collapse " id="navbarText">
+            {% if current_user %}
+            <div class=" ml-auto ">
+                <header class="d-flex align-items-center">
+                    <h4 class="pr-2">{{ current_user.name }}</h4>
+                    <img class="profile_pic" src="{{ current_user.avatar_url }}" height="50" width="50"/>
+                </header>
+                    {% if current_user.credits %}
+                    {{ current_user.credits|int }}
+                    {% else %}0.00{% endif %}
+                    credits
+            </div>
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                <a class="nav-link text-right" href="{{ url_for('landing.about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-right" href="{{ url_for('landing.about') }}">Product</a>
+                </li>
+                <li class="nav-item">
+                    {% if data.current_user %}
+                        <!-- send this to a logout route once that's done -->
+                        <a class="nav-link text-right" href="{{ url_for('auth.logout') }}">Sign Out</a>
+                    {%  else  %}                
+                        <!-- <div class="nav-link text-right" onclick="github_login()">Sign In</div> -->
+                        <a class="nav-link text-right" href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
+            {% endif %}
+          
         </div>
       </nav>      
     </header>

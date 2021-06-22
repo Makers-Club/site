@@ -6,17 +6,17 @@
 
 {% if data.current_user %}
     {% set current_user = data.current_user %}
-    {% if data.user_profile %}
-        {% set user_profile = data.user_profile %}    
-        {% if user_profile.handle == current_user.handle %}
+    {% if data.this_profile %}
+        {% set this_profile = data.this_profile %}    
+        {% if this_profile.handle == current_user.handle %}
         {% set is_my_profile = True %}
         {% else %}
         {% set is_my_profile = False %}
         {% endif %}
     {% endif %}
 {% else %}
-    {% if data.user_profile %}
-        {% set user_profile = data.user_profile %}
+    {% if data.this_profile %}
+        {% set this_profile = data.this_profile %}
     {% endif %}
     {% set current_user = None %}
 {% endif%}
@@ -24,11 +24,12 @@
 
 {% block content %}
 
-{% if user_profile %}
+{% if this_profile %}
     <section>
-        <p>{{ user_profile.handle }}</p>
-        <img src="{{ user_profile.avatar_url }}" height="100" width="100"/>
-        <p>name: {{ user_profile.name }}</p>
+        <a href="{{ url_for('users.all') }} ">All Users</a>
+        <p>{{ this_profile.handle }}</p>
+        <img src="{{ this_profile.avatar_url }}" height="100" width="100"/>
+        <p>name: {{ this_profile.name }}</p>
     </section>
 {% else %}
     <section>

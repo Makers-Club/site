@@ -23,6 +23,7 @@ def about():
   data = {}
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
+    print(request.current_user.to_dict())
   return render_template('about.html', data=data)
 
 @landing.route('/contact', methods=['GET'], strict_slashes=False)

@@ -21,9 +21,11 @@ def profile(handle):
     if current_user:
         current_user = current_user.to_dict()
     user = User.get_by_handle(handle)
+    if user:
+        user = user.to_dict()
     data = {
         'current_user': current_user,
-        'user_profile': user.to_dict()
+        'this_profile': user
     }
     return render_template('profile.html', data=data)
 
