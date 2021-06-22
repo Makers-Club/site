@@ -9,7 +9,7 @@ from models.base import declarative_base
 
 class MySQLClient():
     def __init__(self, credentials):
-        self.__engine = create_engine(URL.create(**credentials), pool_pre_ping=True)
+        self.__engine = create_engine(URL.create(**credentials), isolation_level="READ UNCOMMITTED", pool_pre_ping=True)
     
     def reload(self):
         declarative_base.metadata.create_all(self.__engine)
