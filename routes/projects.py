@@ -5,6 +5,24 @@ from models.auth import auth_client
 @projects.route('/', methods=['GET', 'POST'], strict_slashes=False)
 @auth_client.login_required
 def index():
+    project = setProject()
+    data = {
+        'current_user': request.current_user.to_dict(),
+        'project': project
+    }
+    return render_template('project.html', data=data)
+
+@projects.route('/<project_id>/<sprint_id>/<task_id>', methods=['GET'], strict_slashes=False)
+def sprint_task_by_id(project_id, sprint_id, task_id):
+    data = {
+        'current_user': request.current_user.to_dict(),
+        'project': setProject(),
+        'task': setTask()
+    }
+    return render_template('task.html', data=data)
+
+
+def setProject():
     project = {
         'title': 'Historic Black Wallstreet Business Directory',
         'repository': 'hello-world',
@@ -16,13 +34,18 @@ def index():
         'resources': [{'link':'https://www.azlyrics.com/n/nickelback.html', 'name': "The Meaning of Life"}],
         'quizes': ['#THEREARENOQUIZESYET'],
         'goals': ['Put your left foot in', 'Your left foot out', 'Your left foot in',
-                  'And shake it all about', 'You do the hokey pokey', 'And turn yourself around'],
+                    'And shake it all about', 'You do the hokey pokey', 'And turn yourself around'],
         'dependencies': ['Python 3.8', 'Flask', 'The Will to Live'],
         'progress': '0',
         'sprints': ['Sprint 1', 'Sprint 2', 'Sprint 3']
     }
-    data = {
-        'current_user': request.current_user.to_dict(),
-        'project': project
+
+    return project
+
+def setTask():
+    task = {
+        'description': 'Time to make computer go burr',
+        'code': "function wasteTime() {\n  setTimeout(\n    () => {\n      console.log('Are we there yet');\n      wasteTime();\n    }, 1000\n  );\n}",
+        'completed': False
     }
-    return render_template('project.html', data=data)
+    return task
