@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Task{% endblock %}
+{% block head %}
+  {{ super() }}
+  <script src="/static/scripts/check.js"></script>
+{% endblock %}
+
+{% block content %}
+
+{% if data.project %}
+    {% set project = data.project %}
+{% endif %}
+{% set task = data.task %}
+
+
+<section>
+    <p id="goals">
+        <h3>Goals:</h3>
+        <ul>
+            {% for goal in project.goals %}
+                <li>* {{ goal }}</li>
+            {% endfor %}
+        </ul>
+    </p>
+
+    <p id="resources">
+        <h3>Resources</h3>
+        <ul>
+            {% for resource in project.resources %}
+            <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
+            {% endfor %}
+        </ul>
+    </p>
+
+    <div id="description">
+        <h4>Task Description</h4>
+        <p>
+            {{ task.description }}
+        </p>
+    </div>
+
+    <div id="code" style="border: 1px solid black;background-color: aliceblue;">
+        <pre><code>{{ task.code }}</code></pre>
+    </div>
+
+    <div id="task_status">
+        <div style="display: flex;">
+            {% if task.complete %}
+            <p>Staus: Complete </p>
+            {% else %}
+            <p>Status: Incomplete</p>
+            {% endif %}            
+            <button>The Thingy</button>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

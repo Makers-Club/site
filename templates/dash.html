@@ -13,6 +13,12 @@
     {% else %}
         {% set current_user = None %}
     {% endif %}
+
+    {% if data.projects %}
+        {% set projects = data.projects %}
+    {% else %}
+        {% set projects = None %}
+    {% endif %}
 {% endif %}
 
 
@@ -22,7 +28,35 @@ Dashboard
 Welcome, {{ current_user.name }}<br>
 @{{ current_user.handle }}
 
-<a href="{{ url_for('projects.project')}}">Start project</a>
+<a href="{{ url_for('projects.index')}}">Start project</a>
 
+<br><br>
+<a href="https://buy.stripe.com/cN29ACaIY3S44IUbIJ">Give russ money</a>
 
+<section class="container">
+    <h3>Projects</h3>
+    <div class="row">
+        {% for project in projects %}
+        <div class="card col-3 m-2">
+            <img src="{{ project.preview }}" class="card-img-top" alt="{{ project.title }}_preview">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5><br>
+                <a href="{{ project.link }}">Website link</a><br><br>
+                <p class="card-text">
+                    Author: {{ project.author }}<br><br>
+                    {{ project.description }}<br><br>
+                </p>
+                <div class="row align-items-center justify-content-around border">
+                    <a href="{{ url_for('projects.index') }}">
+                    <button class="btn btn-primary">Unlock</button>
+                    </a>
+                    <p class="my-auto">
+                        ${{ project.price }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

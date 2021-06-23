@@ -6,6 +6,8 @@ from routes import landing
 def index():
   """ render landing template """
   data = {}
+  data['projects'] = allProjects()
+
   if request.args.get('error'):
       data['error'] = request.args.get('error')
   if request.args.get('msg'):
@@ -30,3 +32,21 @@ def contact():
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
   return render_template('contact.html', data=data)
+
+
+def allProjects():
+    """ query all projects in database """
+    projects = []
+
+    for _ in range(3):
+        projects.append({
+            'title': 'Title',
+            'link': 'https://www.historicblackwallstreet.com/',
+            'author': 'Makers Club',
+            'description': 'Me me do things double plus bigly',
+            'price': 1.23,
+            'preview': 'https://i.redd.it/60h3y9h882h51.jpg',
+            'unlocked': False
+        })
+
+    return projects

@@ -23,14 +23,34 @@
     {% endblock %}
   </head>
 
+
   <body>
+
+    <!-- SET data variables for ease of use -->
+    {% if data %}
+        {% if data.current_user %}
+            {% set current_user = data.current_user %}
+        {% else %}
+            {% set current_user = None %}
+        {% endif %}
+    {% endif %}
 
     <header class="container" id="header">
       <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
 
-        <a class="navbar-brand" href="{{ url_for('landing.index') }}">
-            <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
-        </a>
+        <div>
+        {% if current_user %}
+        <h3>{{ current_user.name }}</h3>
+        Credits:
+            {% if current_user.credits %}
+            {{current_user.credits}}
+            {% else %}0.00{% endif %}
+        {% else %}
+            <a class="navbar-brand" href="{{ url_for('landing.index') }}">
+                <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
+            </a>
+        {% endif %}
+        </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -67,6 +87,7 @@
     <p >{{data.msg}}</p>
 
     {% endif %}    
+
 
     <main>
       {% block content %}
