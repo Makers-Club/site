@@ -65,9 +65,9 @@ def setSprint(id):
         'id': id,
         'complete': False,
         'tasks': [
-            getTask('1'),
-            getTask('2'),
-            getTask('3')
+            setTask('1'),
+            setTask('2'),
+            setTask('3')
         ]
     }
     return sprint
