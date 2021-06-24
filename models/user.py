@@ -20,8 +20,8 @@ class User(Base, declarative_base):
         super().__init__()
         self.id = kwargs.get('id') # or str(uuid4())
         self.email = kwargs.get('email') # or str(uuid4())
-        self.name = kwargs.get('name') or kwargs.get('handle') # or str(uuid4())
-        self.handle = kwargs.get('handle')
+        self.name = kwargs.get('name') or kwargs.get('login') # or str(uuid4())
+        self.handle = kwargs.get('login')
         self.avatar_url = kwargs.get('avatar_url')
         self.access_token = kwargs.get('access_token')
         self.credits = 0.0

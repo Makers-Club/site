@@ -58,6 +58,7 @@ class GithubClient:
             return None
         
         user_data = gh_response.json()
+        user_data['access_token'] = gh_access_token
 
         if user_data['email'] is None: # if user email is private, GET /user/emails too
             gh_response = get('https://api.github.com/user/emails', headers=headers)
@@ -75,15 +76,12 @@ class GithubClient:
         user = User.get_by_id(user_data['id'])
 
         # TODO: See Issue #66
-        if not user:
-            user = User.get_by_handle(user_data['handle'])
-        # No user? Make new user!
-        if user is None:
+        if user is None: # No user? Make new user!
             user = User(**user_data)
             user.save()
             print('NEW USER {} ADDED TO DATABASE'.format(user.id))
-
-        # update user's access token to new value
-        user.access_token = user_data['access_token']
-        user.save()
+        else:
+            # update user's access token to new value
+            user.access_token = user_data['access_token']
+            user.save()
         return user
