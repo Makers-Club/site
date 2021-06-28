@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float
+from sqlalchemy import Column, String, Float, Integer
 from sqlalchemy.orm import relationship
 from models.base import declarative_base, Base
 from uuid import uuid4
@@ -9,7 +9,7 @@ class User(Base, declarative_base):
     name = Column(String(128), nullable=False)
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
-    credits = Column(Int(10))
+    credits = Column(Integer(10))
 
     def __init__(self, id, email, handle, name=None, avatar_url=None):
         super().__init__()
