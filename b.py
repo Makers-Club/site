@@ -24,7 +24,7 @@ class User(Base, db.Model):
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
     # TODO: We should make these nullable=False. See Issue #67
-    credits = Column(Integer())
+    credits = Column(Integer(), nullable=False)
     access_token = Column(String(128))
 
     # * If you get another failure, Russ, save the error msg and share it on
