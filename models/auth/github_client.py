@@ -57,17 +57,8 @@ class GithubClient:
             print('Faulty response')
             return None
         
-        user_github_data = gh_response.json()
-
-        # tested new user creation, had to add these because it was giving
-        # errors for all the github info we don't accept in user's init args
-        user_data = {}
-        user_data['id'] = user_github_data.get('id')
-        user_data['name'] = user_github_data.get('name')
-        user_data['email'] = user_github_data.get('email')
-        user_data['handle'] = user_github_data.get('login')
-        user_data['avatar_url'] = user_github_data.get('avatar_url')
-        
+        user_data = gh_response.json()
+        user_data['access_token'] = gh_access_token
 
         if user_data['email'] is None: # if user email is private, GET /user/emails too
             gh_response = get('https://api.github.com/user/emails', headers=headers)
@@ -83,12 +74,14 @@ class GithubClient:
     def match_user(user_data):
         """matches user data with a user, returns user"""
         user = User.get_by_id(user_data['id'])
-        if not user:
-            user = User.get_by_handle(user_data['handle'])
-        # No user? Make new user!
-        if user is None:
+
+        # TODO: See Issue #66
+        if user is None: # No user? Make new user!
             user = User(**user_data)
             user.save()
             print('NEW USER {} ADDED TO DATABASE'.format(user.id))
-        
+        else:
+            # update user's access token to new value
+            user.access_token = user_data['access_token']
+            user.save()
         return user

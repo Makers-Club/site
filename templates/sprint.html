@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Sprint{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+{% if data.project %}
+    {% set project = data.project %}
+{% endif %}
+
+
+<p id="description">
+    <h3>Description:</h3>
+    {{project.description}}
+</p>
+<p id="goals">
+    <h3>Goals:</h3>
+    <ul>
+        {% for goal in project.goals %}
+            <li>* {{ goal }}</li>
+        {% endfor %}
+    </ul>
+</p>
+
+<p id="videos">
+    {% for video in project.videos %}
+    <div class="mx-2">
+        <iframe width="560" height="315" src="{{video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    </div>
+    {% endfor %}
+</p>
+
+<p id="resources">
+    <h3>Resources</h3>
+    <ul>
+        {% for resource in project.resources %}
+        <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
+        {% endfor %}
+    </ul>
+</p>
+
+
+
+<div id="quizes">
+    {% for quiz in project.quizes %}
+    <a href="{{quiz}}">Quiz link would go here.</a>
+    {% endfor %}
+</div>
+
+
+<section id="tasks">
+
+    {% for task in data.sprint.tasks %}
+        <div class="card h4">
+            Task {{ task.name }}
+        </div>
+    {% endfor %}
+
+</section>
+
+{% endblock %}

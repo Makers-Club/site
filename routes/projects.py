@@ -12,6 +12,15 @@ def index():
     }
     return render_template('project.html', data=data)
 
+@projects.route('/<project_id>/<sprint_id>', methods=['GET'], strict_slashes=False)
+def sprint_by_id(project_id, sprint_id):
+    data = {
+        'current_user': request.current_user.to_dict(),
+        'project': setProject(),
+        'sprint': setSprint(sprint_id)
+    }
+    return render_template('sprint.html', data=data)
+
 @projects.route('/<project_id>/<sprint_id>/<task_id>', methods=['GET'], strict_slashes=False)
 def sprint_task_by_id(project_id, sprint_id, task_id):
     data = {
@@ -42,10 +51,23 @@ def setProject():
 
     return project
 
-def setTask():
+def setTask(name='task'):
     task = {
+        'name': name,
         'description': 'Time to make computer go burr',
         'code': "function wasteTime() {\n  setTimeout(\n    () => {\n      console.log('Are we there yet');\n      wasteTime();\n    }, 1000\n  );\n}",
         'completed': False
     }
     return task
+
+def setSprint(id):
+    sprint = {
+        'id': id,
+        'complete': False,
+        'tasks': [
+            setTask('1'),
+            setTask('2'),
+            setTask('3')
+        ]
+    }
+    return sprint

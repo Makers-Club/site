@@ -9,16 +9,19 @@ class User(Base, declarative_base):
     name = Column(String(128), nullable=False)
     handle = Column(String(60), nullable=False)
     avatar_url = Column(String(256), nullable=True)
-    credits = Column(Integer(10))
+    # TODO: We should make these nullable=False. See Issue #67
+    credits = Column(Integer())
+    access_token = Column(String(128))
 
-    def __init__(self, id, email, handle, name=None, avatar_url=None):
+    # * If you get another failure, Russ, save the error msg and share it on
+    # * issue #68, then uncomment the old str(uuid4())'s and try again
+    # TODO: See Issue #68
+    def __init__(self, *args, **kwargs):
         super().__init__()
-        self.id = id or str(uuid4())
-        self.email = email or str(uuid4())
-        self.name = name or handle or str(uuid4())
-        self.handle = handle or str(uuid4())
-        self.avatar_url = avatar_url
+        self.id = kwargs.get('id') # or str(uuid4())
+        self.email = kwargs.get('email') # or str(uuid4())
+        self.name = kwargs.get('name') or kwargs.get('login') # or str(uuid4())
+        self.handle = kwargs.get('login')
+        self.avatar_url = kwargs.get('avatar_url')
+        self.access_token = kwargs.get('access_token')
         self.credits = 0
-    
-    
-
