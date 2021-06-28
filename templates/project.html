@@ -107,9 +107,11 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 <section id="sprints">
 
     {% for sprint in project.sprints %}
+    <a href="{{ url_for('projects.sprint_by_id', project_id=1, sprint_id=1)  }}">
         <div class="card h4">
             {{ sprint }}
         </div>
+    </a>
     {% endfor %}
 
 </section>
@@ -121,7 +123,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 
 
-<button onclick="check( '{{ current_user.handle }}', '{{ project.repository }}' )">Check your repo</button>
+<button onclick="test_code( '{{ current_user.handle }}', '{{ project.repository }}' )">Check your repo</button>
 </br>
 <div id="checks">Results:</div>
 

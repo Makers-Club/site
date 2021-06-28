@@ -54,9 +54,11 @@
 <section id="tasks">
 
     {% for task in data.sprint.tasks %}
-        <div class="card h4">
-            Task {{ task.name }}
-        </div>
+        <a href="{{ url_for('projects.sprint_task_by_id', project_id=1, sprint_id=1, task_id=1)  }}">
+            <div class="card h4">
+                Task {{ task.name }}
+            </div>
+        </a>
     {% endfor %}
 
 </section>

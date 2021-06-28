@@ -23,7 +23,6 @@
 
 
 Dashboard
-<img src="{{ current_user.avatar_url }}" height="100" width="100"/>
 <br/>
 Welcome, {{ current_user.handle }}<br>
 <a href="{{ url_for('users.profile', handle=current_user.handle) }}">@{{ current_user.handle }}</a>
