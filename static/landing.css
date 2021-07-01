@@ -6,6 +6,7 @@
 .bg-hero {
   background: var(--background-gradient);
   /* box-shadow: var(--hero-shadow); */
+  /*min-height: 75vh; this was also for the presignup version of deployment*/
 }
 
 #hero > div {

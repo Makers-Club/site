@@ -6,7 +6,7 @@ handlers:
   redirect_http_response_code: 301
   
 env_variables:
-  PRODUCTION_DATABASE: "TRUE"
+  PRODUCTION: "TRUE"
   GITHUB_CLIENT_ID: "25ea07bd2d607833d0bd"
   MYSQL_USER: "root"
   MYSQL_PWD: "123123"
@@ -14,3 +14,4 @@ env_variables:
   GITHUB_CLIENT_SECRET: "39da3ad6dfd757263026315bb3df8ad58da582a1"
   MYSQL_TEST_DB: "development"
   MYSQL_PRODUCTION_DB: "development"
+  GITHUB_CALLBACK_URL: "https://maker-teams-site.uc.r.appspot.com/auth/github_callback"

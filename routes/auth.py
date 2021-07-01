@@ -49,7 +49,8 @@ def github_callback():
     if user is None:
         # See issues #18 and #28
         return 'No verified emails, buddy! Verify your GitHub email.'
-    response = make_response(redirect('/'))
+    # this was for deploying the pre-signup version of the landing page
+    # response = make_response(redirect(url_for('landing.presignup')))
     response.set_cookie('session', session.id)
     return response
 

@@ -2,6 +2,11 @@ from flask import render_template, request, g
 from os import environ
 from routes import landing
 
+@landing.route('/thankyou', methods=['GET'], strict_slashes=False)
+def presignup():
+    # let's users know they've pre-signed up
+    return render_template('presignup.html', data={})
+
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
   """ render landing template """
