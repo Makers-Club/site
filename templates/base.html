@@ -38,10 +38,27 @@
     <header class="container" id="header">
       <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
 
+
+        {% if current_user %}
+          <a href="{{ url_for('users.profile', handle=current_user.handle)  }} ">
+            <img class="profile_pic" src="{{ current_user.avatar_url }}" height="55" width="55"/>
+            <div class="d-flex flex-column p-3">
+              <span class="pr-2">
+                {{ current_user.name }}
+              </span>
+              
+              <a class="nav-lin" href="{{ url_for('auth.logout') }}">Sign Out</a>
+            </div>
+          </a>
+
+            
+        {% else %}
+
         <a class="navbar-brand" href="{{ url_for('landing.index') }}">
             <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
         </a>
         
+        {% endif %}
         
 
             
