@@ -36,6 +36,7 @@ class BaseClient():
     @classmethod
     def get_one(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
+        print(url)
         return requests.get(url).json()
     
     @classmethod
@@ -44,7 +45,8 @@ class BaseClient():
         return requests.get(url).json()
 
     @classmethod
-    def update_by_id(cls, route, extra_data=None):
+    def update_by_id(cls, route, attribute, value, extra_data=None):
+        route = f'{route}/{attribute}/{value}'
         url = parameters(cls, route, extra_data)
         return requests.put(url).json()
 

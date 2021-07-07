@@ -61,4 +61,5 @@ class StripeClient():
     @staticmethod
     def give_credits_to(user, amount):
         user.credits += int(amount)
-        user.save()
+        from models.clients.maker_teams_client import MTClient
+        user.update(MTClient, 'credits', user.credits + amount)

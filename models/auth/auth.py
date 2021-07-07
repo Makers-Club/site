@@ -29,9 +29,7 @@ class Auth:
     def login(cls, token, user_id):
         ''' log a user in '''
         from models.session import Session
-        print(token, user_id, 'token and user_id IN AUTH>PY')
         new_session = Session.create_new(MTClient, token, user_id)
-        print(new_session, 'new session')
         return new_session
     
     @classmethod

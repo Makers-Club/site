@@ -31,16 +31,19 @@ class Session(Base):
         response = client.get_one(route, extra_data)
         if not response or not response.get('user'):
             return None
-        session = Session(**response.get('user'))
-        return session
+        from models.user import User
+        user = User(**response.get('user'))
+        return user
 
+
+
+# HEYYY DO THIISSSS
     @classmethod
-    def delete_by_user_id(cls, client, id, extra_data=None) -> dict:
-        route = f'sessions/{id}'
-        response = client.get_one(route, extra_data)
-        if not response or not response.get('user'):
-            return None
-        session = Session(**response.get('user'))
-        return session
+    def delete_by_user_id(cls, client, user_id, extra_data=None) -> dict:
+        route = f'sessions/{user_id}'
+        response = client.delete(route, extra_data)
+        if not response or not response.get('status') == 'OK':
+            return False
+        return True
     
 

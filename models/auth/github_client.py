@@ -21,7 +21,6 @@ class GithubClient:
             # User has a Github account without any verified emails
             return None, None
         user = self.match_user(user_data)    
-        print(user.name, gh_access_token, 'IN GHCLIENT')
         session = Auth.login(gh_access_token, user.id)
         return user, session
 

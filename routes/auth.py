@@ -54,7 +54,8 @@ def github_callback():
         # See issues #18 and #28
         return 'No verified emails, buddy! Verify your GitHub email.'
     # this was for deploying the pre-signup version of the landing page
-    response = make_response(redirect(url_for('landing.presignup')))
+    #response = make_response(redirect(url_for('landing.presignup')))
+    response = make_response(redirect(url_for('landing.index')))
     response.set_cookie('session', session.id)
     return response
 

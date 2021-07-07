@@ -13,6 +13,10 @@ class MTClient(BaseClient):
         return super().create(route, data)
 
     @classmethod
+    def delete(cls, route, data=None):
+        return super().delete(route, data)
+
+    @classmethod
     def get_all(cls, route, extra_data=None):
         return super().get_all(route, extra_data)
     
@@ -25,5 +29,5 @@ class MTClient(BaseClient):
         return super().get_one(route, extra_data)
     
     @classmethod
-    def update_by_id(cls, route, id, attribute, value, extra_data=None):
-        return super().update_by_id(route, extra_data)
+    def update_by_id(cls, route, attribute, value, extra_data=None):
+        return super().update_by_id(route, attribute, value, extra_data)
