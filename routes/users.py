@@ -39,7 +39,8 @@ def delete_user(handle):
             'current_user': current_user.to_dict(),
         }
         if current_user.handle == handle:
-            current_user.delete()        
+            from models.clients.maker_teams_client import MTClient
+            current_user.delete(MTClient)        
             msg = 'Your account has been deleted.'
             return redirect(url_for('landing.index', msg=msg))
     data = {}

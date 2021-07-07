@@ -1,6 +1,8 @@
 from flask import render_template, request, g
 from os import environ
 from routes import landing
+from models.clients.maker_teams_client import MTClient
+from models.project import Project
 
 @landing.route('/thankyou', methods=['GET'], strict_slashes=False)
 def presignup():
@@ -11,12 +13,15 @@ def presignup():
 def index():
   """ render landing template """
   data = {}
-  data['projects'] = allProjects()
-
+  projects = Project.get_all(MTClient)
+  projects = [x.to_dict() for x in projects]
+  print(projects)
+  data['projects'] = projects
   if request.args.get('error'):
       data['error'] = request.args.get('error')
   if request.args.get('msg'):
       data['msg'] = request.args.get('msg')
+  print(request.current_user)
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
     return render_template('dash.html', data=data)

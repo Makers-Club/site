@@ -13,6 +13,13 @@ class User(Base):
             return None
         user = User(**response.get('user'))
         return user
+    
+    def delete(self, client):
+        route = f'users/{self.id}'
+        response = client.delete(route)
+        if not response or not response.get('status') == 'OK':
+            return False
+        return True
 
     @classmethod
     def get_all(cls, client, extra_data=None) -> list:
@@ -41,10 +48,13 @@ class User(Base):
         return User(**response.get('users')[0])
 
     def update(self, client, attribute, value, extra_data=None):
-        route = f'users/{id}'
+        route = f'users/{self.id}'
         response = client.update_by_id(route, attribute, value, extra_data)
+        print(response, '****')
         if not response:
             return None
+        # actually sets the new attr in current memory too, not just api
+        self.__dict__[attribute] = value
         return response.get('user')
     
     def save(self):

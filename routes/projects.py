@@ -1,18 +1,21 @@
 from flask import render_template, request
 from routes import projects
+from models.project import Project
+from models.clients.maker_teams_client import MTClient
 from models.auth import auth_client
 
-@projects.route('/', methods=['GET', 'POST'], strict_slashes=False)
+@projects.route('/<id>', methods=['GET'], strict_slashes=False)
 @auth_client.login_required
-def index():
-    project = setProject()
+def index(id):
+    project = Project.get_by_id(MTClient, int(id))
     data = {
         'current_user': request.current_user.to_dict(),
-        'project': project
+        'project': ''#project.to_dict()
     }
     return render_template('project.html', data=data)
 
 @projects.route('/<project_id>/<sprint_id>', methods=['GET'], strict_slashes=False)
+@auth_client.login_required
 def sprint_by_id(project_id, sprint_id):
     data = {
         'current_user': request.current_user.to_dict(),
@@ -22,6 +25,7 @@ def sprint_by_id(project_id, sprint_id):
     return render_template('sprint.html', data=data)
 
 @projects.route('/<project_id>/<sprint_id>/<task_id>', methods=['GET'], strict_slashes=False)
+@auth_client.login_required
 def sprint_task_by_id(project_id, sprint_id, task_id):
     data = {
         'current_user': request.current_user.to_dict(),
