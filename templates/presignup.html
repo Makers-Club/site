@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="container d-flex flex-column justfy-content-center text-center">
+Thank you! <br>
+You have successfully signed up for Maker Teams and will recieve an email upon launch!
+</section>
+
+{% endblock %}

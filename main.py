@@ -1,45 +1,19 @@
 from flask import Flask, jsonify
 from flask_cors import (CORS, cross_origin)
-from os import environ
-import pytest
+from os import environ, getenv
 from uuid import uuid4
-from functools import wraps
 from routes import *
 from flask import request, redirect, url_for
-from models.storage import DB
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
-
-DB_MIGRATION_URI = DB._MySQLClient__engine.url
 
 
 # initialize the app
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in environ:
-    app.secret_key = environ["FLASK_SECRET_KEY"]
+    app.secret_key = getenv("FLASK_SECRET_KEY")
 else:
     environ["FLASK_SECRET_KEY"] = str(uuid4())
 CORS(app, resources={r"*": {"origins": "*"}})
-
-
-app.config["SQLALCHEMY_DATABASE_URI"] = DB_MIGRATION_URI
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-
-
-@pytest.fixture
-def test_app():
-    """
-    This is the test version of the app.
-    It is imported by pytest unittests.
-    We use this to make test requests.
-    """
-    # app.config['TESTING'] = True
-    test_app = app.test_client()
-    yield test_app
 
 
 # register blueprints
@@ -48,7 +22,6 @@ app.register_blueprint(auth)
 app.register_blueprint(users)
 app.register_blueprint(tutorial)
 app.register_blueprint(projects)
-app.register_blueprint(api)
 app.register_blueprint(payments)
 
 @app.before_request
@@ -56,7 +29,7 @@ def before():
     for route in ['static/', 'favicon', 'auth/']:
         if route in request.url:
             return
-    from models.auth import Auth
+    from models.auth.auth import Auth
     logged_in_user = Auth.logged_in_user
     session = request.cookies.get('session')
     setattr(request, 'current_user', logged_in_user(session))

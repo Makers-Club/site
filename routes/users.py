@@ -1,11 +1,12 @@
 from flask import render_template, request, g, redirect, url_for
 from os import environ
 from routes import users
-from b import User
+from models.user import User
+from models.clients.maker_teams_client import MTClient
 
 @users.route('/', methods=['GET'], strict_slashes=False)
 def all():
-    all_users = User.get_all()
+    all_users = User.get_all(MTClient)
     current_user = request.current_user
     if current_user:
         current_user = current_user.to_dict()
@@ -20,7 +21,8 @@ def profile(handle):
     current_user = request.current_user
     if current_user:
         current_user = current_user.to_dict()
-    user = User.get_by_handle(handle)
+    from models.clients.maker_teams_client import MTClient
+    user = User.get_by_attribute_and_value(MTClient, 'handle', handle)
     if user:
         user = user.to_dict()
     data = {

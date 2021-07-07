@@ -1,4 +1,6 @@
-from b import User
+from models.user import User
+from models.clients.maker_teams_client import MTClient
+from models.session import Session
 from functools import wraps
 from flask import request, redirect, url_for
 
@@ -20,26 +22,21 @@ class Auth:
         ''' register a new user '''
         if not type(user) == User:
             raise TypeError
-        user.save()
+        user = User.create_new_user(MTClient)
         return user
     
     @classmethod
     def login(cls, token, user_id):
         ''' log a user in '''
-        from b import Session
-        new_session = Session(token=token, user_id=user_id)
-        new_session.save()
+        from models.session import Session
+        print(token, user_id, 'token and user_id IN AUTH>PY')
+        new_session = Session.create_new(MTClient, token, user_id)
+        print(new_session, 'new session')
         return new_session
     
     @classmethod
     def logged_in_user(cls, session):
-        from b import Session
-        from b import User
-        current_session = Session.get_by_id(session)
-        if not current_session:
-            return None
-        user_id = current_session.user_id
-        return User.get_by_id(user_id)
+        return Session.get_user_from_cookie(MTClient, session)
         
 
     

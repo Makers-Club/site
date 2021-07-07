@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
+{% block title %}{% endblock %}
 {% block head %}
   {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
@@ -17,13 +17,20 @@
     <div class="container py-4" id="options">
       <div class="row justify-content-between">
 
-        <div id="forDevelopers" class="card my-3 my-md-0 col-12 col-md-6 developer-card">
+        <div id="forDevelopers" class=" my-3 my-md-0 col-12 col-md-6 developer-card">
     
           <div class="card-body px-0">
             <header>
-              <h3 class="card-title">For developers</h3>
+              <h4 class="card-title">Developers</h4>
             </header>
-            <p class="card-text">Software students learn how to code, not how to build complete products. Companies then spend $75K+ training new hires. Maker Teams is a platform providing virtual apprenticeship through guided, team-based projects, based on REAL work. Pre-signup today!</p>
+            <p class="card-text">
+                <ul>
+                    <li style="list-style:square">Build entire webapps from start to finish.</li>
+                    <li style="list-style:square">Work in teams and find your community!</li>
+                    <li style="list-style:square">Follow guided projects based on REAL work, done for REAL clients.</li>
+                    <li style="list-style:square">Gain insight from the original developers.</li>
+                    <li style="list-style:square">Get your projects tested and deployed automatically.</li>
+                </ul>
             <!-- GitHub Sign up Button START -->
             <a href="{{ url_for('auth.send_visitor_to_github') }}">
                 <img class="img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
@@ -37,8 +44,9 @@
     
           <div class="card-body px-0 d-flex flex-column justify-content-between">
             <header>
-                <h3>For employers</h3>
-            <p class="card-text">Technical and professional insights that help you find developer talent for your specific needs, coming soon!</p>
+                <h4>Employers</h4>
+            <p class="card-text"><li style="list-style:square">Never spend 50k and 6+ months training early-career developers again!</li>
+                <li style="list-style:square">Use our technical and professional insights to help you find developer talent specific to your needs.</li>
             </header>
             <button type="button" class="btn border w-100" disabled>coming soon</button>
           </div>

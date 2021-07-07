@@ -39,11 +39,12 @@ class StripeClient():
     @staticmethod
     def match_payment_to_user(data):
         from models.user import User
+        from models.clients.maker_teams_client import MTClient
         email = data.get('email')
         name = data.get('name')
         email_match, name_match = None, None
         # need a query by email but this works for now
-        users = User.get_all()
+        users = User.get_all(MTClient)
         for user in users:
             if user.email.lower() == email.lower():
                 email_match = user

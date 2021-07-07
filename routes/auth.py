@@ -1,31 +1,35 @@
 """Defines all methods and routes related to user authentication"""
 from flask import request, render_template, Blueprint, abort, redirect, url_for, make_response
+#from routes import auth
 from routes import auth
-from models.auth import auth_client
+from models.auth.auth import Auth
 from models.auth import gh_client
+from models.clients.maker_teams_client import MTClient
 from os import environ
 
 
 
     
 @auth.route('/private')
-@auth_client.login_required
+@Auth.login_required
 def private():
     return render_template('about.html', data=None)
 
 @auth.route('/logout', methods=['GET'], strict_slashes=False)
 def logout():
-    from b import Session
+    from models.session import Session
     cookie = request.cookies.get('session')
-    session = Session.get_by_id(cookie)
-    if session:
-        session.delete()
+    user = Session.get_user_from_cookie(MTClient, cookie)
+    if not user:
+        return redirect(url_for('landing.index'))
+    Session.delete_by_user_id(MTClient, user.id)
     return redirect(url_for('landing.index'))
 
 
 @auth.route('/authenticate_with_github', methods=['GET'], strict_slashes=False)
 def send_visitor_to_github():
     """Sends user to Github Login to sign in."""
+    # lets put these credentials into githubclient as class variables
     scopes = ['user', 'repo']
     query_params = {
         'client_id': environ['GITHUB_CLIENT_ID'],
@@ -50,7 +54,7 @@ def github_callback():
         # See issues #18 and #28
         return 'No verified emails, buddy! Verify your GitHub email.'
     # this was for deploying the pre-signup version of the landing page
-    # response = make_response(redirect(url_for('landing.presignup')))
+    response = make_response(redirect(url_for('landing.presignup')))
     response.set_cookie('session', session.id)
     return response
 

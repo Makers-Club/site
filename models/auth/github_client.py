@@ -1,6 +1,6 @@
 from requests import post, get
 from re import search
-from b import User
+from models.user import User
 from models.auth.auth import Auth
 
 class GithubClient:
@@ -21,6 +21,7 @@ class GithubClient:
             # User has a Github account without any verified emails
             return None, None
         user = self.match_user(user_data)    
+        print(user.name, gh_access_token, 'IN GHCLIENT')
         session = Auth.login(gh_access_token, user.id)
         return user, session
 
@@ -73,15 +74,17 @@ class GithubClient:
     @staticmethod
     def match_user(user_data):
         """matches user data with a user, returns user"""
-        user = User.get_by_id(user_data['id'])
+        from models.clients.maker_teams_client import MTClient
+        user = User.get_by_id(MTClient, user_data['id'])
 
         # TODO: See Issue #66
         if user is None: # No user? Make new user!
-            user = User(**user_data)
-            user.save()
+            from models.clients.maker_teams_client import MTClient
+            user = User.create_new_user(MTClient, user_data)
             print('NEW USER {} ADDED TO DATABASE'.format(user.id))
         else:
             # update user's access token to new value
-            user.access_token = user_data['access_token']
-            user.save()
+            #user.access_token = user_data['access_token']
+            #user.save()
+            pass
         return user
