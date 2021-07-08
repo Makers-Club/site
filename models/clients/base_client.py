@@ -26,25 +26,36 @@ class BaseClient():
     @classmethod
     def create_user(cls, route, extra_data=None):
         url, data = prepare_data(cls, route, extra_data)
-        print(url)
-        return requests.post(url, data=data).json()
+        url += 'token=123123'
+        response = requests.post(url, data=data)
+        if not response:
+            return None
+        return response.json()
     
     @classmethod
     def create(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
-        print(url)
-        return requests.post(url).json()
+        response = requests.post(url)
+        if not response:
+            return None
+        return response.json()
 
     @classmethod
     def get_all(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
-        return requests.get(url).json()
+        response = requests.get(url)
+        if not response:
+            return None
+        return response.json()
 
     @classmethod
     def get_one(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
         print(url)
-        return requests.get(url).json()
+        response = requests.get(url)
+        if not response:
+            return None
+        return response.json()
     
     @classmethod
     def get_by_attribute_and_value(cls, route, extra_data=None):

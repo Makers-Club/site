@@ -8,7 +8,7 @@ class User(Base):
     @classmethod
     def create_new_user(cls, client, data):
         route = 'users'
-        response = client.create_new(route, data)
+        response = client.create_new_user(route, data)
         if not response or not response.get('user'):
             return None
         user = User(**response.get('user'))
@@ -42,7 +42,6 @@ class User(Base):
     def get_by_attribute_and_value(cls, client, attribute, value, extra_data=None):
         route = f'users/{attribute}/{value}'
         response = client.get_by_attribute_and_value(route)
-        print(response)
         if not response or not response.get('users'):
             return None
         return User(**response.get('users')[0])
@@ -50,7 +49,6 @@ class User(Base):
     def update(self, client, attribute, value, extra_data=None):
         route = f'users/{self.id}'
         response = client.update_by_id(route, attribute, value, extra_data)
-        print(response, '****')
         if not response:
             return None
         # actually sets the new attr in current memory too, not just api

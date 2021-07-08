@@ -45,9 +45,11 @@
             <div class="d-flex flex-column p-3">
               <span class="pr-2">
                 {{ current_user.name }}
+
               </span>
+            
+              <a>Credits: {{ current_user.credits }}</a>
               
-              <a class="nav-lin" href="{{ url_for('auth.logout') }}">Sign Out</a>
             </div>
           </a>
 
@@ -71,19 +73,7 @@
 
         
         <div class="collapse navbar-collapse " id="navbarText">
-            {% if current_user %}
-            <div class=" ml-auto ">
-                <header class="d-flex align-items-center">
-                    <h4 class="pr-2">{{ current_user.name }}</h4>
-                    <img class="profile_pic" src="{{ current_user.avatar_url }}" height="50" width="50"/>
-                </header>
-                    {% if current_user.credits %}
-                    {{ current_user.credits|int }}
-                    {% else %}0.00{% endif %}
-                    credits
-                    <a class="nav-lin" href="{{ url_for('auth.logout') }}">Sign Out</a>
-            </div>
-            {% else %}
+            
 
 
         
@@ -96,7 +86,11 @@
                 <a class="nav-link text-right" href="{{ url_for('landing.about') }}">Product</a>
                 </li>
                 <li class="nav-item">
+                    {% if current_user %}
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Sign Out</a>
+                    {% else %}
                         <a class="nav-link text-right" href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
+                    {% endif %}
                 </li>
           </ul>
           
@@ -106,7 +100,6 @@
 
 
             
-            {% endif %}
           
         </div>
     <!-- -->

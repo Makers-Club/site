@@ -11,10 +11,14 @@
     {% set project = data.project %}
 {% endif %}
 
-<h1>{{ project.title }} - {{project.progress}}% Done</h1>
+{% if data.info %}
+    {% set info = data.info %}
+{% endif %}
+
+<h1>{{ info.name }} - {{project.progress}}% Done</h1>
 
 <p>
-We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{project.repository}}">{{ project.repository }}</a>.
+We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{project.repository_link}}">{{ info.name }}</a>.
 </p>
 
 <p id="description">

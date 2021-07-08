@@ -13,15 +13,19 @@ def presignup():
 def index():
   """ render landing template """
   data = {}
+  from models.project_template import ProjectTemplate
+  project_templates = ProjectTemplate.get_all(MTClient)
+  data['templates'] = []
+  for e in project_templates:
+      data['templates'].append(e.to_dict())
+      print(e.to_dict())
   projects = Project.get_all(MTClient)
   projects = [x.to_dict() for x in projects]
-  print(projects)
   data['projects'] = projects
   if request.args.get('error'):
       data['error'] = request.args.get('error')
   if request.args.get('msg'):
       data['msg'] = request.args.get('msg')
-  print(request.current_user)
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
     return render_template('dash.html', data=data)
@@ -33,7 +37,6 @@ def about():
   data = {}
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
-    print(request.current_user.to_dict())
   return render_template('about.html', data=data)
 
 @landing.route('/contact', methods=['GET'], strict_slashes=False)
