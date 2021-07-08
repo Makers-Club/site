@@ -10,6 +10,8 @@ class MTClient(BaseClient):
 
     @classmethod
     def create_new(cls, route, data):
+        if cls.__name__ == 'User':
+            return super().create_user(route, data)
         return super().create(route, data)
 
     @classmethod

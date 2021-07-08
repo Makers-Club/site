@@ -24,9 +24,16 @@ def prepare_data(cls, route, extra_data):
 class BaseClient():
 
     @classmethod
-    def create(cls, route, extra_data=None):
+    def create_user(cls, route, extra_data=None):
         url, data = prepare_data(cls, route, extra_data)
+        print(url)
         return requests.post(url, data=data).json()
+    
+    @classmethod
+    def create(cls, route, extra_data=None):
+        url = parameters(cls, route, extra_data)
+        print(url)
+        return requests.post(url).json()
 
     @classmethod
     def get_all(cls, route, extra_data=None):

@@ -13,13 +13,6 @@ class Project(Base):
             return None
         project = Project(**response.get('project'))
         return project
-    
-    def delete(self, client):
-        route = f'projects/{self.id}'
-        response = client.delete(route)
-        if not response or not response.get('status') == 'OK':
-            return False
-        return True
 
     @classmethod
     def get_all(cls, client, extra_data=None) -> list:
@@ -29,12 +22,17 @@ class Project(Base):
             return []
         return [Project(**project_dict) for project_dict in response.get('projects')]
     
+    def delete(self, client):
+        route = f'projects/{self.id}'
+        response = client.delete(route)
+        if not response or not response.get('status') == 'OK':
+            return False
+        return True
+    
     @classmethod
     def get_by_id(cls, client, id, extra_data=None) -> dict:
         route = f'projects/{id}'
-        print(client)
         response = client.get_one(route, extra_data)
-        print('****** ', response)
         if not response or not response.get('project'):
             return None
         project = Project(**response.get('project'))
