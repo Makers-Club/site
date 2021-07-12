@@ -40,6 +40,9 @@ a:visited {
   
   background-color: white;
 }
+a:active, a:focus {
+    border: none;
+}
 
 .profile_pic {
     border-radius: 100%;

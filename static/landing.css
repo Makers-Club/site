@@ -1,19 +1,59 @@
 :root {
   --background-gradient: linear-gradient(180deg, #FFFFFF 0%, #F2F7F7 40.13%, #E9F2F2 100%), #EFEFEF;
-  --hero-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --background-gradient2: linear-gradient(0deg, #FFFFFF 0%, #F2F7F7 40.13%, #E9F2F2 100%), #EFEFEF;
+  --hero-shadow: 10px 10px 42px rgba(142, 145, 146, 0.25), 0px 4px 4px rgba(80, 80, 80, 0.25);
 }
 
 .bg-hero {
   background: var(--background-gradient);
+  border-radius: 4px;
   /* box-shadow: var(--hero-shadow); */
   /*min-height: 75vh; this was also for the presignup version of deployment*/
 }
-
+#more-info {
+    background: var(--background-gradient);
+    width: 100vw;
+}
+#intro {
+}
+.card {
+    box-shadow: var(--hero-shadow);
+}
+.github-signup-btn {
+    min-width: 200px;
+    min-height: 33px;
+    max-width: 300px;
+    max-height: 42px;
+}
+main {
+    position: absolute;
+}
+#hero {
+    position: fixed;
+    top: 6rem;
+    left: 0;
+    height: 50vh;
+    width: 100vw;
+}
+#wrapper {
+    position: relative;
+    margin-top: 50vh;
+    width: 100vw;
+    left: 0;
+    z-index: 3;
+    background-color: white;
+}
+li {
+    padding: 4px 0 4px 0;
+}
 #hero > div {
   max-width: 600px;
 }
 .display-4 {
     font-size: 4rem;
+}
+#callToAction > h1 {
+    font-size: 7vh;
 }
 .developer-card {
     box-shadow: 4px 3px 4px rgba(108, 206, 208, 0.25);
@@ -27,7 +67,24 @@
 #forEmployers * {
     color: var(--neutral);
 }
-
+.f-sm  {
+    font-size: 15px;
+}
+.t {
+    color: rgb(95, 95, 95);
+}
+.r {
+    color: rgb(126, 126, 126);
+}
+.e {
+    color: rgb(151, 151, 151);
+}
+.w {
+    color: rgb(194, 194, 194);
+}
+.q {
+    color: rgb(216, 216, 216);
+}
 .text-underline {
   font-size: .75rem;
   text-decoration: underline !important;

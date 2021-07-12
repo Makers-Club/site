@@ -1,58 +1,65 @@
-{% extends "base.html" %}
-{% block title %}{% endblock %}
-{% block head %}
-  {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
-{% endblock %}
+<!doctype html>
+<html>
 
-{% block content %}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- put css links here -->
+    <script src="{{ url_for('static', filename='github_login.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+
+    <!-- bootstrap 4.4 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+ 
+    <title>
+      Maker Teams
+    </title>
+  </head>
+
+
+  <body>
+
+    
+
+    <header class="container" id="header">
+      <nav class="navbar navbar-expand-md fixed-top bg-white">
+
+       
+
+        <a class="navbar-brand" href="{{ url_for('landing.index') }}">
+        <!---->
+            <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
+            <!---->
+        </a>
+        
+        
+
+            
+
+        
+            
+     
+    </header>
+
+<main>
 
 <section class="bg-hero" id="hero">
-  <div class="container w-75 p-0">
+  <div class="container d-flex justify-content-center flex-column p-0 pl-2">
     
     <header class="" id="callToAction">
-      <h1 class="display-4">So you're a coder,<br>but are you a Maker?</h1>
+      <h1 class="display-4">The world needs Makers, not just coders.</h1>
     </header>
+    <p class="h5 pt-5 mt-3 font-weight-light">Join a team and start making. Your virtual apprenticeship starts here.</p>
+    <div class="w-100 d-flex justify-content-center p-3">
+        <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-75 d-flex justify-content-center">
+        <img class="w-50 img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
+    </a>
     
-    <div class="container py-4" id="options">
-      <div class="row justify-content-between">
-
-        <div id="forDevelopers" class=" my-3 my-md-0 col-12 col-md-6 developer-card">
-    
-          <div class="card-body px-0">
-            <header>
-              <h4 class="card-title">Developers</h4>
-            </header>
-            <p class="card-text">
-                <ul>
-                    <li style="list-style:square">Build entire webapps from start to finish.</li>
-                    <li style="list-style:square">Work in teams and find your community!</li>
-                    <li style="list-style:square">Follow guided projects based on REAL work, done for REAL clients.</li>
-                    <li style="list-style:square">Gain insight from the original developers.</li>
-                    <li style="list-style:square">Get your projects tested and deployed automatically.</li>
-                </ul>
-            <!-- GitHub Sign up Button START -->
-            <a href="{{ url_for('auth.send_visitor_to_github') }}">
-                <img class="img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
-            </a>
-            <!-- GitHub Sign up Button END -->
-            
-          </div>
-
-        </div>
-        <div id="forEmployers" class="card col-12 col-md-6 employer-card">
-    
-          <div class="card-body px-0 d-flex flex-column justify-content-between">
-            <header>
-                <h4>Employers</h4>
-            <p class="card-text"><li style="list-style:square">Never spend 50k and 6+ months training early-career developers again!</li>
-                <li style="list-style:square">Use our technical and professional insights to help you find developer talent specific to your needs.</li>
-            </header>
-            <button type="button" class="btn border w-100" disabled>coming soon</button>
-          </div>
-    
-        </div>
-      </div>   
     </div>
 
     
@@ -62,10 +69,116 @@
 
 
 
+<div id="wrapper">
+
+<section class=" w-100 py-4 d-flex justify-content-center" id="intro">
+      <div class="row justify-content-around container">
+
+        <div  class="card border-0 my-3 my-md-0 col-12 col-md-5 ">
+    
+          <div class="card-body px-1 d-flex flex-column justify-content-between h-100">
+            <header>
+                <h4>I'm seeking employment</h4>
+                    <li class="f-sm" style="list-style:square">Prove you're ready for serious work by doing it here first.</li>
+                    <li class="f-sm" style="list-style:square">Code in teams <em>before</em> you start your career.</li>
+                    <li class="f-sm" style="list-style:square">Build complete webapps based on real-world projects.</li>
+                    <li class="f-sm" style="list-style:square">Discover a community of Makers like you.</li>
+            </header>
+            <!-- GitHub Sign up Button START -->
+            
+            <!-- GitHub Sign up Button END -->
+            
+          </div>
+
+        </div>
+        <div  class="card border-0 my-3 my-md-0 col-12 col-md-5 ">
+    
+          <div class="card-body px-1 d-flex flex-column justify-content-between h-100">
+            <header>
+                <h4>I plan to freelance</h4>
+                <li class="f-sm" style="list-style:square">Explore how others manage client relationships.</li>
+                <li class="f-sm" style="list-style:square">Expand your understanding of webapp architecture.</li>
+                <li class="f-sm" style="list-style:square">Discover how to think about the development process.</li>
+                <li class="f-sm" style="list-style:square">Gain insight from developers on real work they've done.</li>
+
+
+            </header>
+            
+          </div>
+    
+        </div>
+        
+      </div>  
+
+</section>
+
+
+<div class="container w-25 d-flex justify-content-center my-4">
+    <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-100 d-flex justify-content-center">
+        <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
+    </a>
+</div>
 
 
 
+<div id="more-info">
+<section class="container py-4 mt-5 d-flex flex-column justify-content-center ">
+    <header>
+        <h3>An apprenticeship platform for web developers.</h3>
+        <p class="col-12 col-md-10"></p>
+    </header>
+    
+<h5>The Problem</h5>
+<p class="col-12 col-md-10">
+    Early-career web developers often require 6 months of training and over $50k before they can contribute meaningful code.
+    Bootcamp students learn programming languages. College students learn computer science theory. Neither begin their career ready to make serious webapps, but isn’t that the point?</p>
+
+<h5>The Solution</h5>
+<p class="col-12 col-md-10">
+    A social, team-focused coding platform that provides insights from developers of real-world projects, guides you through recreating your own versions of them, tests your code automatically, and showcases your work for employers. There are no toy-torials here. Only real work to prepare you for the real world.
+</p>
+
+<h5>Our Purpose</h5>
+<p class="col-12 col-md-10">
+    Maker Teams exists to eliminate uncertainty for software students and junior developers. We know that programming and making products are two very different things. We've been there. Come join or create a team. Allow practice, guidance, and teamwork to provide answers to the questions that documentation can't help you with.
+    <ul>
+        <li>"Where do I even begin?" </li>
+        <li class="t">"Do I need an API?" </li>
+        <li class="r">"Should this function be here or there?"</li>
+        <li class="e">"How do I avoid tech-debt?"</li>
+        <li class="w">"How do large teams affect coding style?"</li>
+        <li class="q">"What questions should I ask clients?"</li>
+        <li>...and the list goes on and on.</li>
+    </ul>
+</p>
 
 
+    <span class="text-center">Don't worry. We've got your back.</span>
+<div class="container w-25 d-flex justify-content-center my-4">
+    <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-100 d-flex justify-content-center">
+        <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
+    </a>
+</div>
+</section>
 
-{% endblock %}
+<footer class="border-top pt-5">
+    <div class="container text-center">
+    
+    ©Copyright Maker Teams Inc. 2021
+    </div>
+</footer>
+
+</div>
+
+
+</div>
+</main>
+
+    
+      <!-- ADD a Copyright?? -->
+      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+  </body>
+
+</html>
+
+
