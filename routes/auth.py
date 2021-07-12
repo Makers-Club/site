@@ -30,7 +30,7 @@ def logout():
 def send_visitor_to_github():
     """Sends user to Github Login to sign in."""
     # lets put these credentials into githubclient as class variables
-    scopes = ['user', 'repo']
+    scopes = ['read:user', 'public_repo']
     query_params = {
         'client_id': environ['GITHUB_CLIENT_ID'],
         'scope': '%20'.join(scopes)
