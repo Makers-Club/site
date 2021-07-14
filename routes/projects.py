@@ -4,30 +4,30 @@ from models.project import Project
 from models.clients.maker_teams_client import MTClient
 from models.auth import auth_client
 
-@projects.route('/<id>', methods=['GET'], strict_slashes=False)
+@projects.route('/create/<template_id>', methods=['GET'], strict_slashes=False)
+def create_project(template_id):
+    print('template', template_id)
+    project = Project.create_new_project(MTClient, {'project_template_id': template_id})    
+    if not project:
+        return redirect(url_for('landing.index'))
+    return redirect(url_for('projects.index', template_id=template_id, project_id=project.id))
+
+
+@projects.route('/<template_id>/<project_id>', methods=['GET'], strict_slashes=False)
 @auth_client.login_required
-def index(id):
-    projects = Project.get_all(MTClient)
-    found_project = None
-    for project in projects:
-        if project.id == id:
-            found_project = project
-    print(found_project)
-    if found_project:
-        from models.project_template import ProjectTemplate
-        project_infos = ProjectTemplate.get_all(MTClient)
-        info = None
-        for proj_info in project_infos:
-            if proj_info.id == found_project.project_template_id:
-                info = proj_info
-                print(info.to_dict(), '*******\n')
-        found_project = found_project.to_dict()
-        print(found_project)
-        
+def index(template_id, project_id):
+    print(template_id, project_id)
+    # Get the project that was just created with a template id
+    project = Project.get_by_id(MTClient, project_id)
+    
+    found_template = None
+    print(project.to_dict())
+    
+
     data = {
         'current_user': request.current_user.to_dict(),
-        'project': found_project,
-        'info': info
+        'this_project': project,
+        'project_info': {'test': 'yea'}
     }
     return render_template('project.html', data=data)
 

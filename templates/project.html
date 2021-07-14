@@ -7,28 +7,28 @@
 
 {% block content %}
 
-{% if data.project %}
-    {% set project = data.project %}
+{% if data.this_project %}
+    {% set this_project = data.this_project %}
 {% endif %}
 
-{% if data.info %}
-    {% set info = data.info %}
+{% if data.project_info %}
+    {% set project_info = data.project_info %}
 {% endif %}
 
-<h1>{{ info.name }} - {{project.progress}}% Done</h1>
+<h1>{{ project_info.name }} - {{this_project.progress}}% Done</h1>
 
 <p>
-We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{project.repository_link}}">{{ info.name }}</a>.
+We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{this_project.repository_link}}">{{ project_info.name }}</a>.
 </p>
 
 <p id="description">
     <h3>Description:</h3>
-    {{project.description}}
+    {{this_project.description}}
 </p>
 <p id="goals">
     <h3>Goals:</h3>
     <ul>
-        {% for goal in project.goals %}
+        {% for goal in this_project.goals %}
             <li>* {{ goal }}</li>
         {% endfor %}
     </ul>
@@ -42,7 +42,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 {% set i = namespace(value=0) %}
 <div id="carouselExampleIndicators" class="carousel slide w-50 card" data-ride="carousel">
   <ol class="carousel-indicators">
-    {% for img in project.preview_images %}
+    {% for img in this_project.preview_images %}
     <li data-target="#carouselExampleIndicators" data-slide-to="{{i.value}}" class="active"></li>
     {% set i.value = i.value + 1 %}
     {% endfor %}
@@ -51,7 +51,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
     {% set i = namespace(value=0) %}
     
-    {% for img in project.preview_images %}
+    {% for img in this_project.preview_images %}
     {%if i == 0%}active{%endif%}
         <div class="carousel-item {% if i.value == 0 %}active{% endif %} card-body border">
         <img class="d-block w-100" src="{{img}}">
@@ -82,7 +82,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 
 <p id="videos">
-    {% for video in project.videos %}
+    {% for video in this_project.videos %}
     <div class="mx-2">
         <iframe width="560" height="315" src="{{video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
@@ -93,7 +93,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 <p id="resources">
     <h3>Resources</h3>
     <ul>
-        {% for resource in project.resources %}
+        {% for resource in this_project.resources %}
         <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
         {% endfor %}
     </ul>
@@ -102,7 +102,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 
 <div id="quizes">
-    {% for quiz in project.quizes %}
+    {% for quiz in this_project.quizes %}
     <a href="{{quiz}}">Quiz link would go here.</a>
     {% endfor %}
 </div>
@@ -110,7 +110,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 <section id="sprints">
 
-    {% for sprint in project.sprints %}
+    {% for sprint in this_project.sprints %}
     <a href="{{ url_for('projects.sprint_by_id', project_id=1, sprint_id=1)  }}">
         <div class="card h4">
             {{ sprint }}
@@ -127,7 +127,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 
 
-<button onclick="test_code( '{{ current_user.handle }}', '{{ project.repository }}' )">Check your repo</button>
+<button onclick="test_code( '{{ current_user.handle }}', '{{ this_project.repository }}' )">Check your repo</button>
 </br>
 <div id="checks">Results:</div>
 

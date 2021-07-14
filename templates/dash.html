@@ -44,7 +44,7 @@
                     {{ template.description }}<br><br>
                 </p>
                 <div class="row align-items-center justify-content-around border">
-                    <a href="{{ url_for('projects.unlock', id=template.id)}}">Start project</a>
+                    <a href="{{ url_for('projects.create_project', template_id=template.id)}}">Start project</a>
                     <button class="btn btn-primary">Unlock</button>
                     </a>
                     <p class="my-auto">

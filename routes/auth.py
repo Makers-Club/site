@@ -30,7 +30,7 @@ def logout():
 def send_visitor_to_github():
     """Sends user to Github Login to sign in."""
     # lets put these credentials into githubclient as class variables
-    scopes = ['read:user', 'public_repo']
+    scopes = ['read:user', 'user:email', 'public_repo']
     query_params = {
         'client_id': environ['GITHUB_CLIENT_ID'],
         'scope': '%20'.join(scopes)
@@ -50,12 +50,14 @@ def github_callback():
         abort(404)
 
     user, session = gh_client.get_user(gh_tmp_code)
+    print(user, session)
     if user is None:
         # See issues #18 and #28
-        return 'No verified emails, buddy! Verify your GitHub email.'
+        return 'No verified emails! Please verify your email with GitHub and try again.'
     # this was for deploying the pre-signup version of the landing page
-    #response = make_response(redirect(url_for('landing.presignup')))
-    response = make_response(redirect(url_for('landing.index')))
+    response = make_response(redirect(url_for('landing.presignup')))
+    #response = make_response(redirect(url_for('landing.index')))
     response.set_cookie('session', session.id)
     return response
+
 
