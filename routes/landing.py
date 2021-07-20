@@ -15,21 +15,19 @@ def index():
   data = {}
   from models.project_template import ProjectTemplate
   project_templates = ProjectTemplate.get_all(MTClient)
+
   data['templates'] = []
-  for e in project_templates:
-      data['templates'].append(e.to_dict())
-      print(e.to_dict())
-  projects = Project.get_all(MTClient)
-  projects = [x.to_dict() for x in projects]
-  data['projects'] = projects
-  if request.args.get('error'):
-      data['error'] = request.args.get('error')
-  if request.args.get('msg'):
-      data['msg'] = request.args.get('msg')
+
+  for template in project_templates:
+      data['templates'].append(template.to_dict())
+
   if request.current_user:
     data['current_user'] = request.current_user.to_dict()
+    print('template id', [x.get('id') for x in data['templates']])
     return render_template('dash.html', data=data)
-  return render_template('landing.html', data=data)
+  return render_template('landing.html')
+
+
 
 @landing.route('/about', methods=['GET'], strict_slashes=False)
 def about():

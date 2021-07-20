@@ -9,7 +9,7 @@ auth_data = {
     'redirect_uri': environ['GITHUB_CALLBACK_URL']
 }
 if getenv('PRODUCTION'):
-    auth_data['redirect_uri'] = 'https://maker-teams-site.uc.r.appspot.com/auth/github_callback'
+    auth_data['redirect_uri'] = 'https://makerteams.org/auth/github_callback'
     
 gh_client = GithubClient(auth_data)
 auth_client = Auth()

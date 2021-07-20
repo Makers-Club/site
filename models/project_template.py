@@ -19,5 +19,6 @@ class ProjectTemplate(Base):
         route = 'project_templates'
         response = client.get_all(route, extra_data)
         if not response or not response.get('project_templates'):
+            print(response, '**BAD RESPONSE**')
             return []
         return [ProjectTemplate(**project_template_dict) for project_template_dict in response.get('project_templates')]
