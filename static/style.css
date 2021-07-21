@@ -5,6 +5,10 @@
     --darkest: rgb(42, 42, 42);
     --lightest: white;
 }
+a[target="_blank"]:after {
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==');
+    margin: 0 3px 0 5px;
+}
 
 * {
     margin: 0px;
@@ -26,7 +30,9 @@ main {
 li {
   list-style-type: none;
 }
-
+.template_preview {
+    max-width: 100%;
+}
 a:visited {
     color: var(--dark);
 }

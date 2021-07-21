@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dash{% endblock %}
+{% block head %}
+  {{ super() }}
+  <script src="/static/scripts/check.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<section class="row px-4">
+
+{% if data.projects %}
+    {% for project in data.projects %}
+        <div class="card text-center col p-2">
+            {{project.progress}}<br>
+            <a href="{{ url_for('projects.one', template_id=data.templates[0].id, project_id=project.id) }}">View Project</a><br>
+            {{ project.name }}
+        </div>
+    {% endfor %}
+{% else %}
+Projects failed to load. Try to hard refresh the page. (ctr + shift + R)
+{% endif %}
+
+</section>
+
+
+
+{% endblock %}

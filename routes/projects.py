@@ -5,18 +5,52 @@ from models.project_template import ProjectTemplate
 from models.clients.maker_teams_client import MTClient
 from models.auth import auth_client
 
+
+@projects.route('/', methods=['GET'], strict_slashes=False)
+@auth_client.login_required
+def index():
+    projects = Project.get_all(MTClient)
+    templates = ProjectTemplate.get_all(MTClient)
+    if projects:
+        projects = [obj.to_dict() for obj in projects]
+    if templates:
+        templates = [obj.to_dict() for obj in templates]
+    current_user = request.current_user.to_dict()
+    data = {
+        'projects': projects,
+        'templates': templates,
+        'current_user': current_user
+    }
+    return render_template('all_projects.html', data=data)
+    
+
 @projects.route('/create/<template_id>', methods=['GET'], strict_slashes=False)
+@auth_client.login_required
 def create_project(template_id):
-    print('template', template_id)
+    templates = ProjectTemplate.get_all(MTClient)
+    cost = 0
+    for template in templates:
+        if template.id == template_id:
+            cost = template.cost
+    current_user = request.current_user
+    if cost > current_user.credits:
+        data = {'msg': 'Not enough credits.'}
+        return redirect(url_for('landing.index'), data=data)
     project = Project.create_new_project(MTClient, {'project_template_id': template_id})  
     if not project:
         return redirect(url_for('landing.index'))
-    return redirect(url_for('projects.index', template_id=template_id, project_id=project.id))
+    updated_credits = current_user.credits - cost
+    updated_user = current_user.update(MTClient, 'credits', updated_credits)
+    if not updated_user:
+        data = {'msg': "We're having trouble charging your credits. Please contact support."}
+        return redirect(url_for('landing.index'), data=data)
+    print(updated_user)
+    return redirect(url_for('projects.one', template_id=template_id, project_id=project.id))
 
 
 @projects.route('/<template_id>/<project_id>', methods=['GET'], strict_slashes=False)
 @auth_client.login_required
-def index(template_id, project_id):
+def one(template_id, project_id):
     print(project_id, 'proj id')
     # Get the project that was just created with a template id
     #project = Project.get_by_id(MTClient, project_id)
@@ -54,6 +88,7 @@ def unlock(id):
 
 
 @projects.route('/<id>/<sid>', methods=['GET'], strict_slashes=False)
+@auth_client.login_required
 def sprint(id, sid):
     from models.sprint_template import SprintTemplate
     from models.sprint import Sprint

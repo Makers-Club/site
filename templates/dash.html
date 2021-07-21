@@ -30,32 +30,31 @@
 {% if data.templates %}
 {% set templates = data.templates %}
 
-    <h3>Available Projects</h3>
-<section class="container">
+<section class="px-4 py-5">
+    <h1 class="pb-5">Recreate Real Work</h1>
     <div class="row">
 {% for template in templates %}
         <div class="card col-3 m-2">
-            <img src="{{ template.preview_images }}" class="card-img-top" alt="{{ template.name }}_preview">
-            <div class="card-body">
-                <h5 class="card-title">{{ template.title }}</h5><br>
-                <a href="{{ template.link }}">view here</a><br><br>
+            <div class=" text-right">
+                <h4><a href="{{ template.link }}" class="text-info" target="_blank">{{ template.name }}</a></h4>
+                <img class="template_preview" src="{{ template.preview_images }}" alt="{{ template.name }}_preview">
+            </div>
+            <div>
+                
                 <p class="card-text">
-                    Author: {{ template.author }}<br><br>
-                    {{ template.description }}<br><br>
+                    Developer: <a href="{{ url_for('users.profile', handle=template.author) }}"> @{{ template.author }}</a><br><br>
+                    <small class="text-sm">{{ template.description }}<br><br></small>
                 </p>
-                <div class="row align-items-center justify-content-around border">
-                    <a href="{{ url_for('projects.create_project', template_id=template.id)}}">Start project</a>
-                    <button class="btn btn-primary">Unlock</button>
-                    </a>
-                    <p class="my-auto">
-                        ${{ template.cost }}
-                    </p>
-                </div>
+                <a href="{{ url_for('projects.create_project', template_id=template.id)}}" class="row align-items-center justify-content-around border">
+                    <button class="btn text-primary bg-warning w-100">Start project - {{ template.cost }} credits</button>
+                </a>
             </div>
         </div>
     {% endfor %}
     </div>
 </section>
+{% else %}
+Project Templates failed to load. Try a hard refresh of the page. (ctr + shift + R)
 {% endif %}
 
 {% endblock %}
