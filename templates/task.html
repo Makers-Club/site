@@ -7,8 +7,8 @@
 
 {% block content %}
 
-{% if data.project %}
-    {% set project = data.project %}
+{% if data.info %}
+    {% set info = data.info %}
 {% endif %}
 {% set task = data.task %}
 
@@ -17,18 +17,22 @@
     <p id="goals">
         <h3>Goals:</h3>
         <ul>
-            {% for goal in project.goals %}
+            {% if info.goals %}
+            {% for goal in info.goals %}
                 <li>* {{ goal }}</li>
             {% endfor %}
+            {% endif %}
         </ul>
     </p>
 
     <p id="resources">
         <h3>Resources</h3>
         <ul>
-            {% for resource in project.resources %}
+            {% if info.resources %}
+            {% for resource in info.resources %}
             <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
             {% endfor %}
+            {% endif %}
         </ul>
     </p>
 

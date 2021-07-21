@@ -22,6 +22,8 @@ app.register_blueprint(auth)
 app.register_blueprint(users)
 app.register_blueprint(projects)
 app.register_blueprint(payments)
+app.register_blueprint(sprints)
+app.register_blueprint(tasks)
 
 @app.before_request
 def before():

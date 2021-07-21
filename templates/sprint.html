@@ -9,31 +9,22 @@
 {% if data.sprint %}
     {% set sprint = data.sprint %}
 {% endif %}
-{% if data.info %}
-    {% set info = data.info %}
-{% endif %}
 
-<h3>Sprint #{{info.number}}</h3>
-
+{{ data.sprint}}
 <p id="description">
     <h3>Description:</h3>
-    {{info.description}}
 </p>
 <p id="goals">
     <h3>Goals:</h3>
     <ul>
-            <li> {{ info.goals }}</li>
     </ul>
-    {{info}}
 </p>
 
 <p id="videos">
-    {% for video in info.videos %}
     <div class="mx-2">
         <iframe width="560" height="315" src="{{video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
     </div>
-    {% endfor %}
 </p>
 
 <p id="resources">
@@ -56,12 +47,12 @@
 
 <section id="tasks">
 
-    {% for task in data.sprint.tasks %}
-        <a href="{{ url_for('projects.sprint_task_by_id', project_id=1, sprint_id=1, task_id=1)  }}">
-            <div class="card h4">
-                Task {{ task.name }}
-            </div>
-        </a>
+    {% for task in sprint.tasks %}
+        <a href="{{ url_for('tasks.index', id=task)  }}">
+        <div class="card h4">
+            {{ task }}
+        </div>
+    </a>
     {% endfor %}
 
 </section>

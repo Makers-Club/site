@@ -51,14 +51,20 @@ def create_project(template_id):
 @projects.route('/<template_id>/<project_id>', methods=['GET'], strict_slashes=False)
 @auth_client.login_required
 def one(template_id, project_id):
+    from models.sprint import Sprint
     print(project_id, 'proj id')
     # Get the project that was just created with a template id
-    #project = Project.get_by_id(MTClient, project_id)
-    import requests
-    project = requests.get('https://api.makerteams.org/projects/5b284552-e16b-4a99-a30f-53c6bf955416?token=123123').json()
-
+    project = Project.get_by_id(MTClient, project_id)
+    if project:
+        project = project.to_dict()
     pts = ProjectTemplate.get_all(MTClient)
-    project = {'some': 'data'}
+    sprints = Sprint.get_all(MTClient)
+    print(sprints)
+    our_sprints = []
+    for s in sprints:
+        if s.project_id == project.get('id'):
+            our_sprints.append(s.id)
+    project['sprints'] = our_sprints
     data = {
         'current_user': request.current_user.to_dict(),
         'this_project': project,

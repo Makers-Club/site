@@ -13,3 +13,5 @@ from routes.auth import *
 from routes.users import *
 from routes.projects import *
 from routes.payments import *
+from routes.sprints import *
+from routes.tasks import *

@@ -16,7 +16,7 @@
 {% endif %}
 
 <h1>{{ project_info.name }} - {{this_project.progress}}% Done</h1>
-
+{{this_project}} 
 <p>
 We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{this_project.repository_link}}">{{ project_info.name }}</a>.
 </p>
@@ -111,7 +111,7 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 <section id="sprints">
 
     {% for sprint in this_project.sprints %}
-    <a href="{{ url_for('projects.sprint_by_id', project_id=1, sprint_id=1)  }}">
+    <a href="{{ url_for('sprints.index', id=sprint)  }}">
         <div class="card h4">
             {{ sprint }}
         </div>
