@@ -58,6 +58,10 @@ def one(template_id, project_id):
     if project:
         project = project.to_dict()
     pts = ProjectTemplate.get_all(MTClient)
+    project_info = None
+    for pt in pts:
+        if pt.id == project.get('project_template_id'):
+            project_info = pt.to_dict()
     sprints = Sprint.get_all(MTClient)
     print(sprints)
     our_sprints = []
@@ -68,7 +72,7 @@ def one(template_id, project_id):
     data = {
         'current_user': request.current_user.to_dict(),
         'this_project': project,
-        'project_info': {'test': 'yea'}
+        'project_info': project_info
     }
     return render_template('project.html', data=data)
 

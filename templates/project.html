@@ -23,7 +23,8 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 <p id="description">
     <h3>Description:</h3>
-    {{this_project.description}}
+    {{project_info}}
+    {{project_info.description}}
 </p>
 <p id="goals">
     <h3>Goals:</h3>
@@ -110,7 +111,9 @@ We just made a repo for you. It's called <a href="https://github.com/{{current_u
 
 <section id="sprints">
 
-    {% for sprint in this_project.sprints %}
+    {% set sprints = this_project.sprints %}
+
+    {% for sprint in sprints | sort(attribute='number', reverse=True) %}
     <a href="{{ url_for('sprints.index', id=sprint)  }}">
         <div class="card h4">
             {{ sprint }}

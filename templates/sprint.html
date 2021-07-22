@@ -10,12 +10,20 @@
     {% set sprint = data.sprint %}
 {% endif %}
 
+{% if data.info %}
+    {% set info = data.info %}
+{% endif %}
+
+<h1>Sprint {{ info.number }}</h1>
+
 {{ data.sprint}}
 <p id="description">
     <h3>Description:</h3>
+    {{ info.description }}
 </p>
 <p id="goals">
     <h3>Goals:</h3>
+    {{ info.goals }}
     <ul>
     </ul>
 </p>
@@ -29,6 +37,8 @@
 
 <p id="resources">
     <h3>Resources</h3>
+    {{ info.description }}
+    {{ info }} info here
     <ul>
         {% for resource in sprint.resources %}
         <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
@@ -39,9 +49,8 @@
 
 
 <div id="quizes">
-    {% for quiz in sprint.quizes %}
+    {{ info.quiz }}
     <a href="{{quiz}}">Quiz link would go here.</a>
-    {% endfor %}
 </div>
 
 

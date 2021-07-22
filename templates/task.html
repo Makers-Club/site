@@ -14,37 +14,31 @@
 
 
 <section>
+<h1>Task {{ info.number }}</h1>    
     <p id="goals">
         <h3>Goals:</h3>
         <ul>
-            {% if info.goals %}
-            {% for goal in info.goals %}
-                <li>* {{ goal }}</li>
-            {% endfor %}
-            {% endif %}
+                <li>* {{ info.goals }}</li>
         </ul>
     </p>
 
     <p id="resources">
         <h3>Resources</h3>
         <ul>
-            {% if info.resources %}
-            {% for resource in info.resources %}
-            <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
-            {% endfor %}
-            {% endif %}
+            {{info.resources}}
         </ul>
     </p>
 
     <div id="description">
         <h4>Task Description</h4>
         <p>
-            {{ task.description }}
+            {{ info.description }}
         </p>
     </div>
 
+    {{info.tech_dependencies}}
     <div id="code" style="border: 1px solid black;background-color: aliceblue;">
-        <pre><code>{{ task.code }}</code></pre>
+        <pre><code>{{ info.tests }}</code></pre>
     </div>
 
     <div id="task_status">
