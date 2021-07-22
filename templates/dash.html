@@ -45,9 +45,32 @@
                     Developer: <a href="{{ url_for('users.profile', handle=template.author) }}"> @{{ template.author }}</a><br><br>
                     <small class="text-sm">{{ template.description }}<br><br></small>
                 </p>
-                <a href="{{ url_for('projects.create_project', template_id=template.id)}}" class="row align-items-center justify-content-around border">
+                <a data-toggle="modal" data-target="#confirmModal" href="{{ url_for('projects.create_project', template_id=template.id)}}" class="row align-items-center justify-content-around border">
                     <button class="btn text-primary bg-warning w-100">Start project - {{ template.cost }} credits</button>
                 </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Spend credits?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                This will spend {{template.cost}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form method="GET" action="{{ url_for('projects.create_project', template_id=template.id)}}">
+                    <input type="submit" value="Unlock" class="form-control btn btn-danger"/>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     {% endfor %}
