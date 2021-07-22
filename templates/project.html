@@ -18,7 +18,15 @@
 <h1>{{ project_info.name }} - {{this_project.progress}}% Done</h1>
 {{this_project}} 
 <p>
-We just made a repo for you. It's called <a href="https://github.com/{{current_user.handle}}/{{this_project.repository_link}}">{{ project_info.name }}</a>.
+{% if data.status_code %}
+    {% if data.status_code == 201 %}
+    We just made a repo for you. It's called <a href="{{project_info.repository_link}}">{{ project_info.repository }}</a>.
+    {% elif data.status_code == 422 %}
+    Seems you already have a repository named {{ project_info.repository }}
+    {% else %}
+    Something went wrong when we tried creating the repository {{project_info.repository }} for you.
+    {% endif %}
+{% endif %}
 </p>
 
 <p id="description">

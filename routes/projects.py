@@ -86,11 +86,14 @@ def unlock(id):
         return render_template('index.html', data={'msg': 'ERROR*****'})
     info = {
         'name': 'BWS Business Directory',
-        'repository_link': f'https://github.com/{current_user}/bws_directory',
+        'repository': 'sample-template-repo',
+        'repository_link': f'https://github.com/{current_user}/sample-template-repo',
         'roles': 'Facilitator Backend Frontend'
     }
     project = Project.create_new_project(MTClient, info.update(found))
-    return render_template('project.html', data={'project': project.to_dict(), 'info': found})
+    # Create repository
+    repo_status = create_repo(current_user, info['repository'])
+    return render_template('project.html', data={'this_project': project.to_dict(), 'project_info': info, 'repo_status': repo_status})
 
 
 @projects.route('/<id>/<sid>', methods=['GET'], strict_slashes=False)
@@ -107,3 +110,37 @@ def sprint(id, sid):
     }
     return render_template('sprint.html', data=data)
     
+
+# CREATE_REPO HELPER TO BE PLACED IN SITE API
+def create_repo(user, repo):
+    """ creates a new repository for a user based on a Makers-Club template
+    
+    Docs:
+    https://docs.github.com/en/rest/reference/repos#create-a-repository-using-a-template-preview-notices
+    """
+    from json import dumps
+    from requests import post
+
+    access_token = user.access_token
+    headers = {
+        'Authorization':f'token {access_token}',
+        'Accept':'application/vnd.github.baptiste-preview+json' # !Github peculiarity-- see docs.
+    }
+    data = {
+        'owner': user.handle, # 'thisathrowaway',
+        'name': repo,
+        'description': 'description' # project['description']
+        # !See github docs for other possible attributes
+    }
+    url = f'https://api.github.com/repos/Makers-Club/{repo}/generate'
+    response = post(url, data=dumps(data), headers=headers)
+
+    return response.status_code
+
+    if response.status_code == 201: # Success
+        return 'Success!'
+    if response.status_code == 422: # They already have a repo with same name
+        return 'This repository already exists'
+    if response.status_code == 403: # "Forbidden"
+        return 'We don\'t have permission to make a repo for you'
+    return 'Unknown error has occured'
