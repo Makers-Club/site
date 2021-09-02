@@ -36,7 +36,7 @@ class BaseClient():
     def create(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
         response = requests.post(url)
-        print('IN BASE', response)
+        # print('IN BASE', response)
         if not response:
             return None
         return response.json()
@@ -45,8 +45,8 @@ class BaseClient():
     def get_all(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
         response = requests.get(url)
-        print(url, 'url')
-        print(response)
+        # print(url, 'url')
+        # print(response)
         if not response:
             return None
         return response.json()
