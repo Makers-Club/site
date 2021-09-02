@@ -75,6 +75,11 @@
         </div>
     {% endfor %}
     </div>
+
+    {% if current_user.roles_of_interest == None%}
+        
+        <script data-user="{{ current_user }}" src="../static/scripts/first_login.js"></script>
+    {% endif %}
 </section>
 {% else %}
 Project Templates failed to load. Try a hard refresh of the page. (ctr + shift + R)
