@@ -11,7 +11,7 @@ class Session(Base):
         route = 'sessions'
         url = f'{client.url}/{route}/{token}/{user_id}?token=123123'
         response = requests.post(url).json()
-        print(response, 'RESPONSE')
+        # print(response, 'RESPONSE')
         if not response or not response.get('session'):
             return None
         session = Session(**response.get('session'))

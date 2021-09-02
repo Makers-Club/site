@@ -75,14 +75,14 @@ class GithubClient:
         """matches user data with a user, returns user"""
         from models.clients.maker_teams_client import MTClient
         user = User.get_by_id(MTClient, user_data['id'])
-        print('id', user_data['id'])
-        print(user)
+        # print('id', user_data['id'])
+        # print(user)
 
         # TODO: See Issue #66
         if user is None: # No user? Make new user!
             from models.clients.maker_teams_client import MTClient
             user = User.create_new_user(MTClient, user_data)
-            print(user)
+            # print(user)
             print('NEW USER {} ADDED TO DATABASE'.format(user.id))
         else:
             # update user's access token to new value

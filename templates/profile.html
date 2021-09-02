@@ -24,21 +24,72 @@
 
 {% block content %}
 
-{% if this_profile %}
-    <section>
-        <a href="{{ url_for('users.all') }} "><- Back to all users</a>
-        <p>{{ this_profile.handle }}</p>
-        <a target="_blank" href="https://github.com/{{this_profile.handle}}"><img src="{{ this_profile.avatar_url }}" height="100" width="100"/><br>view on GitHub</a>
-        <p>name: {{ this_profile.name }}</p>
-        
-    </section>
-{% else %}
-    <section>
-        <p>
-            User Not found
-        </p>
-    </section>
-{% endif %}
+
+<section>
+    <a href="{{ url_for('users.all') }} "><- Back to all users</a>
+    <div class="container pt-5">
+        <div class="row justify-content-between"> <!-- profile info top -->
+            <div class="row col-6 align-items-center"> <!-- img ghHandle name -->
+                <div class="">
+                    <a href="https://github.com/{{this_profile.handle}}">
+                        <img src="{{ this_profile.avatar_url }}" height="100" width="100"/>
+                    </a>
+                </div>
+                <div class="ml-4">
+                    <a href="https://github.com/{{this_profile.handle}}">/{{ this_profile.handle }}</a>
+                    <p>name: {{ this_profile.name }}</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <input id="editing" type="checkbox"/>
+                <div> <!-- update button -->
+                    <form>
+                        <input type="submit" value="Update"/>
+                    </form>
+                </div>
+            </div>
+            <div class="row col-12"> <!-- about me / email / roles -->
+                <div class="col-3">
+                    <p>email</p>
+                    <p>about me</p>
+                </div>
+                <div class="col-3">
+                    <h6>Roles:</h6>
+                    <div>
+                        {{ this_profile.roles }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div> <!-- profile info bottom -->
+            <h4>Projects</h4>
+            <div class="container"> <!-- list of projects -->
+                {{ this_profile.projects }}
+                <div class="row">
+                    <p>test Project</p>
+                    <form class="ml-4" method="POST"> <!-- action=" url_for(projects.delete) "-->
+                        <input type="submit" value="Delete" />
+                    </form>
+                </div>
+            </div>
+
+            <h4>Teams</h4>
+            <div class="container"> <!-- list of teams -->
+                {{ this_profile.teams }}
+                <div class="row">
+                    <p>test Project</p>
+                    <form class="ml-4" method="POST"> <!-- action=" url_for(teams.delete) "-->
+                        <input type="submit" value="Delete" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+          
+    </div>
+</section>
 
 {% if is_my_profile %}
 <section class="pb-5 mb-5">
@@ -61,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form method="POST">
+                <form action="{{ url_for('users.delete_user', handle=current_user.handle) }}" method="POST">
                     <input type="submit" value="Yes DELETE" class="form-control btn btn-danger"/>
                 </form>
             </div>
