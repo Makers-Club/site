@@ -1,0 +1,5 @@
+types = {
+    "SEND_INVITE": "SEND_INTITE",
+    "RESPOND": "RESPOND",
+    "FEEDBACK": "FEEDBACK"
+}
