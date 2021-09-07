@@ -1,19 +1,25 @@
 // Checks if first_login is True and if so shows a modal that can't be closed out until submit
-
 function createRequest(roles, callback) {
     const this_script = $('script[src$="first_login.js"');
     let user = this_script.attr('data-user').replace(/'/g, '"');
     user = user.replace(/"created_at": .*\, "access_token"/i, "\"access_token\"");
-    user = user.replace(/None/i, "\"None\"")
+    user = user.replace(/None/g, "\"None\"")
+    console.log(user)
     user = JSON.parse(user);
 
     const data = {};
     const url = `https://api.makerteams.org/users/${user.id}/roles_of_interest/${roles}?token=${user.access_token}`
+    console.log(url)
     const request = {
         url: url,
         type: 'PUT',
         data: data,
-        success: callback
+        success: (res, req) => {
+            callback()
+        },
+        failure: (res, req) => {
+            console.log(res, req)
+        }
     };
 
     return request
@@ -39,7 +45,7 @@ function create_modal() {
     ];
 
     const footer = $('<div class="modal-footer">');
-    const submit = $(`<input type="submit" value="Submit" onClick="toggle" class="form-control btn col-3 btn-danger">`);
+    const submit = $(`<input type="submit" value="Submit" class="form-control btn col-3 btn-danger">`);
 
     header.append(headerTitle);
     body.append(...roles);
@@ -60,14 +66,15 @@ const options = {
     show: false
 };
 
-modal.modal(options);
-
 $(document).ready(() => {
     $("body").append(modal);
     modal.modal('show');
 })
 
+modal.modal(options);
+
 modal.submit(e => {
+    e.preventDefault()
     const front = $('#front')[0];
     const back =  $('#back')[0];
     const both = $('#both')[0];
@@ -76,8 +83,10 @@ modal.submit(e => {
     if (front.checked) role = "Front-End";
     if (back.checked) role = "Back-End";
     if (both.checked) role = "Front-End:Back-End";
-
-    const request = createRequest(role, modal.modal('hide'));
+    const hide = () => {
+        modal.modal('hide');
+    }
+    const request = createRequest(role, hide);
 
     $.ajax(request);
     return false;
