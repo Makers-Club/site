@@ -30,8 +30,8 @@ def before():
     for route in ['static/', 'favicon', 'auth/']:
         if route in request.url:
             return
-    from models.auth.auth import Auth
-    logged_in_user = Auth.logged_in_user
+    from models.clients.auth.authenticate import Authenticate
+    logged_in_user = Authenticate.logged_in_user
     session = request.cookies.get('session')
     setattr(request, 'current_user', logged_in_user(session))
 

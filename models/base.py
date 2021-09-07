@@ -8,6 +8,9 @@ class Base():
     def __init__(self, *args, **kwargs):
         self.id = str(uuid4())
         self.created_at = datetime.now()
+        for k, v in kwargs.items():
+            if k != "__class__":
+                self.__dict__[k] = v
         '''
         Had trouble serializing/deserializing datetimes correctly so
         I'm just getting rid of it for now. Sessions will be ongoing.
@@ -16,9 +19,6 @@ class Base():
             if k == "created_at":
                 self.__dict__[k] = datetime.strptime(v, date_format)
         '''
-        for k, v in kwargs.items():
-            if k != "__class__":
-                self.__dict__[k] = v
     
     def to_dict(self):
         dict_repr = self.__dict__

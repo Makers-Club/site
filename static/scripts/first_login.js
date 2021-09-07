@@ -6,13 +6,15 @@ function createRequest(roles, callback) {
     user = user.replace(/"created_at": .*\, "access_token"/i, "\"access_token\"");
     user = user.replace(/None/i, "\"None\"")
     user = JSON.parse(user);
-
+    // PUT api.makerteams.org/users/<user_id>/roles_of_interest/<role>?token=user.access_token
     const data = {};
-    const url = `https://api.makerteams.org/users/${user.handle}/roles?token=${user.access_token}`;
+    console.log(roles);
+    const url = `https://api.makerteams.org/users/${user.id}/roles_of_interest/${roles}/?token=${user.access_token}`;
+    console.log(url)
     const request = {
         url: url,
         type: 'PUT',
-        data: data,
+        data: data, // can get rid of this
         success: callback
     };
 
@@ -34,7 +36,7 @@ function create_modal() {
         $('<label for="front" class="p-0 m-1 mr-4">').text("Front-End"),
         $('<input type="radio" value="back" id="back" name="role">'),
         $('<label for="back" class="p-0 m-1 mr-4">').text("Back-End"),
-        $('<input type="radio" value="both" id="both" name="role">'),
+        $('<input type="radio" value="both" id="both" name="role" checked>'),
         $('<label for="both" class="p-0 m-1 mr-4">').text("Both")
     ];
 
@@ -73,16 +75,16 @@ modal.submit(e => {
     const both = $('#both')[0];
     let role = "";
 
-    if (front.checked) role = "Front-End";
+    if (front.checked) role = "FrontEnd";
     if (back.checked) role = "Back-End";
     if (both.checked) role = "Front-End:Back-End";
+    
 
     // const request = createRequest(role, closeModal);
-    const request = {
-        url: 'https://api.makerteams.org/users?token=123123', 
-        type: 'GET',
-        success: (res) => modal.modal('hide')
-    };
+    const request = createRequest(role, (res, req) => {
+        console.log(res, req);
+        modal.modal('hide')
+    });
 
     $.ajax(request);
     return false;

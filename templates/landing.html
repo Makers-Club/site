@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- put css links here -->
-    <script src="{{ url_for('static', filename='github_login.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
 
     <!-- bootstrap 4.4 -->
@@ -56,7 +55,7 @@
     </header>
     <p class="h5 pt-5 mt-3 font-weight-light">Join a team and start making. Your virtual apprenticeship starts here.</p>
     <div class="w-100 d-flex justify-content-center p-3">
-        <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-75 d-flex justify-content-center">
+        <a href="{{ url_for('auth.authorize_github_integration') }}" class="w-75 d-flex justify-content-center">
         <img class="w-50 img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
     </a>
     
@@ -114,7 +113,7 @@
 
 
 <div class="container w-25 d-flex justify-content-center my-4">
-    <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-100 d-flex justify-content-center">
+    <a href="{{ url_for('auth.authorize_github_integration') }}" class="w-100 d-flex justify-content-center">
         <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
     </a>
 </div>
@@ -155,7 +154,7 @@
 
     <span class="text-center">Don't worry. We've got your back.</span>
 <div class="container w-25 d-flex justify-content-center my-4">
-    <a href="{{ url_for('auth.send_visitor_to_github') }}" class="w-100 d-flex justify-content-center">
+    <a href="{{ url_for('auth.authorize_github_integration') }}" class="w-100 d-flex justify-content-center">
         <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
     </a>
 </div>

@@ -3,7 +3,9 @@ from routes import projects
 from models.project import Project
 from models.project_template import ProjectTemplate
 from models.clients.maker_teams_client import MTClient
-from models.auth import auth_client
+from models.clients.auth.authenticate import Authenticate
+
+auth_client = Authenticate()
 
 
 @projects.route('/', methods=['GET'], strict_slashes=False)

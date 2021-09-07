@@ -11,21 +11,12 @@ def presignup():
 
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
-  """ render landing template """
-  data = {}
-  from models.project_template import ProjectTemplate
-  project_templates = ProjectTemplate.get_all(MTClient)
-
-  data['templates'] = []
-
-  for template in project_templates:
-      data['templates'].append(template.to_dict())
-
-  if request.current_user:
-    data['current_user'] = request.current_user.to_dict()
-    print('template id', [x.get('id') for x in data['templates']])
-    return render_template('dash.html', data=data)
-  return render_template('landing.html')
+    """ render landing template """
+    if request.current_user:
+        data = {}
+        data['current_user'] = request.current_user.to_dict()
+        return render_template('dash.html', data=data)
+    return render_template('landing.html')
 
 
 

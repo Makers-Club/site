@@ -4,7 +4,7 @@ from models.session import Session
 from functools import wraps
 from flask import request, redirect, url_for
 
-class Auth:
+class Authenticate:
     def __init__(self):
         pass
 
@@ -16,6 +16,7 @@ class Auth:
                 return redirect(url_for('auth.send_visitor_to_github', next=request.url))
             return f(*args, **kwargs)
         return decorated_function
+
 
     @classmethod
     def register(cls, user):

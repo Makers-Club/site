@@ -10,79 +10,24 @@
 {% if data %}
     {% if data.current_user %}
         {% set current_user = data.current_user %}
-    {% else %}
-        {% set current_user = None %}
-    {% endif %}
 
-    {% if data.projects %}
-        {% set projects = data.projects %}
-    {% else %}
-        {% set projects = None %}
-    {% endif %}
+
+{% if not current_user.roles_of_interest %}
+    
+<script data-user="{{ current_user }}" src="../static/scripts/first_login.js"></script>
 {% endif %}
 
 
-<!--
 
-<br><br>
-<a href="https://buy.stripe.com/cN29ACaIY3S44IUbIJ">Give russ money</a>
--->
-{% if data.templates %}
-{% set templates = data.templates %}
 
-<section class="px-4 py-5">
-    <h1 class="pb-5">Recreate Real Work</h1>
-    <div class="row">
-{% for template in templates %}
-        <div class="card col-3 m-2">
-            <div class=" text-right">
-                <h4><a href="{{ template.link }}" class="text-info" target="_blank">{{ template.name }}</a></h4>
-                <img class="template_preview" src="{{ template.preview_images }}" alt="{{ template.name }}_preview">
-            </div>
-            <div>
-                
-                <p class="card-text">
-                    Developer: <a href="{{ url_for('users.profile', handle=template.author) }}"> @{{ template.author }}</a><br><br>
-                    <small class="text-sm">{{ template.description }}<br><br></small>
-                </p>
-                <a data-toggle="modal" data-target="#confirmModal" href="{{ url_for('projects.create_project', template_id=template.id)}}" class="row align-items-center justify-content-around border">
-                    <button class="btn text-primary bg-warning w-100">Start project - {{ template.cost }} credits</button>
-                </a>
 
-    <!-- Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Spend credits?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                This will spend {{template.cost}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form method="GET" action="{{ url_for('projects.create_project', template_id=template.id)}}">
-                    <input type="submit" value="Unlock" class="form-control btn btn-danger"/>
-                </form>
-            </div>
-            </div>
-        </div>
-    </div>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-
-    {% if current_user.roles_of_interest == None%}
-        
-        <script data-user="{{ current_user }}" src="../static/scripts/first_login.js"></script>
+    {% else %}
+        <a href=" {{ url_for('auth.send_visitor_to_github') }} ">
+            Please login here.
+        </a>
     {% endif %}
-</section>
-{% else %}
-Project Templates failed to load. Try a hard refresh of the page. (ctr + shift + R)
+
+
 {% endif %}
 
 {% endblock %}
