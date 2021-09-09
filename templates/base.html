@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+  <head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- bootstrap 4.4 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 
+    <!-- put css links here -->
+    <script src="{{ url_for('static', filename='github_login.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+
+    <title>
+      {% block title %}
+      {% endblock %}Maker Teams
+    </title>
+    {% endblock %}
+  </head>
+
+
+  <body>
+
+    <!-- SET data variables for ease of use -->
+    {% if data %}
+        {% if data.current_user %}
+            {% set current_user = data.current_user %}
+        {% else %}
+            {% set current_user = None %}
+        {% endif %}
+    {% endif %}
+
+
+
+
+
+
+{% if not current_user %}
+<header class="fixed-top w-100" id="header">
+    <div  class="ml-2 mt-3 d-flex">
+        <a class="navbar-brand" href="{{ url_for('landing.index') }}">
+        <!---->
+            <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
+            <!---->
+        </a>
+
+    </div>
+</header>
+
+{% endif %}
+
+{% if current_user %}
+
+    <nav class="sidebar-container pr-3 border-right">
+        <div class="ml-2 mt-3 d-flex">
+        <a href="{{ url_for('users.profile', handle=current_user.handle)  }} ">
+        <img class="profile_pic mr-2" src="{{ current_user.avatar_url }}" height="50" width="50"/>
+        <div class="d-flex flex-column">
+            <span>
+            {{ current_user.name }}
+            </span>
+        <br>
+        <a href="{{ url_for('auth.logout') }}">Sign Out</a>
+        </div>
+        </a>
+        </div>
+
+        <ul class="sidebar">
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('projects.index') }}">Projects</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.all') }}">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    
+     
+      
+{% endif %}        
+
+
+
+{% if data.error %}
+
+<p class="alert">{{data.error}}</p>
+
+{% endif %}
+{% if data.msg %}
+
+<p >{{data.msg}}</p>
+
+{% endif %}    
+
+
+
+
+<main class="d-flex h-100">
+    
+          
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+
+
+
+<footer class="border-top pt-5">
+    <div class="container text-center">
+    
+    ©Copyright Maker Teams Inc. 2021
+    </div>
+</footer>
+      <!-- ADD a Copyright?? -->
+      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+      {% if current_user %}
+          <div class="col-2 fixed-bottom m-4 ml-auto" id="notifications">
+              <img
+                  id="notification_button"
+                  src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-bell-512.png"
+                  alt=""
+                  class="rounded-circle ml-auto"
+                  width="80px"
+                  height="80px"
+                  style="display: block;"
+              />
+              
+              </button>
+              <div class="p-2" id="notification_list" style="display: none;">
+                  <button class="" id="notification_list_close">close</button>
+                  <ul class="">
+                      <li>Notifications</li>
+                  </ul>
+              </div>
+          </div>
+        <script type="module" data-user="{{ current_user }}" src="../static/scripts/notifications/notifications.js"></script>
+      {% endif %}
+  </body>
+
+</html>
