@@ -6,7 +6,7 @@ class MTClient(BaseClient):
     credentials = {
         'token': '123123'
     }
-    url = 'https://api.makerteams.org'
+    url = 'http://0.0.0.0:8081'
 
     @classmethod
     def create_new(cls, route, data):

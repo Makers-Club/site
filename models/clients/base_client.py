@@ -27,6 +27,7 @@ class BaseClient():
     def create_user(cls, route, extra_data=None):
         url, data = prepare_data(cls, route, extra_data)
         url += 'token=123123'
+        print('IN CREATE USER')
         response = requests.post(url, data=data)
         if not response:
             return None

@@ -35,101 +35,94 @@
         {% endif %}
     {% endif %}
 
-    <header class="container" id="header">
-      <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
-
-        <!---->
-        
-
-            
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        
-        <div class="collapse navbar-collapse " id="navbarText">
-            
-
-
-        
-            <ul class="navbar-nav mr-auto">
-
-                <li class="nav-item">
-                <a class="nav-link text-right" href="{{ url_for('landing.index') }}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-right" href="{{ url_for('projects.index') }}">Projects</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-right" href="{{ url_for('users.all') }}">Users</a>
-                </li>
-          </ul>
-          
 
 
 
 
 
-            
-          
-        </div>
-
-
-{% if current_user %}
-          <a href="{{ url_for('users.profile', handle=current_user.handle)  }} ">
-            <img class="profile_pic" src="{{ current_user.avatar_url }}" height="55" width="55"/>
-            <div class="d-flex flex-column pl-3">
-              <span class="pr-2">
-                {{ current_user.name }}
-
-              </span>
-            <br>
-              Credits: {{ current_user.credits }}
-                {% if current_user %}
-                    <a href="{{ url_for('auth.logout') }}">Sign Out</a>
-                {% else %}
-                    <a  href="{{ url_for('auth.send_visitor_to_github') }}">Sign In</a>
-                {% endif %}
-            </div>
-          </a>
-
-            
-        {% else %}
-
+{% if not current_user %}
+<header class="fixed-top w-100" id="header">
+    <div  class="ml-2 mt-3 d-flex">
         <a class="navbar-brand" href="{{ url_for('landing.index') }}">
         <!---->
             <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
             <!---->
         </a>
-        
-        {% endif %}        
-    <!-- -->
-      </nav>      
-    </header>
-    {% if data.error %}
 
-    <p class="alert">{{data.error}}</p>
+    </div>
+</header>
 
-    {% endif %}
+{% endif %}
+
+{% if current_user %}
+
+    <nav class="sidebar-container pr-3 border-right">
+        <div class="ml-2 mt-3 d-flex">
+        <a href="{{ url_for('users.profile', handle=current_user.handle)  }} ">
+        <img class="profile_pic mr-2" src="{{ current_user.avatar_url }}" height="50" width="50"/>
+        <div class="d-flex flex-column">
+            <span>
+            {{ current_user.name }}
+            </span>
+        <br>
+        <a href="{{ url_for('auth.logout') }}">Sign Out</a>
+        </div>
+        </a>
+        </div>
+
+        <ul class="sidebar">
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('projects.index') }}">Projects</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.all') }}">Users</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    
+     
+      
+{% endif %}        
+
+
+
+{% if data.error %}
+
+<p class="alert">{{data.error}}</p>
+
+{% endif %}
 {% if data.msg %}
 
-    <p >{{data.msg}}</p>
+<p >{{data.msg}}</p>
 
-    {% endif %}    
+{% endif %}    
 
 
-    <main>
-      {% block content %}
-      {% endblock %}
-    </main>
 
-    <footer class="border-top pt-5">
-      <div class="container text-center">
-        
-        ©Copyright Maker Teams Inc. 2021
-      </div>
-    </footer>
+
+<main class="d-flex h-100">
+    
+          
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+
+
+
+<footer class="border-top pt-5">
+    <div class="container text-center">
+    
+    ©Copyright Maker Teams Inc. 2021
+    </div>
+</footer>
       <!-- ADD a Copyright?? -->
       <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
   </body>

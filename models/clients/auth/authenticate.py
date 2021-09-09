@@ -13,7 +13,7 @@ class Authenticate:
         @wraps(f)
         def decorated_function(*args, **kwargs):
             if not hasattr(request, 'current_user') or not request.current_user:
-                return redirect(url_for('auth.send_visitor_to_github', next=request.url))
+                return redirect(url_for('auth.authorize_github_integration', next=request.url))
             return f(*args, **kwargs)
         return decorated_function
 

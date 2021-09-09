@@ -18,35 +18,44 @@
 
 {% block content %}
 
-<section class="container col-sm-12 col-md-10">
-    
-
-
+<section class="container">
 <!-- show list of users -->
-
-
 {% if data %}
-{% if data.users %}
-{% set users = data.users %}
+    {% if data.users %}
+        {% set users = data.users %}
+    {% endif %}
 {% endif %}
-{% endif %}
-
-
     {% for user in users %}
-        {% if user.id != current_user.id %}
-            <div class="border">
-                <a href="{{ url_for('users.profile', handle=user.handle) }}">
-                    <img class="profile_pic" src="{{ user.avatar_url }}" height="100" width="100"/>
-                </a>
-                <a href="https://github.com/{{user.handle}}" target="_blank">
-                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="33px" height="33px">
+            {% if loop.index % 2 %}
+            <div class="row p-0">
+                
+            {% endif %}
+            <div class="col card mb-3 ml-3 pl-3 pt-3 pb-3">
+                <div class="pr-0 m-0 mb-3 row justify-content-between w-100">
+                    <div class="pr-0 m-0 row">
+                        <a href="{{ url_for('users.profile', handle=user.handle) }}">
+                            <img class="profile_pic_square" src="{{ user.avatar_url }}" height="50" width="50" />
+                        </a>
+                        <div class="pl-2">
+                            <span class="h5">{{ user.name }}</span>
+                                <br>
+                            <span>@{{ user.handle }}</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/{{user.handle}}" target="_blank">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="33" height="33">
                     </a>
-                <p>{{ user.name }}<br>
-                {{ user.handle }}</p>
-                <p>Roles of Interest: {% if user.roles_of_interest %} {{ user.roles_of_interest.replace(':', ', ') }} {% else %} Undeclared {% endif %}</p>
+                </div>
+                    
+                
+                <div><strong>Roles of Interest:</strong><br> {% if user.roles_of_interest %} {{ user.roles_of_interest.replace(':', ', ') }} {% else %} Undeclared {% endif %}
+                </div>
             </div>
-        {% endif %}
+            {% if not loop.index % 2 %}
+            </div>
+            {% endif %}
     {% endfor %}
+  
 </section>
 
 
