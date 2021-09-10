@@ -1,11 +1,15 @@
-export function mockPing(user_id, access_token) {
+export function mockPing(user_id, user_handle, access_token) {
     const data = {
-        "status": "OK",
         "results": [
-            { "id": 1, "user_id": user_id, "msg": "This is a message", "is_read": "False" },
-            { "id": 2, "user_id": user_id, "msg": "This is a message", "is_read": "True" }
-        ]
-    }
+            {
+            "id": "1", 
+            "is_read": false, 
+            "msg": `<p><a href='https://api.makerteams.org/users/${user_handle}?token=123123' target='_blank'>${user_handle}</a> has invited you to work on a project: <a href='https://www.google.com' target='_blank'>link</a></p>`, 
+            "user_id": `${user_id}`
+            }
+        ], 
+        "status": "OK"
+}
     const res = {
         json: () => (data["status"] === "OK") ? data["results"] : undefined
     }
