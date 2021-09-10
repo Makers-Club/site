@@ -25,13 +25,13 @@ def notification_creator(notification_type, data):
     message = data.msg if hasattr(data, 'msg') else set_message(notification_type, data)
 
     content = {
-        "id": data.id if hasattr(data, 'id') else uuid4(),
-        "user_id": data.user_id,
+        "id": str(uuid4()),
+        "user_id": data.get('user_id'),
         "msg": message,
-        "is_read": data.is_read if hasattr(data, 'is_read') else False
+        "is_read": data.get('is_read')
     }
 
-    notification = Notification(content)
+    notification = Notification(**content)
 
     if notification is None:
         raise Exception("(notification_creator.py: 40) Notification Creation failed")

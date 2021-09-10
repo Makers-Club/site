@@ -1,5 +1,5 @@
 types = {
-    "SEND_INVITE": "SEND_INTITE",
+    "SEND_INVITE": "SEND_INVITE",
     "RESPOND": "RESPOND",
     "FEEDBACK": "FEEDBACK"
 }

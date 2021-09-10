@@ -3,7 +3,7 @@ from models.base import Base
 class Notification(Base):
 
     def __init__(self, *args, **kwargs):
-        super().__init(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def create(self, client):
         """ Ping API to create a notifciation """
