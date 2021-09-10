@@ -1,6 +1,12 @@
 from models.notifications.notification import Notification
 from models.notifications.notification_types import types
 from uuid import uuid4
+from base64 import b64encode
+
+def encode(message):
+    message_bytes = message.encode('ascii')
+    base64_bytes = b64encode(message_bytes)
+    return base64_bytes.decode('ascii')
 
 def notification_creator(notification_type, data):
     """ 
@@ -48,7 +54,13 @@ def set_message(notification_type, data):
 
 def send_invite(data):
     """ create a message for sending an invite notification """
-    raise NotImplementedError
+    invitor_handle = data['invitor_handle']    
+    # project_id = data['project_id']
+
+    invitor_link = f"<a href='https://api.makerteams.org/users/{invitor_handle}' target='_blank'>{invitor_handle}</a>"
+    project_link = f"<a href='https://www.google.com' target='_blank'>link</a>"
+
+    return encode(f"<p>{invitor_link} has invited you to work on a project: {project_link}</p>")
 
 
 def respond(data):
