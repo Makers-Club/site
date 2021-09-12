@@ -3,6 +3,7 @@
 {% block head %}
   {{ super() }}
   <script src="/static/scripts/check.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='projects.css') }}"> 
 {% endblock %}
 
 {% block content %}

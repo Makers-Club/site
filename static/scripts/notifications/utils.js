@@ -17,15 +17,6 @@ export function mockPing(user_id, user_handle, access_token) {
     return res; 
 }
 
-export function getUser() {
-    const script = $('script[src$="notifications.js"]');
-    let userData = script.attr('data-user');
-    userData = userData.replace(/None/g, '"None"');
-    userData = userData.replace(/'/g, '"');
-    userData = userData.replace(/"created_at": .*\, "access_token"/i, '"access_token"');
-    return JSON.parse(userData);
-}
-
 export function getElements() {
     const list = $('#notification_list');
     const button = $('#notification_button');
@@ -35,6 +26,7 @@ export function getElements() {
     close.css('position', 'absolute');
     close.css('top', '.5rem');
     close.css('right', '.5rem');
-
+ 
     return { list, button, close, container };
 }
+ 
