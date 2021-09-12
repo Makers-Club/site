@@ -5,13 +5,14 @@ let id = script.attr('data-user_id');
 let access_token = script.attr('data-user_access_token');
 
 const url = `https://api.makerteams.org/notifications/${id}?token=${access_token}`;
-
+console.log(url)
 const { list, button, close, container, iconExample } = getElements();
 $(document).ready(() => {
     fetch(url)
     .then(res => res.json())
     .then(data => {
         const { results } = data;
+        console.log(results)
         const ul = $('#notification_list ul');
         for (const item of results) {
             let li;
@@ -26,6 +27,20 @@ $(document).ready(() => {
             ul.append(li);
         }   
     });
+
+    const dashboard = $('#dashboard');
+    dashboard.css('border', 'none')
+
+    const eventUrl = `https://api.makerteams.org/events?token=123123`
+    console.log(eventUrl)
+    fetch(eventUrl)
+    .then(res => res.json())
+    .then(data => {
+        for (const item of events) {
+            let li = $('<li class="event">').append($(item));
+            dashboard.append(li)
+        }
+})
 });
 
 
@@ -67,3 +82,16 @@ iconExample.click(() => {
         flag = 0;
     }
 });
+
+
+const createbtn = $('#create_btn');
+createbtn.click(() => {
+
+    const projUrl = `http://127.0.0.1:8081/projects?token=123123&name=ProjectX&short_description=somedescriptionhere&repository_link=google&owner_handle=${id}&repository_name=somereponame&owner=${id}`
+    fetch(projUrl, {method: 'POST'})
+    .then(res => {res.json(); console.log(res)})
+    .then(data => {
+        console.log(data)
+    })
+})
+

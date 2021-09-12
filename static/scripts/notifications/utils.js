@@ -12,5 +12,5 @@ export function getElements() {
  
     return { list, button, close, container, iconExample };
 }
- 
+
 
