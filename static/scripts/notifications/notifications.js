@@ -6,25 +6,22 @@ let access_token = script.attr('data-user_access_token');
 
 const url = `https://api.makerteams.org/notifications/${id}?token=${access_token}`;
 
-const { list, button, close, container } = getElements();
+const { list, button, close, container, iconExample } = getElements();
 $(document).ready(() => {
     fetch(url)
     .then(res => res.json())
     .then(data => {
         const { results } = data;
         const ul = $('#notification_list ul');
-        if (results) {
-            console.log(button[0].src)
-            button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=aFE7U1r8x";
-        }
         for (const item of results) {
             let li;
             const msg = item.msg;
             if (item.is_read) {
-            li = $('<li class="notification read">').append($(msg));
+                li = $('<li class="notification read">').append($(msg));
             }
             else {
-            li = $('<li class="notification unread">').append($(msg));
+                button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=aFE7U1r8x";
+                li = $('<li class="notification unread">').append($(msg));
             }
             ul.append(li);
         }   
@@ -40,13 +37,33 @@ button.click(() => {
         list.css('display', 'flex');
         list.css('position', 'relative')
         flag = 1;
+        console.log(url)
+        fetch(url, {method: 'PUT'})
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            const { status } = data;
+            console.log(data)
+        })
     }
     else {
         // closing
         list.css('display', 'none');
         button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0";
         flag = 0;
+        let unreads = document.getElementsByClassName("unread");
+        for (let i = 0; i < unreads.length; i++) {
+            console.log(unreads[i])
+            unreads[i].classList.remove("unread");
+          }
     }
     
 });
 
+iconExample.click(() => {
+    if (flag == 1) {
+        list.css('display', 'none');
+        button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0";
+        flag = 0;
+    }
+});
