@@ -1,3 +1,10 @@
 .projects-side-panel {
     background-color: var(--primary);
 }
+
+.users-side-panel > a {
+    color: var(--lightest);
+}
+.discover-side-panel > a {
+    color: var(--lightest);
+}

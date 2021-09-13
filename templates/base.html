@@ -65,7 +65,7 @@
                 {{ current_user.name }}
                 </span>
             <br>
-            <a href="{{ url_for('auth.logout') }}">Sign Out</a>
+            <a class="text-light" href="{{ url_for('auth.logout') }}">Sign Out</a>
             </div>
             </a>
         </div>
@@ -131,7 +131,6 @@
                   width="33px"
                   height="33px"
                   style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications">
-              </button>
               
 
           <script type="module" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>

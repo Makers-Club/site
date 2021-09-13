@@ -8,40 +8,44 @@ const url = `https://api.makerteams.org/notifications/${id}?token=${access_token
 console.log(url)
 const { list, button, close, container, iconExample } = getElements();
 $(document).ready(() => {
+
     fetch(url)
     .then(res => res.json())
     .then(data => {
         const { results } = data;
-        console.log(results)
+        console.log('notif results: ', results)
         const ul = $('#notification_list ul');
         for (const item of results) {
             let li;
             const msg = item.msg;
             if (item.is_read) {
-                li = $('<li class="notification read">').append($(msg));
+                li = $('<li class="notification read text-dark font-weight-normal">').append($(msg));
             }
             else {
                 button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=aFE7U1r8x";
                 li = $('<li class="notification unread">').append($(msg));
             }
             ul.append(li);
-        }   
-    });
-
-    const dashboard = $('#dashboard');
-    dashboard.css('border', 'none')
-
+        } });
+        
     const eventUrl = `https://api.makerteams.org/events?token=123123`
-    console.log(eventUrl)
+    const dashboard = $('#dashboard');
+    dashboard.css('border', 'none');
     fetch(eventUrl)
     .then(res => res.json())
     .then(data => {
+        const { events } = data;
+        console.log('events', events)
+        const ul = $('#dashboard ul');
         for (const item of events) {
-            let li = $('<li class="event">').append($(item));
-            dashboard.append(li)
+            let li = $('<li class="event h-25 w-25 border">').append($(item.message));
+            ul.append(li);
         }
+    })
+
+
 })
-});
+
 
 
 // Event Handlers

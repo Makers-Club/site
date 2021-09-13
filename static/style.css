@@ -19,7 +19,6 @@ a[target="_blank"]:after {
     padding: 0px;
     box-sizing: border-box;
     text-decoration: none;
-    color: var(--dark);
     scroll-behavior: smooth;
 }
 
@@ -62,10 +61,17 @@ a:active, a:focus {
 .profile_pic_square {
     border-radius: 3px;
 }
-.profile_pic_square:hover, .profile_pic:hover {
+.profile_pic_square:hover {
     box-shadow: 3px 3px 7px rgb(219, 219, 219);
 }
+.profile_pic:hover {
+    box-shadow: 3px 3px 7px rgb(52, 52, 52);
+}
 
+a[target="_blank"]::after {
+    content: none;
+    margin: 0 3px 0 5px;
+  }
 .sidebar-container {
     position: fixed;
     height: 100%;
@@ -91,14 +97,22 @@ a:active, a:focus {
     justify-content: space-around;
 }
 .nav-item {
-    padding: 2px;
     border-radius: 3px;
     margin-left: 9px;
     margin-right: 9px;
 }
 .sidebar-nav > li:hover {
     background-color: var(--secondary-light);
-    box-shadow: 3px 3px 7px rgb(219, 219, 219);
+    box-shadow: 3px 3px 7px rgb(52, 52, 52);
+}
+.sidebar-nav a {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 11px;
+}
+.sidebar-nav > li:hover, .sidebar-nav  a:hover {
+    color: var(--dark);
 }
 .user-card {
     box-shadow: 3px 3px 7px rgb(219, 219, 219);
@@ -111,13 +125,31 @@ a:active, a:focus {
     max-height: 29%;
     overflow-y: hidden;
 }
+.sidebar-nav > *, .sidebar-container * * {
+    color: var(--lightest);
+}
 #notification_list {
     overflow-y: scroll;
+    background-color: white;
+    color: var(--dark);
 }
 
-.notification {
+.notification, .notification * {
     padding: 2px;
+    color: var(--dark);
+}
+.notification {
+    border-bottom: 1px solid rgb(230, 230, 230);
+    padding-top: 3px;
+}
+.notification a {
+    text-decoration: none;
 }
 .unread {
     background-color: var(--tertiary-light);
+    color: var(--dark);
+}
+
+.sidebar-container {
+    background-color: #292f2f;
 }
