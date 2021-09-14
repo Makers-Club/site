@@ -33,7 +33,7 @@
             <div class="row  p-0 w-100 pl-3 pr-3">
                 
             {% endif %}
-            <div class="col card user-card mb-3 ml-1 mr-1 pl-3 pt-3 pb-3">
+            <div data-role="{{ user.roles_of_interest }}" class="col card user-card mb-3 ml-1 mr-1 pl-3 pt-3 pb-3">
                 <div class="pr-0 m-0 mb-3 row justify-content-between w-100">
                     <div class="pr-0 m-0 row">
                         <a href="{{ url_for('users.profile', handle=user.handle) }}">
