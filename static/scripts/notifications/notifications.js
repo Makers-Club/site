@@ -5,7 +5,6 @@ let id = script.attr('data-user_id');
 let access_token = script.attr('data-user_access_token');
 
 const url = `https://api.makerteams.org/notifications/${id}?token=${access_token}`;
-console.log(url)
 const { list, button, close, container, iconExample } = getElements();
 $(document).ready(() => {
 
@@ -13,7 +12,6 @@ $(document).ready(() => {
     .then(res => res.json())
     .then(data => {
         const { results } = data;
-        console.log('notif results: ', results)
         const ul = $('#notification_list ul');
         for (const item of results) {
             let li;
@@ -35,7 +33,6 @@ $(document).ready(() => {
     .then(res => res.json())
     .then(data => {
         const { events } = data;
-        console.log('events', events)
         const ul = $('#dashboard ul');
         for (const item of events) {
             let li = $('<li class="event h-25 w-25 border">').append($(item.message));
@@ -53,21 +50,16 @@ let flag = 0;
 button.click(() => {
     if (flag == 0) {
         //opening - we should send api request telling it these notifications have been read
-        list.css('display', 'flex');
         list.css('position', 'relative')
         flag = 1;
-        console.log(url)
         fetch(url, {method: 'PUT'})
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             const { status } = data;
-            console.log(data)
         })
     }
     else {
         // closing
-        list.css('display', 'none');
         button[0].src = "https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0";
         flag = 0;
         let unreads = document.getElementsByClassName("unread");
@@ -75,8 +67,7 @@ button.click(() => {
             console.log(unreads[i])
             unreads[i].classList.remove("unread");
           }
-    }
-    
+    } 
 });
 
 iconExample.click(() => {
