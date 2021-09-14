@@ -118,47 +118,57 @@
 
 
 <div class="sidebar-container sidebar-container-right border-left">
-
-              {% if current_user %}
     <div id="icon"></div>
+    {% if current_user %}
+    <div class="d-flex p-3 border-bottom" id="">
+        <!-- NOTIFICATION BUTTON -->
+        <img
+            id="notification_button"
+            src="https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0 "
+            class=""
+            width="33px"
+            height="33px"
+            style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications"
+        />
 
-              <!-- NOTIFICATION BUTTON -->
-          <div class="d-flex p-3 border-bottom" id="">
-              <img
-                  id="notification_button"
-                  src="https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0 "
-                  class=""
-                  width="33px"
-                  height="33px"
-                  style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications">
-              
-
-          <script type="module" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>
-
-
+        <!-- FILTER BUTTON -->
+        <img 
+            id="filter_button"
+            src="https://w7.pngwing.com/pngs/369/665/png-transparent-angle-symbol-logo-line-filter-angle-logo-funnel.png"
+            class=""
+            width="33px"
+            height="33px"
+            style="display: block;"
+            data-toggle="tooltip" data-placement="bottom" title="Roles"
+        />
     </div>
     <!-- NOTIFICATION LIST -->
-              <div class=" border right-panel-section" id="notification_list" style="display: none;">
-                  <ul id="notif-items" class="">
-                  </ul>
-              </div>
+    <div class=" border right-panel-section" id="notification_list" style="display: none;">
+        <ul id="notif-items" class=""></ul>
+    </div>
+
+    <!-- FILTER LIST -->
+    <div class="border right-panel-section" id="filter_list" style="display: none;">
+        <ul id="filter_items" class=""></ul>
+    </div>
 </div>
 
 
 
 <footer class="border-top pt-5">
     <div class="container text-center">
-    
-    ©Copyright Maker Teams Inc. 2021
+        
+        ©Copyright Maker Teams Inc. 2021
     </div>
 </footer>
-      <!-- ADD a Copyright?? -->
-      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+<!-- ADD a Copyright?? -->
+<!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
 
-
-
-          {% endif %}
-  </body>
+<script type="module" src="../static/scripts/sibebar.js"></script>
+<script type="module" data-endpoint="{{request.url.split('/')[-2]}}" src="../static/scripts/filters/filter.js"></script>
+<script type="module" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>
+{% endif %}
+</body>
 
 
 
