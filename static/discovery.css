@@ -1,7 +1,9 @@
 .discover-side-panel {
     background-color: var(--primary);
 }
-
+.discover-side-panel > .nav-link {
+    color: black;
+}
 .users-side-panel > a {
     color: var(--lightest);
 }

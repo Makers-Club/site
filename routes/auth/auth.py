@@ -35,11 +35,10 @@ def github_callback():
     if not user:
         user = User.create_new_user(MTClient, github_user_data)
     from models.clients.auth.authenticate import Authenticate
-    print(user)
     session = Authenticate.login(user.access_token, user.id)
     if not session:
         print('***** NO SESSION')
-        redirect(url_for('landing.index', error='Login Failed'))
+        abort(500)
     #response = make_response(redirect(url_for('landing.presignup')))
     response = make_response(redirect(url_for('landing.index')))
     cookie = session.id

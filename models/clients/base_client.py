@@ -46,6 +46,7 @@ class BaseClient():
     def get_all(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
         response = requests.get(url)
+        print(url)
         # print(url, 'url')
         # print(response)
         if not response:

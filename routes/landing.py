@@ -26,6 +26,7 @@ def index():
     if request.current_user:
         data = {}
         data['current_user'] = request.current_user.to_dict()
+        print(data['current_user'])
         return render_template('dash.html', data=data)
     return render_template('landing.html')
 

@@ -1,146 +1,65 @@
 {% extends "base.html" %}
-{% block title %}Dash{% endblock %}
+{% block title %}Project{% endblock %}
 {% block head %}
   {{ super() }}
-  <script src="/static/scripts/check.js"></script>
 {% endblock %}
 
+
+
+
+
+
+
+<!-- set current user -->
+
+{% if data.current_user %}
+    {% set current_user = data.current_user %}
+{% else %}
+    {% set current_user = None %}
+{% endif%}
+
+
+<!-- set project -->
+
+{% if data.project %}
+    {% set project = data.project %}
+{% else %}
+    {% set project = None %}
+{% endif%}
+
 {% block content %}
+<section class="w-100  border  h-100">
+<script type="module" data-user_handle="{{ current_user.handle }}" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/project.js"></script>
+<h2>{{ project.name }}</h2>
+    <br>
+        <h4>
+        Created by
+        <a href="{{ url_for('users.profile', handle=project.owner_handle) }}">
+            {{ project.owner_handle }}
+        </a>
+        </h4>
 
-{% if data.this_project %}
-    {% set this_project = data.this_project %}
-{% endif %}
-
-{% if data.project_info %}
-    {% set project_info = data.project_info %}
-{% endif %}
-
-<h1>{{ project_info.name }} - {{this_project.progress}}% Done</h1>
-{{this_project}} 
-<p>
-{% if data.status_code %}
-    {% if data.status_code == 201 %}
-    We just made a repo for you. It's called <a href="{{project_info.repository_link}}">{{ project_info.repository }}</a>.
-    {% elif data.status_code == 422 %}
-    Seems you already have a repository named {{ project_info.repository }}
-    {% else %}
-    Something went wrong when we tried creating the repository {{project_info.repository }} for you.
-    {% endif %}
-{% endif %}
-</p>
-
-<p id="description">
-    <h3>Description:</h3>
-    {{project_info}}
-    {{project_info.description}}
-</p>
-<p id="goals">
-    <h3>Goals:</h3>
-    <ul>
-        {% for goal in this_project.goals %}
-            <li>* {{ goal }}</li>
-        {% endfor %}
-    </ul>
-</p>
-
-
-
-
-<p id="preview-images">
-
-{% set i = namespace(value=0) %}
-<div id="carouselExampleIndicators" class="carousel slide w-50 card" data-ride="carousel">
-  <ol class="carousel-indicators">
-    {% for img in this_project.preview_images %}
-    <li data-target="#carouselExampleIndicators" data-slide-to="{{i.value}}" class="active"></li>
-    {% set i.value = i.value + 1 %}
-    {% endfor %}
-  </ol>
-  <div class="carousel-inner">
-
-    {% set i = namespace(value=0) %}
-    
-    {% for img in this_project.preview_images %}
-    {%if i == 0%}active{%endif%}
-        <div class="carousel-item {% if i.value == 0 %}active{% endif %} card-body border">
-        <img class="d-block w-100" src="{{img}}">
+    <div class="card bg-dark">
+        <div class="p-3">
+            
         </div>
-        
-    {% set i.value = i.value + 1 %}
-
-    {% endfor %}
-
-</div>
-
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-
-</div>
-
-</p>
-
-
-
-
-
-
-<p id="videos">
-    {% for video in this_project.videos %}
-    <div class="mx-2">
-        <iframe width="560" height="315" src="{{video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
     </div>
-    {% endfor %}
-</p>
 
-<p id="resources">
-    <h3>Resources</h3>
-    <ul>
-        {% for resource in this_project.resources %}
-        <li><h5><a href="{{resource.link}}">{{resource.name}}</a></h5></li>
+    {% if current_user.handle == project.owner_handle %}
+    <button id="create_sprint">create sprint</button>
+
+    <div id="current_sprint"></div>
+        
+    <ul id="sprints">
+        {{data.sprints}}
+        {% for s in data.sprints %}
+            sprint <br>{{ s }}<br>
         {% endfor %}
     </ul>
-</p>
 
-
-
-<div id="quizes">
-    {% for quiz in this_project.quizes %}
-    <a href="{{quiz}}">Quiz link would go here.</a>
-    {% endfor %}
-</div>
-
-
-<section id="sprints">
-
-    {% set sprints = this_project.sprints %}
-
-    {% for sprint in sprints | sort(attribute='number', reverse=True) %}
-    <a href="{{ url_for('sprints.index', id=sprint)  }}">
-        <div class="card h4">
-            {{ sprint }}
-        </div>
-    </a>
-    {% endfor %}
-
+    {% else %}
+    ljkdajdas
+    {% endif %}
 </section>
-
-
-
-
-
-
-
-
-<button onclick="test_code( '{{ current_user.handle }}', '{{ this_project.repository }}' )">Check your repo</button>
-</br>
-<div id="checks">Results:</div>
-
 
 {% endblock %}

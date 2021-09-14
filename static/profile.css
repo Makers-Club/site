@@ -1,9 +1,7 @@
 .projects-side-panel {
-    background-color: var(--primary);
+    background-color: var(--lightest);
 }
-.projects-side-panel > .nav-link {
-    color: black;
-}
+
 .users-side-panel > a {
     color: var(--lightest);
 }
