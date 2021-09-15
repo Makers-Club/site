@@ -1,15 +1,14 @@
 // Checks if first_login is True and if so shows a modal that can't be closed out until submit
 function createRequest(roles, callback) {
     const this_script = $('script[id$="role-modal-script"');
-    let user = this_script.attr('data-user').replace(/'/g, '"');
-    user = user.replace(/"created_at": .*\, "access_token"/i, "\"access_token\"");
-    user = user.replace(/None/g, "\"None\"")
-    console.log(user)
-    user = JSON.parse(user);
+    const user = {
+        id: this_script.attr('data-user-id'),
+        access_token: this_script.attr('data-user-token')
+    };
 
     const data = {};
-    const url = `https://api.makerteams.org/users/${user.id}/roles_of_interest/${roles}?token=${user.access_token}`
-    console.log(url)
+    const url = `https://api.makerteams.org/users/${user.id}/roles_of_interest/${roles}?token=${user.access_token}`;
+
     const request = {
         url: url,
         type: 'PUT',
@@ -28,7 +27,7 @@ function createRequest(roles, callback) {
 export function create_modal() {
     const modal = $('<div id="role-modal" class="modal fade w-50 p-5" id="rolesModal" tabindex="-1" role="dialog" aria-hidden="true">');
     const dialog = $('<div class="modal-dialog" role="document">');
-    const content = $(`<form id="roles-form" class="modal-content" target="">`);
+    const content = $(`<form id="roles-form" class="modal-content bg-dark" target="">`);
     
     const header = $('<div class="modal-header m-auto">');
     const headerTitle = $('<h5 class="modal-title" id="confirmModalLabel"></h5>').text("Choose Roles");
@@ -63,7 +62,6 @@ export function create_modal() {
     };
 
     modal.modal(options);
-
     
     modal.submit(e => {
         e.preventDefault()
@@ -75,8 +73,11 @@ export function create_modal() {
         if (front.checked) role = "Front-End";
         if (back.checked) role = "Back-End";
         if (both.checked) role = "Front-End:Back-End";
+    
         const hide = () => {
             modal.modal('hide');
+            const roles = role.split(':');
+            $("#roles_field").text(roles.join(', '));
         }
         const request = createRequest(role, hide);
 
@@ -84,18 +85,10 @@ export function create_modal() {
         return false;
     });
 
-    modal.on('show.bs.modal', () => {
-        console.log('Showing');
-    });
-    modal.on('shown.bs.modal', () => {
-        console.log('Finished showing');
-    });
-    modal.on('hide.bs.modal', () => {
-        console.log('Hiding')
-    });
-    modal.on('hidden.bs.modal', () => {
-        console.log('Finished hiding')
-    });
+    modal.on('show.bs.modal', () => { console.log('Showing') });
+    modal.on('shown.bs.modal', () => { console.log('Finished showing') });
+    modal.on('hide.bs.modal', () => { console.log('Hiding') });
+    modal.on('hidden.bs.modal', () => { console.log('Finished hiding') });
 
     return modal;
 }
