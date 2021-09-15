@@ -28,40 +28,40 @@
 {% endif%}
 
 {% block content %}
-<section class="w-100  border  h-100">
+<section class="w-100 h-100 d-flex p-2 justify-content-center ">
 <script type="module" data-user_handle="{{ current_user.handle }}" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/project.js"></script>
-<h2>{{ project.name }}</h2>
-    <br>
-        <h4>
-        Created by
-        <a href="{{ url_for('users.profile', handle=project.owner_handle) }}">
-            {{ project.owner_handle }}
-        </a>
-        </h4>
 
-    <div class="card bg-dark">
-        <div class="p-3">
-            
-        </div>
+<div class="user-card card bg-dark lighter h-100 w-100 p-2">
+    <div class="col rounded p-2">
+        <h2>{{ project.name }}</h2>
+        <h6>
+            <img class="profile_pic" height="33" width="33" src="{{ project.user_pic }}"></im>
+            <a href="{{ url_for('users.profile', handle=project.owner_handle) }}">
+                {{ project.owner_handle }}
+            </a>
+        </h6>
     </div>
 
     {% if current_user.handle == project.owner_handle %}
-    <button id="create_sprint">create sprint</button>
+    <div class="w-100 rounded my-2 p-2">
+        <button id="create_sprint">create sprint</button>
 
-    <div id="current_sprint"></div>
-        
-    <ul id="sprints">
-        {% for s in data.sprints|sort(attribute='id', reverse=True) %}
-            {% for i, v in s.items() %}
-                {{i, v}}<br>
-                {% endfor %}
-                <br><br>
-                {% endfor %}
-    </ul>
+        <div id="current_sprint"></div>
+            
+        <ul id="sprints">
+            {% for s in data.sprints|sort(attribute='id', reverse=True) %}
+                {% for i, v in s.items() %}
+                    {{i, v}}<br>
+                    {% endfor %}
+                    <br><br>
+                    {% endfor %}
+        </ul>
+    </div>
+</div>
 
-    {% else %}
-    ljkdajdas
+
     {% endif %}
+
 </section>
 
 {% endblock %}

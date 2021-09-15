@@ -60,7 +60,7 @@
         <div class="ml-2 d-flex border-base-bottom pb-3">
         <script type="module" data-user_handle="{{ current_user.handle }}" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>
         <a href="{{ url_for('users.profile', handle=current_user.handle)  }} ">
-            <img class="profile_pic mr-2" src="{{ current_user.avatar_url }}" height="50" width="50" data-toggle="tooltip" data-placement="bottom" title="My Account">
+            <img id="profile_pic" class="profile_pic mr-2" src="{{ current_user.avatar_url }}" height="50" width="50" data-toggle="tooltip" data-placement="bottom" title="My Account">
             <div class="d-flex flex-column">
                 <span>
                 {{ current_user.name }}

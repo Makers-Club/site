@@ -4,12 +4,15 @@ const script = $('script[src$="notifications.js"]');
 let id = script.attr('data-user_id');
 let access_token = script.attr('data-user_access_token');
 let handle = script.attr('data-user_handle');
+let user_pic = $('#profile_pic')[0].src
+console.log(user_pic)
 console.log(handle)
 console.log(id)
 
 const url = `https://api.makerteams.org/notifications/${id}?token=${access_token}`;
 const { list, button, close, container, iconExample } = getElements();
 $(document).ready(() => {
+    console.log(access_token)
 
     fetch(url)
     .then(res => res.json())
@@ -48,7 +51,9 @@ $(document).ready(() => {
     .then(data => {
         if (data) {
             const { events } = data;
-            console.log(eventUrl)
+            console.log('*****', eventUrl)
+            console.log(access_token)
+            console.log(data)
                 console.log('***', data)
             if (events) {
                 const ul = $('#dashboard ul');
@@ -113,7 +118,8 @@ iconExample.click(() => {
 const createbtn = $('#create_btn');
 createbtn.click(() => {
     
-    const projUrl = `http://127.0.0.1:8081/projects?token=123123&name=ProjectX&short_description=somedescriptionhere&repository_link=google&owner_handle=${handle}&repository_name=somereponame&owner=${handle}`
+    const projUrl = `http://127.0.0.1:8081/projects?token=123123&name=ProjectX&short_description=somedescriptionhere&repository_link=google&owner_handle=${handle}&repository_name=somereponame&owner=${handle}&user_pic=${user_pic}`
+    console.log(projUrl)
     fetch(projUrl, {method: 'POST'})
     .then(res => res.json())
     .then(data => {

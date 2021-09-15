@@ -36,7 +36,9 @@ class BaseClient():
     @classmethod
     def create(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
+        print(url)
         response = requests.post(url)
+        print(response)
         # print('IN BASE', response)
         if not response:
             return None
