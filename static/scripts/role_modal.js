@@ -1,6 +1,6 @@
 // Checks if first_login is True and if so shows a modal that can't be closed out until submit
 function createRequest(roles, callback) {
-    const this_script = $('script[src$="first_login.js"');
+    const this_script = $('script[id$="role-modal-script"');
     let user = this_script.attr('data-user').replace(/'/g, '"');
     user = user.replace(/"created_at": .*\, "access_token"/i, "\"access_token\"");
     user = user.replace(/None/g, "\"None\"")
@@ -25,7 +25,7 @@ function createRequest(roles, callback) {
     return request
 }
 
-function create_modal() {
+export function create_modal() {
     const modal = $('<div id="role-modal" class="modal fade w-50 p-5" id="rolesModal" tabindex="-1" role="dialog" aria-hidden="true">');
     const dialog = $('<div class="modal-dialog" role="document">');
     const content = $(`<form id="roles-form" class="modal-content" target="">`);
@@ -55,52 +55,47 @@ function create_modal() {
     dialog.append(content);
     modal.append(dialog);
 
+    const options = {
+        backdrop: "static",
+        keyboard: false,
+        focus: true,
+        show: false
+    };
+
+    modal.modal(options);
+
+    
+    modal.submit(e => {
+        e.preventDefault()
+        const front = $('#front')[0];
+        const back =  $('#back')[0];
+        const both = $('#both')[0];
+        let role = "";
+
+        if (front.checked) role = "Front-End";
+        if (back.checked) role = "Back-End";
+        if (both.checked) role = "Front-End:Back-End";
+        const hide = () => {
+            modal.modal('hide');
+        }
+        const request = createRequest(role, hide);
+
+        $.ajax(request);
+        return false;
+    });
+
+    modal.on('show.bs.modal', () => {
+        console.log('Showing');
+    });
+    modal.on('shown.bs.modal', () => {
+        console.log('Finished showing');
+    });
+    modal.on('hide.bs.modal', () => {
+        console.log('Hiding')
+    });
+    modal.on('hidden.bs.modal', () => {
+        console.log('Finished hiding')
+    });
+
     return modal;
 }
-
-const modal = create_modal();
-const options = {
-    backdrop: "static",
-    keyboard: false,
-    focus: true,
-    show: false
-};
-
-$(document).ready(() => {
-    $("body").append(modal);
-    modal.modal('show');
-})
-
-modal.modal(options);
-
-modal.submit(e => {
-    e.preventDefault()
-    const front = $('#front')[0];
-    const back =  $('#back')[0];
-    const both = $('#both')[0];
-    let role = "";
-
-    if (front.checked) role = "Front-End";
-    if (back.checked) role = "Back-End";
-    if (both.checked) role = "Front-End:Back-End";
-    const hide = () => {
-        modal.modal('hide');
-    }
-    const request = createRequest(role, hide);
-
-    $.ajax(request);
-    return false;
-});
-
-modal.on('show.bs.modal', () => {
-    console.log('Showing');
-});
-modal.on('shown.bs.modal', () => {
-    console.log('Finished showing');
-});
-modal.on('hide.bs.modal', () => {
-    console.log('Hiding')
-});
-modal.on('hidden.bs.modal', () => {
-    console.log('Finished hiding')
-});
