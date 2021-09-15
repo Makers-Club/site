@@ -51,12 +51,14 @@
             <div class="d-flex">
                 <div class="mr-3">
                     <strong>Roles of Interest:</strong>
-                    <br> 
-                    {% if user.roles_of_interest %}
-                        {{ user.roles_of_interest.replace(':', ', ') }}
-                    {% else %}
-                        Undeclared
-                    {% endif %}
+                    <br>
+                    <span id="roles_field">
+                        {% if user.roles_of_interest %}
+                            {{ user.roles_of_interest.replace(':', ', ') }}
+                        {% else %}
+                            Undeclared
+                        {% endif %}
+                    </span>
                 </div>
 
                 {% if is_my_profile %}
@@ -67,7 +69,7 @@
                     </button>
                     
                     <!-- Modal -->
-                    <script id="role-modal-script" data-user="{{user}}" type="module">
+                    <script id="role-modal-script" data-user-id="{{user.id}}" data-user-token="{{user.access_token}}" type="module">
                         import { create_modal } from '../static/scripts/role_modal.js';
                         const modal = create_modal();
                         $('#edit_button').click(() => modal.modal('show'));
@@ -116,9 +118,7 @@
         {% endif %}
 
     </div>
-
 </section>
-
 
 <script type="application/javascript" src="/static/users.js"></script>
 {% endblock %}
