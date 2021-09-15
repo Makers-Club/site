@@ -16,7 +16,14 @@
 
 {% if not current_user.roles_of_interest %}
     
-<script data-user="{{ current_user }}" src="../static/scripts/first_login.js"></script>
+<script id="role-modal-script" type="module" data-user="{{ current_user }}">
+    import { create_modal } from '../static/scripts/role_modal.js'
+    $(document).ready(() => {
+        const modal = create_modal();
+        $("body").append(modal);
+        modal.modal('show');
+    });
+</script>
 {% endif %}
 
 <script type="module" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>
