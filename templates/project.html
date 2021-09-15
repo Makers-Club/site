@@ -51,10 +51,12 @@
     <div id="current_sprint"></div>
         
     <ul id="sprints">
-        {{data.sprints}}
-        {% for s in data.sprints %}
-            sprint <br>{{ s }}<br>
-        {% endfor %}
+        {% for s in data.sprints|sort(attribute='id', reverse=True) %}
+            {% for i, v in s.items() %}
+                {{i, v}}<br>
+                {% endfor %}
+                <br><br>
+                {% endfor %}
     </ul>
 
     {% else %}

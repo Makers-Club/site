@@ -7,6 +7,7 @@ from models.clients.maker_teams_client import MTClient
 @users.route('/', methods=['GET'], strict_slashes=False)
 def all():
     all_users = User.get_all(MTClient)
+    print('ALL USERS\n\t')
     current_user = request.current_user
     if current_user:
         current_user = current_user.to_dict()

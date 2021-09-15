@@ -10,3 +10,6 @@
 .projects-side-panel > a {
     color: var(--lightest);
 }
+.event > * {
+    background-color: #292f2f;
+}
