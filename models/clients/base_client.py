@@ -58,7 +58,9 @@ class BaseClient():
     @classmethod
     def get_one(cls, route, extra_data=None):
         url = parameters(cls, route, extra_data)
+        print("\n\nURL", url)
         response = requests.get(url)
+        print("\n\n RESPONSE", response)
         if not response:
             return None
         return response.json()

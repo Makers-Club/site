@@ -26,5 +26,5 @@
     </div>
 {% endfor %}
 
-<script type="module" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" src="../static/scripts/notifications/notifications.js"></script>
+<script type="module" data-user_pic="{{ current_user.avatar_url }}" data-user_id="{{ current_user.id }}" data-user_access_token="{{ current_user.access_token }}" data-user_handle="{{ current_user.handle}}" src="../static/scripts/projects.js"></script>
 {% endblock %}

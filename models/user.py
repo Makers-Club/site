@@ -9,7 +9,7 @@ class User(Base):
     def create_new_user(cls, client, data):
         route = 'users'
         response = client.create_new_user(route, data)
-        print(response)
+        # print(response)
         if not response or not response.get('user'):
             return None
         user = User(**response.get('user'))

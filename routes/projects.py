@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for
+from sqlalchemy.engine import url
 from routes import projects
 from models.project import Project
 from models.project_template import ProjectTemplate
@@ -25,12 +26,14 @@ def index():
 @auth_client.login_required
 def project(id):
     project = Project.get_by_id(MTClient, id)
+    if not project:
+        return redirect(url_for('projects.index'))
     if project:
         project = project.to_dict()
     current_user = request.current_user.to_dict()
     from models.sprint import Sprint
     sprints = Sprint.get_all(MTClient)
-    print(sprints, '****8')
+    #print(sprints, '****8')
     if sprints:
         sprints = [s.to_dict() for s in sprints]
     data = {

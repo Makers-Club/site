@@ -21,18 +21,18 @@
 
 {% block content %}
 
-<section class="w-100 d-flex flex-column  justify-content-center align-items-center">
+<section class="w-100 d-flex flex-column mt-3 justify-content-center align-items-center">
 <!-- show list of users -->
 {% if data %}
     {% if data.users %}
         {% set users = data.users %}
     {% endif %}
 {% endif %}
-    {% for user in users %}
-        {% if loop.index % 2 %}
-        <div class="row  p-0 w-100 pl-3 pr-3">
-        {% endif %}
-            <div data-role="{{ user.roles_of_interest }}" class="col user-card card bg-dark  mb-3 ml-1 mr-1 p-2">
+<div class="row  d-flex flex-wrap p-0 w-100 pl-3 pr-3">
+
+{% for user in users %}
+
+            <div data-role="{{ user.roles_of_interest }}" class="col user-card card bg-dark mx-1 mb-3  p-2">
                 
                 <div class="pr-0 m-0 mb-2 row justify-content-between w-100 px-2 py-2 rounded">
                     <div class="pr-0 m-0 row">
@@ -61,11 +61,10 @@
                 </div>
 
             </div>
-        {% if not loop.index % 2 %}
-        </div>
-        {% endif %}
+        
 
     {% endfor %}
+</div>
   
 </section>
 

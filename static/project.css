@@ -1,0 +1,23 @@
+.r-panel-btn {
+    padding: .3rem;
+    border-radius: 10px;
+    color: var(--darkest);
+    background-color: whitesmoke;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 2px 2px 2px 2px black;
+}
+.r-panel-btn:focus, .r-panel-btn:active {
+    background-color: var(--lightest);
+    outline: none;
+    box-shadow: 0px 0px 1px 1px black;
+}
+#mark_sprint_complete {
+    background-color: var(--dark);
+    color: whitesmoke;
+    
+}
+
+#mark_sprint_complete:focus, #mark_sprint_complete:active {
+    background-color: var(--darkest);
+}

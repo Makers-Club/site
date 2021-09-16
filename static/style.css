@@ -5,7 +5,9 @@
     --darkest: rgb(42, 42, 42);
     --lightest: rgb(191, 191, 191);
     --primary: #39d9de;
-    --secondary-light: rgb(175, 255, 231);
+    --primary-light: #4aeef4;
+    --secondary: rgb(52, 210, 162);
+    --secondary-light: rgb(155, 241, 215);
     --tertiary: #de38a3;
     --tertiary-light: #fee4f5;
 }
@@ -123,9 +125,13 @@ a[target="_blank"]::after {
     color: var(--dark);
 }
 .user-card {
-    max-width: 49%; 
+    min-width: 45%;
+    max-width: 49%; color;
 }
-
+.s_tiny img {
+    height: 33px;
+    width: 33px;
+}
 .right-panel-section {
     margin: 3px 0 3px 3px;
     height: 100%;
@@ -139,18 +145,24 @@ a[target="_blank"]::after {
     color: var(--lightest);
     background-color: #292f2f;
 }
-.event > * {
+.event  * {
     background-color: #292f2f;
 }
 .tertiary {
     color: #de38a3;
 }
-#notification_list {
-    overflow-y: scroll;
-    background-color: rgb(215, 215, 215);
-    color: var(--dark);
-}
 
+.wh-33 {
+    width: 33px;
+    height: 33px;
+}
+#slack_icon {
+    height: 200%;
+    width: 200%;
+    position: relative;
+    top: -50%;
+    left: -50%;
+}
 .notification, .notification * {
     padding: 2px;
     color: var(--dark);
@@ -172,4 +184,10 @@ a[target="_blank"]::after {
 }
 .lighter {
     color: var(--lightest);
+}
+#notification_list {
+    overflow-y: scroll;
+    background-color: rgb(215, 215, 215);
+    color: var(--dark);
+    max-height: 200px;
 }

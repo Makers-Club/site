@@ -107,7 +107,7 @@
 
 
 
-<main class="d-flex flex-column h-100">
+<main class="d-flex flex-column h-100 pt-0">
     
           
     {% block content %}
@@ -138,7 +138,7 @@
         <img 
             id="filter_button"
             src="https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=desS3MqcN"
-            class="ml-2"
+            class=""
             width="33px"
             height="33px"
             style="display: block;"
@@ -146,30 +146,76 @@
         />
 
         <!-- SLACK BUTTON --> 
-        <a target="_blank" href="https://join.slack.com/t/makerteams/shared_invite/zt-vrynuzza-goE5OE4xrulkceQE0Mt3Hw">
+        <div class="wh-33 p-0 m-0" data-toggle="tooltip" data-placement="bottom" title="Slack">
+        <a class="p-0 m-0" target="_blank" href="https://join.slack.com/t/makerteams/shared_invite/zt-vrynuzza-goE5OE4xrulkceQE0Mt3Hw">
             <img
-                id="slack_button"
+                id="slack_icon"
                 src="https://cdn.brandfolder.io/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg"
                 class=""
-                width="66px"
-                height="66px"
-                style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications"
             />
-        </a>     
+        </a>    
+        </div> 
     </div>
+
+
+    <div class="d-flex flex-column">
     <!-- NOTIFICATION LIST -->
     <div class=" border right-panel-section rounded" id="notification_list" style="display: none;">
         <ul id="notif-items" class=""></ul>
-        <li id="no-notifs" class="text-dark">No Notifications</li>
+        <li id="no-notifs" class="text-light p-2">No Notifications</li>
     </div>
 
     <!-- FILTER LIST -->
     <div class="border right-panel-section" id="filter_list" style="display: none;">
-        <ul id="filter_items" class="container"></ul>
+        <ul id="filter_items" class="w-100">
+            <li class="text-light p-2 w-100" id="no-filters" class="text-dark">No Filters Here (yet)</li>
+        </ul>
 
     </div>
-</div>
 
+
+    <!-- CREATE NEW SPRINT -->
+{% if data.project %}
+    <!-- IF YOUR PROJECT AND EXISTING SPRINTS COMPLETE, ALLOW NEW SPRINT CREATION - DO BACKEND CHECK TOO IN FUTURE -->
+    {% set all_sprints = {'complete': 1} %}
+
+    {% set all_sprints = {'create_new_sprint': 1} %}
+    {% if current_user.handle == project.owner_handle %}
+        {% for s in data.sprints %}
+
+            {% if not s.complete %}
+                {% if all_sprints.update({'create_new_sprint': 0}) %}{% endif %}
+            {% endif %}
+
+        {% endfor %}
+
+        {% if all_sprints.complete %}
+            {% if all_sprints.update({'create_new_sprint': 1}) %}{% endif %}
+        {% elif not data.sprints %}
+            {% if all_sprints.update({'create_new_sprint': 1}) %}{% endif %}
+        {% endif %}
+    {% endif %}
+    {% if all_sprints.create_new_sprint %}
+        {% if current_user.handle == project.owner_handle %}
+                <button class="m-3 mt-4 r-panel-btn" id="create_sprint">Create Sprint</button>
+        {% endif %}
+    {% endif %}
+
+
+
+<!-- MARK SPRINT COMPLETE -->
+    {% set current_sprint = {'id': 0} %}
+    {% for sprint in data.sprints %}
+        {% if not sprint.complete %}
+            {% if current_sprint.update({'id': sprint.id}) %}
+            {% endif %}
+                <button class="mt-4 mx-3 r-panel-btn" id="mark_sprint_complete">Complete Sprint</button>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</div>
+</div>
 
 
 <footer class="">

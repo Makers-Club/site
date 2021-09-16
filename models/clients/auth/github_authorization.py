@@ -1,8 +1,5 @@
-from requests import post, get
-from re import search
 from models.user import User
 from os import getenv
-from flask import request
 
 
 
@@ -29,6 +26,7 @@ class GithubAuthorization():
         auth_url = getenv('GITHUB_AUTH_URL')
         for k, v in parameters.items():
             auth_url += '{}={}&'.format(k, v)
+        # print("\n\nAUTH URL", auth_url)
         return auth_url
 
 
@@ -38,10 +36,13 @@ class GithubAuthorization():
         if not code:
             return None
         token = cls.get_token_from(code)
+        #print("\n\nTOKEN", token)
         if not token:
             return None
-        return cls.get_user_from(token)
-    
+        user = cls.get_user_from(token)
+        #print("\n\nUSER", user)
+        return user
+
     @classmethod
     def get_token_from(cls, code):
         cls.data['code'] = code
