@@ -12,17 +12,6 @@ def presignup():
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
     """ render landing template """
-    from models.notifications.notification_creatator import notification_creator
-    data = {
-          'user_id': '38747720',
-          'msg': 'some message here',
-          'is_read': 0,
-          'invitor_handle': 'scan3ls'
-        }
-    n = notification_creator('SEND_INVITE', data)
-    from models.notifications.notification import Notification
-    from models.clients.maker_teams_client import MTClient
-    n.create(MTClient)
     if request.current_user:
         data = {}
         data['current_user'] = request.current_user.to_dict()
