@@ -21,7 +21,16 @@
   </head>
 
 
-  <body>
+  <body >
+
+<h1 class="text-center pt-5 mt-5 text-dark h-100 w-100">Maker Teams</h1>
+      <a  href="{{ url_for('auth.authorize_github_integration') }}" class="w-100 d-flex justify-content-center">
+        <div class=" text-center w-100 ">...</div>
+      </a>
+  </div>
+  
+    <!--
+          <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
 
     
 
@@ -31,9 +40,7 @@
        
 
         <a class="navbar-brand" href="{{ url_for('landing.index') }}">
-        <!---->
             <img id="logo" src="https://storage.googleapis.com/maker_teams_public_images/logo.png">
-            <!---->
         </a>
         
         
@@ -83,9 +90,7 @@
                     <li class="f-sm" style="list-style:square">Build complete webapps based on real-world projects.</li>
                     <li class="f-sm" style="list-style:square">Discover a community of Makers like you.</li>
             </header>
-            <!-- GitHub Sign up Button START -->
             
-            <!-- GitHub Sign up Button END -->
             
           </div>
 
@@ -112,11 +117,7 @@
 </section>
 
 
-<div class="container w-25 d-flex justify-content-center my-4">
-    <a href="{{ url_for('auth.authorize_github_integration') }}" class="w-100 d-flex justify-content-center">
-        <img class="w-75  img-fluid github-signup-btn" src="https://storage.googleapis.com/maker_teams_public_images/Github%20signin%20button%20(2).png">
-    </a>
-</div>
+
 
 
 
@@ -174,10 +175,14 @@
 </main>
 
     
-      <!-- ADD a Copyright?? -->
-      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+      
+-->
   </body>
-
+<style>
+  html, body, body *{
+    background-color: white;
+  }
+</style>
 </html>
 
 
