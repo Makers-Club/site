@@ -217,6 +217,21 @@
 </div>
 </div>
 
+<script type="module" src="../static/scripts/sibebar.js"></script>
+
+{% set endpoint = {'type': 0} %}
+{% if data.users %}
+{% if endpoint.update({'type': 'users'}) %}{% endif %}
+
+{% elif data.projects %}
+    {% if endpoint.update({'type': 'projects'}) %}{% endif %}
+{% elif data.project %}
+    {% if endpoint.update({'type': 'project'}) %}{% endif %}
+{% elif data.user %}
+    {% if endpoint.update({'type': 'user'}) %}{% endif %}
+{% else %}
+    {% if endpoint.update({'type': 'dash'}) %}{% endif %}
+{% endif %}
 
 <footer class="">
     <div class=" text-center lighter">
@@ -227,8 +242,11 @@
 <!-- ADD a Copyright?? -->
 <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
 
-<script type="module" src="../static/scripts/sibebar.js"></script>
-<script type="module" data-endpoint="{{request.url.split('/')[-2]}}" src="../static/scripts/filters/filter.js"></script>
+
+
+{% if endpoint %}
+<script type="module" data-endpoint="{{endpoint.type}}" src="../static/scripts/filters/filter.js"></script>
+{% endif %}
 
 {% endif %}
 </body>
