@@ -7,7 +7,7 @@ const buttons = $('.sidebar-container img[id$="_button"]');
 
 buttons.click((e) => {
     const list = $(`.sidebar-container div[id="${e.target.id.split('_')[0]}_list"]`);
-    const display = list[0].style['display'];
+    const display = (list.length > 0) ? list[0].style.display : null;
     closeAll();
 
     if (display === 'none') list.css('display', 'flex');

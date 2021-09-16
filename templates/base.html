@@ -121,7 +121,7 @@
 <div class="sidebar-container sidebar-container-right border-base-left">
     <div id="icon"></div>
     {% if current_user %}
-    <div class="d-flex  border-base-bottom pt-4 pb-2 px-4 justify-content-between" id="">
+    <div class="d-flex  border-base-bottom pt-4 pb-2 px-4 justify-content-between align-items-center" id="">
         <!-- NOTIFICATION BUTTON -->
         <img
             id="notification_button"
@@ -138,21 +138,24 @@
         <img 
             id="filter_button"
             src="https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=desS3MqcN"
-            class=""
+            class="ml-2"
             width="33px"
             height="33px"
             style="display: block;"
             data-toggle="tooltip" data-placement="bottom" title="Filters"
         />
 
-        <img
-            id="notification_button"
-            src="https://vectr.com/makerteams/dd7C3gKlo.svg?width=640&height=640&select=dd7C3gKlopage0 "
-            class=""
-            width="33px"
-            height="33px"
-            style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications"
-        />
+        <!-- SLACK BUTTON --> 
+        <a target="_blank" href="https://join.slack.com/t/makerteams/shared_invite/zt-vrynuzza-goE5OE4xrulkceQE0Mt3Hw">
+            <img
+                id="slack_button"
+                src="https://cdn.brandfolder.io/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg"
+                class=""
+                width="66px"
+                height="66px"
+                style="display: block;" data-toggle="tooltip" data-placement="bottom" title="Notifications"
+            />
+        </a>     
     </div>
     <!-- NOTIFICATION LIST -->
     <div class=" border right-panel-section rounded" id="notification_list" style="display: none;">
